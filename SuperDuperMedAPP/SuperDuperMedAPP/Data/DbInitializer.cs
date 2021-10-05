@@ -4,12 +4,12 @@ using System.Linq;
 
 
 namespace SuperDuperMedAPP.Data
+{
+    public static class DbInitializer
     {
-        public static class DbInitializer
+        public static void Initialize(AppDbContext context)
         {
-            public static void Initialize(AppDbContext context)
-            {
-                context.Database.EnsureCreated();
+            context.Database.EnsureCreated();
 
             // Look for any patients.
             if (context.Patients.Any())
@@ -41,7 +41,27 @@ namespace SuperDuperMedAPP.Data
             context.SaveChanges();
 
 
+            var medicines = new Medicine[]
+{
+            new Medicine{ Name = "Medicine 1", Manufacturer = "Tova Gyógyszerkereskedelmi Zrt.", DescriptionLink = ""},
+            new Medicine{ Name = "Medicine 2", Manufacturer = "Pfaizer", DescriptionLink = ""},
+            new Medicine{ Name = "Medicine 3", Manufacturer = "Biotek Co.", DescriptionLink = ""},
+            new Medicine{ Name = "Medicine 4", Manufacturer = "Tova Gyógyszerkereskedelmi Zrt.", DescriptionLink = ""},
+            new Medicine{ Name = "Medicine 5", Manufacturer = "Pfaizer", DescriptionLink = ""},
+            new Medicine{ Name = "Medicine 6", Manufacturer = "Tova Gyógyszerkereskedelmi Zrt.", DescriptionLink = ""},
+            new Medicine{ Name = "Medicine 7", Manufacturer = "Tova Gyógyszerkereskedelmi Zrt.", DescriptionLink = ""},
+            new Medicine{ Name = "Medicine 8", Manufacturer = "Tova Gyógyszerkereskedelmi Zrt.", DescriptionLink = ""},
+            new Medicine{ Name = "Medicine 9", Manufacturer = "Pfaizer", DescriptionLink = ""},
+            new Medicine{ Name = "Medicine 10", Manufacturer = "Tova Gyógyszerkereskedelmi Zrt.", DescriptionLink = ""}
+
+};
+            foreach (Medicine m in medicines)
+            {
+                context.Medicines.Add(m);
+            }
+            context.SaveChanges();
+
 
         }
     }
-    }
+}
