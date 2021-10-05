@@ -12,5 +12,18 @@ namespace SuperDuperMedAPP.Controllers
         {
             return View();
         }
+        
+        [HttpPost]
+        public IActionResult Login(string Email, string Password)
+        {
+            if (Email == "hello@world.com" && Password == "pass")
+            {
+                return View("Views/User/Index.cshtml");
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
     }
 }
