@@ -7,6 +7,7 @@ namespace SuperDuperMedAPP.Models
 {
     public class Doctor : SuperUserModel
     {
-        public int RegistrationNumber { get; set; }
+        //public int RegistrationNumber { get; set; }
+        public ICollection<Patient> Patients { get; set; }
     }
 }

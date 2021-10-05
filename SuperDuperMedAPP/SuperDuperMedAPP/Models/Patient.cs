@@ -9,6 +9,7 @@ namespace SuperDuperMedAPP.Models
     {
 
         public int SocialSecurityNumber { get; set; }
+        public int DoctorID { get; set; }
         public ICollection<Medication> Medications { get; set; }
 
     }
