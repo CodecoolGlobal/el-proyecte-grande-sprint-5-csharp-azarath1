@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 
 namespace SuperDuperMedAPP.Models
 {
-    public class PatientModel : SuperUserModel
+    public class Patient : SuperUserModel
     {
 
         public int SocialSecurityNumber { get; set; }
-        public ICollection<MedicationModel> Medications { get; set; }
+        public ICollection<Medication> Medications { get; set; }
 
     }
 }
