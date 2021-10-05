@@ -3,3 +3,7 @@
 *@
 @{
 }
+@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+<p>Hello @HttpContextAccessor.HttpContext.Session.GetString("_Name")!</p>

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,7 @@ namespace SuperDuperMedAPP.Controllers
 {
     public class UserController : Controller
     {
+        private const string SessionKeyName = "_Name";
         public IActionResult Index()
         {
             return View();
@@ -18,6 +20,7 @@ namespace SuperDuperMedAPP.Controllers
         {
             if (Email == "hello@world.com" && Password == "pass")
             {
+                HttpContext.Session.SetString(SessionKeyName, Email);
                 return View("Views/User/Index.cshtml");
             }
             else
