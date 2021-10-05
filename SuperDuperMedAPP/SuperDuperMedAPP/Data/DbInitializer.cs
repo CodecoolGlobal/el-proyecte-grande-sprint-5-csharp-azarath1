@@ -28,6 +28,19 @@ namespace SuperDuperMedAPP.Data
 
             context.SaveChanges();
 
+            var patients = new Patient[]
+{
+            new Patient{SocialSecurityNumber = 044033999, DoctorID = 1, Name="Mr. Instance Imre", DateOfBirth=DateTime.Parse("2005-09-01")},
+            new Patient{SocialSecurityNumber = 044033919, DoctorID = 1, Name="Miss Exampli Gratia", DateOfBirth=DateTime.Parse("2002-09-01")},
+            new Patient{SocialSecurityNumber = 044033929, DoctorID = 1, Name="Mr. Standard Arturo", DateOfBirth=DateTime.Parse("2003-09-01")}
+};
+            foreach (Patient p in patients)
+            {
+                context.Patients.Add(p);
+            }
+            context.SaveChanges();
+
+
 
         }
     }
