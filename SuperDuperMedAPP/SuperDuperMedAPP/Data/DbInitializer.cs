@@ -61,16 +61,16 @@ namespace SuperDuperMedAPP.Data
             }
             context.SaveChanges();
 
-            //TODO: fix medication init
-            var medications = new Medication[]
-            {
-            new Medication{ Doses = 3, DoctorNotes = "Daily dose of 1 pill", Date = DateTime.Parse("2021-10-05"), MedicineID = 1, PatientID = 1 }
-            };
-            foreach (Medication me in medications)
-            {
-                context.Medications.Add(me);
-            }
-            context.SaveChanges();
+            ////TODO: fix medication init
+            //var medications = new Medication[]
+            //{
+            //new Medication{ Doses = 3, DoctorNotes = "Daily dose of 1 pill", Date = DateTime.Parse("2021-10-05"), MedicineID = 1, PatientID = 1 }
+            //};
+            //foreach (Medication me in medications)
+            //{
+            //    context.Medications.Add(me);
+            //}
+            //context.SaveChanges();
 
         }
     }
