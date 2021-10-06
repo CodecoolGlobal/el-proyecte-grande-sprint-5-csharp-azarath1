@@ -2,15 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SuperDuperMedAPP.Data;
 using SuperDuperMedAPP.Models;
 
 namespace SuperDuperMedAPP.Controllers
 {
-    public class MedicationsController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class MedicationsController : ControllerBase
     {
         private readonly AppDbContext _context;
 
@@ -19,143 +21,83 @@ namespace SuperDuperMedAPP.Controllers
             _context = context;
         }
 
-        // GET: Medications
-        public async Task<IActionResult> Index()
+        // GET: api/Medications
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Medication>>> GetMedications()
         {
-            var appDbContext = _context.Medications.Include(m => m.Medicine).Include(m => m.Patient);
-            return View(await appDbContext.ToListAsync());
+            return await _context.Medications.ToListAsync();
         }
 
-        // GET: Medications/Details/5
-        public async Task<IActionResult> Details(int? id)
+        // GET: api/Medications/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Medication>> GetMedication(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var medication = await _context.Medications
-                .Include(m => m.Medicine)
-                .Include(m => m.Patient)
-                .FirstOrDefaultAsync(m => m.MedicationID == id);
-            if (medication == null)
-            {
-                return NotFound();
-            }
-
-            return View(medication);
-        }
-
-        // GET: Medications/Create
-        public IActionResult Create()
-        {
-            ViewData["MedicineID"] = new SelectList(_context.Medicines, "MedicineID", "MedicineID");
-            ViewData["PatientID"] = new SelectList(_context.Patients, "ID", "ID");
-            return View();
-        }
-
-        // POST: Medications/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MedicationID,Name,Doses,DoctorNotes,Date,MedicineID,PatientID")] Medication medication)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(medication);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["MedicineID"] = new SelectList(_context.Medicines, "MedicineID", "MedicineID", medication.MedicineID);
-            ViewData["PatientID"] = new SelectList(_context.Patients, "ID", "ID", medication.PatientID);
-            return View(medication);
-        }
-
-        // GET: Medications/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
             var medication = await _context.Medications.FindAsync(id);
+
             if (medication == null)
             {
                 return NotFound();
             }
-            ViewData["MedicineID"] = new SelectList(_context.Medicines, "MedicineID", "MedicineID", medication.MedicineID);
-            ViewData["PatientID"] = new SelectList(_context.Patients, "ID", "ID", medication.PatientID);
-            return View(medication);
+
+            return medication;
         }
 
-        // POST: Medications/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("MedicationID,Name,Doses,DoctorNotes,Date,MedicineID,PatientID")] Medication medication)
+        // PUT: api/Medications/5
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutMedication(int id, Medication medication)
         {
             if (id != medication.MedicationID)
             {
-                return NotFound();
+                return BadRequest();
             }
 
-            if (ModelState.IsValid)
+            _context.Entry(medication).State = EntityState.Modified;
+
+            try
             {
-                try
-                {
-                    _context.Update(medication);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!MedicationExists(medication.MedicationID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                await _context.SaveChangesAsync();
             }
-            ViewData["MedicineID"] = new SelectList(_context.Medicines, "MedicineID", "MedicineID", medication.MedicineID);
-            ViewData["PatientID"] = new SelectList(_context.Patients, "ID", "ID", medication.PatientID);
-            return View(medication);
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!MedicationExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
         }
 
-        // GET: Medications/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        // POST: api/Medications
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost]
+        public async Task<ActionResult<Medication>> PostMedication(Medication medication)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            _context.Medications.Add(medication);
+            await _context.SaveChangesAsync();
 
-            var medication = await _context.Medications
-                .Include(m => m.Medicine)
-                .Include(m => m.Patient)
-                .FirstOrDefaultAsync(m => m.MedicationID == id);
+            return CreatedAtAction("GetMedication", new { id = medication.MedicationID }, medication);
+        }
+
+        // DELETE: api/Medications/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteMedication(int id)
+        {
+            var medication = await _context.Medications.FindAsync(id);
             if (medication == null)
             {
                 return NotFound();
             }
 
-            return View(medication);
-        }
-
-        // POST: Medications/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var medication = await _context.Medications.FindAsync(id);
             _context.Medications.Remove(medication);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+
+            return NoContent();
         }
 
         private bool MedicationExists(int id)
