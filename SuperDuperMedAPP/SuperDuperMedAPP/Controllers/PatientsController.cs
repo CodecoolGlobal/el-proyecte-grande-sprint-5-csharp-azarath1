@@ -2,15 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SuperDuperMedAPP.Data;
 using SuperDuperMedAPP.Models;
 
 namespace SuperDuperMedAPP.Controllers
 {
-    public class PatientsController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class PatientsController : ControllerBase
     {
         private readonly AppDbContext _context;
 
@@ -19,130 +21,83 @@ namespace SuperDuperMedAPP.Controllers
             _context = context;
         }
 
-        // GET: Patients
-        public async Task<IActionResult> Index()
+        // GET: api/Patients
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Patient>>> GetPatients()
         {
-            return View(await _context.Patients.ToListAsync());
+            return await _context.Patients.ToListAsync();
         }
 
-        // GET: Patients/Details/5
-        public async Task<IActionResult> Details(int? id)
+        // GET: api/Patients/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Patient>> GetPatient(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var patient = await _context.Patients
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (patient == null)
-            {
-                return NotFound();
-            }
-
-            return View(patient);
-        }
-
-        // GET: Patients/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Patients/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("SocialSecurityNumber,DoctorID,ID,Name,DateOfBirth,Username,HashPassword")] Patient patient)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(patient);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(patient);
-        }
-
-        // GET: Patients/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
             var patient = await _context.Patients.FindAsync(id);
+
             if (patient == null)
             {
                 return NotFound();
             }
-            return View(patient);
+
+            return patient;
         }
 
-        // POST: Patients/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("SocialSecurityNumber,DoctorID,ID,Name,DateOfBirth,Username,HashPassword")] Patient patient)
+        // PUT: api/Patients/5
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutPatient(int id, Patient patient)
         {
             if (id != patient.ID)
             {
-                return NotFound();
+                return BadRequest();
             }
 
-            if (ModelState.IsValid)
+            _context.Entry(patient).State = EntityState.Modified;
+
+            try
             {
-                try
-                {
-                    _context.Update(patient);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!PatientExists(patient.ID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                await _context.SaveChangesAsync();
             }
-            return View(patient);
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!PatientExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
         }
 
-        // GET: Patients/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        // POST: api/Patients
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost]
+        public async Task<ActionResult<Patient>> PostPatient(Patient patient)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            _context.Patients.Add(patient);
+            await _context.SaveChangesAsync();
 
-            var patient = await _context.Patients
-                .FirstOrDefaultAsync(m => m.ID == id);
+            return CreatedAtAction("GetPatient", new { id = patient.ID }, patient);
+        }
+
+        // DELETE: api/Patients/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeletePatient(int id)
+        {
+            var patient = await _context.Patients.FindAsync(id);
             if (patient == null)
             {
                 return NotFound();
             }
 
-            return View(patient);
-        }
-
-        // POST: Patients/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var patient = await _context.Patients.FindAsync(id);
             _context.Patients.Remove(patient);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+
+            return NoContent();
         }
 
         private bool PatientExists(int id)

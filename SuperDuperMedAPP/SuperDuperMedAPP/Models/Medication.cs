@@ -10,7 +10,7 @@ namespace SuperDuperMedAPP.Models
         public int MedicationID { get; set; }
         public string Name { get => Name; set => Name = Medicine.Name; }
        public int Doses { get; set; }
-       public string DoctorNotes { get; set; }
+       public string? DoctorNotes { get; set; }
        public DateTime Date { get; set; }
        public int MedicineID { get; set; }
        public int PatientID { get; set; }
