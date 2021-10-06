@@ -1,0 +1,65 @@
+﻿@model IEnumerable<SuperDuperMedAPP.Models.Medication>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Doses)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DoctorNotes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Patient)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Medicine)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Doses)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DoctorNotes)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Patient.ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Medicine.MedicineID)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.MedicationID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.MedicationID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.MedicationID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
