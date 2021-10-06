@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SuperDuperMedAPP.Controllers
 {
-    public class UserController : Controller
+    public class LoginController : Controller
     {
         private const string SessionKeyName = "_Name";
         public IActionResult Index()
