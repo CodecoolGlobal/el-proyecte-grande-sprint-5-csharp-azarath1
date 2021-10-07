@@ -69,8 +69,6 @@ namespace SuperDuperMedAPP.Controllers
         {
             if (username == "" || password == "")
             {
-                System.Diagnostics.Debug.WriteLine("nincsadat");
-
                 return NotFound();
             }
 
@@ -78,7 +76,6 @@ namespace SuperDuperMedAPP.Controllers
  
             if (patient == null)
             {
-                System.Diagnostics.Debug.WriteLine("nullvagyok");
                 return NotFound();
             }
             return Ok(patient);
