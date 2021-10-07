@@ -7,19 +7,11 @@ namespace SuperDuperMedAPP.Data
     public class PatientRepository
     {
         private AppDbContext _db;
-        public PatientRepository(AppDbContext db)
-        {
-            _db = db;
-        }
 
-        public PatientRepository()
-        {
-            _db = new AppDbContext();
-        }
+        public PatientRepository() => _db = new AppDbContext();
 
         public void AddPatient(Patient patient)
         {
-
             _db.Patients?.Add(patient);
             _db.SaveChanges();
         }
