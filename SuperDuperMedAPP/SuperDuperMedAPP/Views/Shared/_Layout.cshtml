@@ -36,7 +36,7 @@
                            else 
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Patient" asp-action="Details" asp-route-id=@{HttpContextAccessor.HttpContext.Session.GetString("_Id");}>My profile</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Patient" asp-action="Details" asp-route-id="@Int32.Parse(HttpContextAccessor.HttpContext.Session.GetString("_Id"))">My profile</a>
                                 </li>
                             }
                         }
