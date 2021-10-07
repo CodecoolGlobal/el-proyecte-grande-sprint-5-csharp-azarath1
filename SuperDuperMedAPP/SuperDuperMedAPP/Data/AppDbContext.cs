@@ -9,12 +9,13 @@ namespace SuperDuperMedAPP.Data
     public class AppDbContext : DbContext
     {
         private IConfiguration _db;
+
         public AppDbContext(DbContextOptions options, IConfiguration configuration) : base(options)
         {
             _db = configuration;
         }
 
-        public AppDbContext(DbContextOptions options): base(options)
+        public AppDbContext(DbContextOptions options) : base(options)
         {
         }
 
@@ -40,11 +41,14 @@ namespace SuperDuperMedAPP.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var config = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json")
-                .Build();
-            optionsBuilder.UseSqlServer(config.GetConnectionString("DefaultConnection"));
+            if (!optionsBuilder.IsConfigured)
+            {
+                var config = new ConfigurationBuilder()
+                    .SetBasePath(Directory.GetCurrentDirectory())
+                    .AddJsonFile("appsettings.json")
+                    .Build();
+                optionsBuilder.UseSqlServer(config.GetConnectionString("DefaultConnection"));
+            }
         }
     }
 }
