@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace SuperDuperMedAPP.Models
 {
-    public class MedicineModel
+    public class Medicine
     {
         public int MedicineID { get; set; }
         public string Name { get; set; }
