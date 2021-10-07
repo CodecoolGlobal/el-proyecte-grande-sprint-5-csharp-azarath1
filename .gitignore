@@ -338,3 +338,5 @@ Desktop.ini
 ### OpenFrameworks+VisualStudio Patch ###
 
 # End of https://www.toptal.com/developers/gitignore/api/aspnetcore,openframeworks+visualstudio
+/SuperDuperMedAPP/SuperDuperMedAPP/Migrations
+/SuperDuperMedAPP/SuperDuperMedAPP/Views/Patient/Index.cshtml
