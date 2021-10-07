@@ -8,7 +8,13 @@ namespace SuperDuperMedAPP.Data
 {
     public class AppDbContext : DbContext
     {
+        private IConfiguration _db;
         public AppDbContext(DbContextOptions options, IConfiguration configuration) : base(options)
+        {
+            _db = configuration;
+        }
+
+        public AppDbContext(DbContextOptions options): base(options)
         {
         }
 
