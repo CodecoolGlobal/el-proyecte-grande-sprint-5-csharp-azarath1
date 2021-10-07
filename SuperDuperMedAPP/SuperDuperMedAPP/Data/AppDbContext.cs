@@ -12,6 +12,8 @@ namespace SuperDuperMedAPP.Data
             public DbSet<Patient>? Patients { get; set; }
             public DbSet<Medicine>? Medicines { get; set; }
             public DbSet<Medication>? Medications { get; set; }
+            public DbSet<User>? Users { get; set; }
+
 
             protected override void OnModelCreating(ModelBuilder modelBuilder)
             {
@@ -19,6 +21,7 @@ namespace SuperDuperMedAPP.Data
                 modelBuilder.Entity<Patient>().ToTable("Patient");
                 modelBuilder.Entity<Medicine>().ToTable("Medicine");
                 modelBuilder.Entity<Medication>().ToTable("Medication");
+                modelBuilder.Entity<User>().ToTable("User");
             }
     }
 
