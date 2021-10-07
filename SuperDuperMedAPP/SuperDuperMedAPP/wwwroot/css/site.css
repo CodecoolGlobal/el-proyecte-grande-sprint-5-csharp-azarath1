@@ -69,3 +69,57 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
+.container {
+    height: 100%;
+    align-content: center;
+}
+
+.card {
+    height: 300px;
+    margin-top: auto;
+    margin-bottom: auto;
+    width: 400px;
+    background-color: rgba(0,0,0,0.5) !important;
+}
+
+.input-group-prepend span {
+    width: 50px;
+    background-color: #00e827;
+    color: black;
+    border: 0 !important;
+}
+
+input:focus {
+    outline: 0 0 0 0 !important;
+    box-shadow: 0 0 0 0 !important;
+}
+
+.remember {
+    color: white;
+}
+
+    .remember input {
+        width: 20px;
+        height: 20px;
+        margin-left: 15px;
+        margin-right: 5px;
+    }
+
+.login_btn {
+    color: black;
+    background-color: #00e827;
+    width: 100px;
+}
+
+    .login_btn:hover {
+        color: black;
+        background-color: white;
+    }
+
+.links {
+    color: white;
+}
+
+.links a {
+    margin-left: 4px;
+}
