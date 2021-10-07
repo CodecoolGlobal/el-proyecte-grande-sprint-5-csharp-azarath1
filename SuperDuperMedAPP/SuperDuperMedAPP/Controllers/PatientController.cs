@@ -87,7 +87,14 @@ namespace SuperDuperMedAPP.Controllers
                 HttpContext.Session.SetString(SessionKeyId, patient.ID.ToString());
                 return View("Details", patient);
             }
-        } 
+        }
+        
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Remove(SessionKeyId);
+            HttpContext.Session.Remove(SessionKeyName);
+            return Redirect("/");
+        }
 
         // GET: Patient/Edit/5
         public async Task<IActionResult> Edit(int? id)
