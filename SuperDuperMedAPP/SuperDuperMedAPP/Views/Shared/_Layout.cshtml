@@ -28,15 +28,18 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                         @{ if (HttpContextAccessor.HttpContext.Session.GetString("_Name") == null)
-                                {
+                            {
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Registration" asp-action="Index">Sign up</a>
                                 </li>
-                                }
-                           else 
+                            }
+                            else
                             {
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Patient" asp-action="Details" asp-route-id=@{HttpContextAccessor.HttpContext.Session.GetString("_Id");}>My profile</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Patient" asp-action="Logout">Logout</a>
                                 </li>
                             }
                         }
