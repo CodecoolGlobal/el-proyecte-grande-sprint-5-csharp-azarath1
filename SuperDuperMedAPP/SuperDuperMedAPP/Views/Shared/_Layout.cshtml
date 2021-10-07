@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -24,9 +26,19 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Registration" asp-action="Index">Sign up</a>
-                        </li>
+                        @{ if (HttpContextAccessor.HttpContext.Session.GetString("_Name") == null)
+                                {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Registration" asp-action="Index">Sign up</a>
+                                </li>
+                                }
+                           else 
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Patient" asp-action="Details" asp-route-id=@{HttpContextAccessor.HttpContext.Session.GetString("_Id");}>My profile</a>
+                                </li>
+                            }
+                        }
                     </ul>
                 </div>
             </div>
