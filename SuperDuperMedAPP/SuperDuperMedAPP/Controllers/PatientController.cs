@@ -13,6 +13,8 @@ namespace SuperDuperMedAPP.Controllers
     public class PatientController : Controller
     {
         private readonly AppDbContext _context;
+        private const string SessionKeyId = "_Id";
+        private const string SessionKeyName = "_Name";
 
         public PatientController(AppDbContext context)
         {
@@ -78,8 +80,11 @@ namespace SuperDuperMedAPP.Controllers
             {
                 return NotFound();
             }
-            return Ok(patient);
-        }
+            else 
+            {
+                return View("Details", patient);
+            }
+        } 
 
         // GET: Patient/Edit/5
         public async Task<IActionResult> Edit(int? id)
