@@ -16,11 +16,11 @@ namespace SuperDuperMedAPP.Controllers
         }
         
         [HttpPost]
-        public IActionResult Login(string Email, string Password)
+        public IActionResult Login(string Username, string Password)
         {
-            if (Email == "hello@world.com" && Password == "pass")
+            if (Username == "hello@world.com" && Password == "pass")
             {
-                HttpContext.Session.SetString(SessionKeyName, Email);
+                HttpContext.Session.SetString(SessionKeyName, Username);
                 return View("Views/User/Index.cshtml");
             }
             else
