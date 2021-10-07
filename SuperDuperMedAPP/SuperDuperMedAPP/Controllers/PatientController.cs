@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +14,8 @@ namespace SuperDuperMedAPP.Controllers
     public class PatientController : Controller
     {
         private readonly AppDbContext _context;
+        private const string SessionKeyId = "_Id";
+        private const string SessionKeyName = "_Name";
 
         public PatientController(AppDbContext context)
         {
@@ -69,8 +72,6 @@ namespace SuperDuperMedAPP.Controllers
         {
             if (username == "" || password == "")
             {
-                System.Diagnostics.Debug.WriteLine("nincsadat");
-
                 return NotFound();
             }
 
@@ -78,11 +79,15 @@ namespace SuperDuperMedAPP.Controllers
  
             if (patient == null)
             {
-                System.Diagnostics.Debug.WriteLine("nullvagyok");
                 return NotFound();
             }
-            return Ok(patient);
-        }
+            else 
+            {
+                HttpContext.Session.SetString(SessionKeyName, patient.Username);
+                HttpContext.Session.SetString(SessionKeyId, patient.ID.ToString());
+                return View("Details", patient);
+            }
+        } 
 
         // GET: Patient/Edit/5
         public async Task<IActionResult> Edit(int? id)
