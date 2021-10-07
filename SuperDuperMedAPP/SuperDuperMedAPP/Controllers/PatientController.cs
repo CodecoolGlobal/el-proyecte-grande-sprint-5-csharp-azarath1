@@ -79,7 +79,7 @@ namespace SuperDuperMedAPP.Controllers
  
             if (patient == null)
             {
-                return NotFound();
+                return NotFound("Incorrect username or password");
             }
             else 
             {
