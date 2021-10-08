@@ -1,41 +1,42 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using SuperDuperMedAPP.Data;
 using SuperDuperMedAPP.Models;
+using SuperDuperMedAPP.Data;
 
 namespace SuperDuperMedAPP.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PatientsController : ControllerBase
+    public class DoctorController : ControllerBase
     {
-        PatientRepository _patientRepository = new PatientRepository();
+        private DoctorRepository _doctorRepository = new DoctorRepository();
 
         [HttpPost]
         [Route("[action]")]
-        public ActionResult RegisterPatient([FromBody] Patient patient)
+        public ActionResult RegisterDoctor([FromBody] Doctor doctor)
         {
-            _patientRepository.AddPatient(patient);
+            
+            _doctorRepository.AddDoctor(doctor);
 
             return Ok();
         }
+
         [Route("[action]")]
         public ActionResult GetLoggedInDoctor(string username)
         {
-            var result = _patientRepository.GetPatientByUsername(username);
-
+            var result = _doctorRepository.GetDoctorByUsername(username);
+            
             if (result == null)
             {
                 return NotFound();
             }
 
             return Ok(result);
-
+            
         }
     }
 }
