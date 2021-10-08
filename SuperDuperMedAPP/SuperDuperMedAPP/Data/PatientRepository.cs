@@ -22,5 +22,10 @@ namespace SuperDuperMedAPP.Data
         {
             return _db.Patients?.FirstOrDefault(x => x.Username.Equals(username));
         }
+
+        public string? GetHashedPassword(string username)
+        {
+            return _db.Patients.Where(x => x.Username.Equals(username)).Select(x => x.HashPassword).First();
+        }
     }
 }
