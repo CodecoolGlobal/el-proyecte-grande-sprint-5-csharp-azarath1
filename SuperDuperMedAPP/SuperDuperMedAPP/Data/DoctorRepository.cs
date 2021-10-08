@@ -10,6 +10,8 @@ namespace SuperDuperMedAPP.Data
 
         public DoctorRepository() => _db = new AppDbContext();
 
+        public DoctorRepository(AppDbContext dbContext) => _db = dbContext;
+
         public void AddDoctor(Doctor doctor)
         {
             _db.Doctors?.Add(doctor);
