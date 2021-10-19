@@ -26,6 +26,7 @@ namespace SuperDuperMedAPP
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
             services.AddDistributedMemoryCache();
 
             services.AddSession(options =>
@@ -63,7 +64,7 @@ namespace SuperDuperMedAPP
             app.UseRouting();
 
             app.UseSession();
-
+            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000"));
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -72,6 +73,7 @@ namespace SuperDuperMedAPP
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+            
         }
     }
 }
