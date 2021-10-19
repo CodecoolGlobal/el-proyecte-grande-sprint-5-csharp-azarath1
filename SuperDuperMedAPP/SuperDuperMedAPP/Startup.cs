@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using SuperDuperMedAPP.Data.Repositories;
 
 namespace SuperDuperMedAPP
 {
@@ -37,6 +38,11 @@ namespace SuperDuperMedAPP
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddDbContext<AppDbContext>();
+
+            services.AddScoped<IDoctorRepository, DoctorRepository>();
+            services.AddScoped<IPatientRepository, PatientRepository>();
+            services.AddScoped<IMedicationRepository, MedicationRepository>();
+            services.AddScoped<IMedicineRepository, MedicineRepository>();
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 
