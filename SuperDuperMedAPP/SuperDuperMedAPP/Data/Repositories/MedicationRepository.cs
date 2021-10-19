@@ -6,7 +6,7 @@ using SuperDuperMedAPP.Models;
 
 namespace SuperDuperMedAPP.Data.Repositories
 {
-    public class MedicationRepository
+    public class MedicationRepository : IMedicationRepository
     {
         private AppDbContext _db;
 

@@ -5,7 +5,7 @@ using SuperDuperMedAPP.Models;
 
 namespace SuperDuperMedAPP.Data.Repositories
 {
-    public class DoctorRepository
+    public class DoctorRepository : IDoctorRepository
     {
         private AppDbContext _db;
 
