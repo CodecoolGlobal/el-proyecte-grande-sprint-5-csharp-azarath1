@@ -33,9 +33,9 @@ export class Medicine extends Component{
         this.refreshList();
     }
 
-    deleteDep(medid){
+    deleteMed(medid){
         if(window.confirm('Are you sure?')){
-            fetch(process.env.ROOT_API_PATH+'medicines/'+medid,{
+            fetch(process.env.REACT_APP_BASE_URL+'medicines/'+medid,{
                 method:'DELETE',
                 header:{'Accept':'application/json',
             'Content-Type':'application/json'}
