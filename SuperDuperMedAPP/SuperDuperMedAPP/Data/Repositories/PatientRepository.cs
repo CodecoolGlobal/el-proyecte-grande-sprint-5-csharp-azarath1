@@ -20,17 +20,21 @@ namespace SuperDuperMedAPP.Data.Repositories
             await _db.SaveChangesAsync();
         }
 
-        public async Task<Patient>? GetPatientByUsername(string username)
+        public async Task<Patient?> GetPatientByUsername(string username)
         {
-            return await _db.Patients.FirstOrDefaultAsync(x => x.Username != null && x.Username.Equals(username));
+            return await _db.Patients.FirstOrDefaultAsync(x => x.Username.Equals(username));
+        }
+        public async Task<Patient?> GetPatientById(int userid)
+        {
+            return await _db.Patients.FirstOrDefaultAsync(x => x.ID.Equals(userid));
         }
 
-        public async Task<Patient>? GetPatientByDoctorId(int doctorId)
+        public async Task<Patient?> GetPatientByDoctorId(int doctorId)
         {
             return await _db.Patients.FirstOrDefaultAsync(x => x.DoctorID.Equals(doctorId));
         }
 
-        public async Task<List<Patient>>? GetAllPatients()
+        public async Task<List<Patient>?> GetAllPatients()
         {
             return await _db.Patients.ToListAsync();
         }
@@ -43,8 +47,8 @@ namespace SuperDuperMedAPP.Data.Repositories
 
         public async Task DeletePatient(int id)
         {
-            var PatientToDelete = _db.Patients.First(x => x.ID == id);
-            _db.Patients.Remove(PatientToDelete);
+            var patientToDelete = _db.Patients.First(x => x.ID == id);
+            _db.Patients.Remove(patientToDelete);
             await _db.SaveChangesAsync();
         }
 
