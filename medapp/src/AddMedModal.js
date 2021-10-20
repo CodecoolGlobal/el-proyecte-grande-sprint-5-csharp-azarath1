@@ -9,20 +9,21 @@ export class AddMedModal extends Component{
 
     handleSubmit(event){
         event.preventDefault();
-        fetch(process.env.ROOT_API_PATH+'medicine',{
+        fetch(process.env.REACT_APP_BASE_URL+'medicines',{
             method:'POST',
             headers:{
                 'Accept':'application/json',
                 'Content-Type':'application/json'
             },
             body:JSON.stringify({
-                MedicineID:null,
-                Name:event.target.Name.value,
+                name:event.target.name.value,
+                manufacturer:event.target.manufacturer.value,
+                descriptionlink:event.target.descriptionLink.value
             })
         })
         .then(res=>res.json())
         .then((result)=>{
-            alert(result);
+            alert('Sucessfully Changed');
         },
         (error)=>{
             alert('Failed');
@@ -38,7 +39,7 @@ size="lg"
 aria-labelledby="contained-modal-title-vcenter"
 centered
 >
-    <Modal.Header clooseButton>
+    <Modal.Header closeButton={true}>
         <Modal.Title id="contained-modal-title-vcenter">
             Add Medicine
         </Modal.Title>
@@ -48,10 +49,26 @@ centered
         <Row>
             <Col sm={6}>
                 <Form onSubmit={this.handleSubmit}>
-                    <Form.Group controlId="DepartmentName">
-                        <Form.Label>Medicine Name</Form.Label>
-                        <Form.Control type="text" name="Name" required 
-                        placeholder="Medicine Name"/>
+                <Form.Group controlId="name">
+                        <Form.Label>Name of Medicine</Form.Label>
+                        <Form.Control type="text" name="name" 
+                        defaultValue={this.props.medname}
+                        placeholder="name"/>
+                    </Form.Group>
+
+                    <Form.Group controlId="manufacturer">
+                        <Form.Label>Manufacturer</Form.Label>
+                        <Form.Control type="text" name="manufacturer"  
+                        defaultValue={this.props.manufacturer}
+                        placeholder="manufacturer"/>
+                    </Form.Group>
+
+                    <Form.Group controlId="descriptionLink">
+                        <Form.Label>Description Link</Form.Label>
+                        <Form.Control type="text" name="descriptionLink" 
+                        defaultValue={this.props.descriptionlink}
+                        placeholder="description link"
+                        />
                     </Form.Group>
                     
                     <Form.Group>
