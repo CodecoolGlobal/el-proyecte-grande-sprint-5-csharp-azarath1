@@ -62,32 +62,29 @@ export class Medicine extends Component{
                                 <td>{med.medicineID}</td>
                                 <td>{med.name}</td>
                             <td>
-<ButtonToolbar>
-    <Button className="mr-2" variant="info"
-    onClick={()=>this.setState({editModalShow:true,
-        medid:med.medicineID,medname:med.name,manufacturer:med.manufacturer,descriptionlink:med.descriptionLink})}>
-            Edit
-        </Button>
+                                <ButtonToolbar>
+                                    <Button className="mr-2" variant="info"
+                                    onClick={()=>this.setState({editModalShow:true,
+                                        medid:med.medicineID,medname:med.name,manufacturer:med.manufacturer,descriptionlink:med.descriptionLink})}>
+                                            Edit
+                                        </Button>
 
-        <Button className="mr-2" variant="danger"
-    onClick={()=>this.deleteMed(med.medicineID)}>
-            Delete
-        </Button>
+                                        <Button className="mr-2" variant="danger"
+                                    onClick={()=>this.deleteMed(med.medicineID)}>
+                                            Delete
+                                        </Button>
 
-        <EditMedModal show={this.state.editModalShow}
-        onHide={editModalClose}
-        medid={medid}
-        medname={medname}
-        manufacturer={manufacturer}
-        descriptionlink={descriptionlink}
-        />
-</ButtonToolbar>
-
-                                </td>
-
-                            </tr>)}
+                                        <EditMedModal show={this.state.editModalShow}
+                                        onHide={editModalClose}
+                                        medid={medid}
+                                        medname={medname}
+                                        manufacturer={manufacturer}
+                                        descriptionlink={descriptionlink}
+                                        />
+                                </ButtonToolbar>
+                            </td>
+                        </tr>)}
                     </tbody>
-
                 </Table>
 
                 <ButtonToolbar>
