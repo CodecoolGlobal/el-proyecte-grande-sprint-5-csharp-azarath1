@@ -1,33 +1,56 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using SuperDuperMedAPP.Data;
+using SuperDuperMedAPP.Data.Repositories;
 using SuperDuperMedAPP.Models;
 
 namespace SuperDuperMedAPP.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("patient")]
     [ApiController]
     public class PatientsController : ControllerBase
     {
-        PatientRepository _patientRepository = new PatientRepository();
+        private IPatientRepository _patientRepository;
+        private IMedicationRepository _medicationRepository;
+        private IMedicineRepository _medicineRepository;
+
+        public PatientsController(IPatientRepository patientRepository, IMedicationRepository medicationRepository,
+            MedicineRepository medicineRepository)
+        {
+            _patientRepository = patientRepository;
+            _medicationRepository = medicationRepository;
+            _medicineRepository = medicineRepository;
+        }
 
         [HttpPost]
         [Route("[action]")]
-        public ActionResult RegisterPatient([FromBody] Patient patient)
+        public async Task<ActionResult> RegisterPatient(
+            [FromBody] [Bind("SocialSecurityNumber,DoctorID,Name,DateOfBirth,Email,PhoneNumber,Username,HashPassword")]
+            Patient patient)
         {
-            _patientRepository.AddPatient(patient);
+            if (_patientRepository.GetPatientByUsername(patient.Username) != null)
+            {
+                return BadRequest("Username already in use!");
+            }
 
-            return Ok();
+            await _patientRepository.AddPatient(patient);
+
+            HttpContext.Session.SetString("username", patient.Username);
+            HttpContext.Session.SetInt32("ID", patient.ID);
+
+
+            return Ok("Registration successful.");
         }
-        [Route("[action]")]
-        public ActionResult GetLoggedInDoctor(string username)
+
+        [Route("patient/{id:int}")]
+        public async Task<ActionResult> GetLoggedInPatient([FromRoute] int id)
         {
-            var result = _patientRepository.GetPatientByUsername(username);
+            if (id != HttpContext.Session.GetInt32("ID"))
+            {
+                return Unauthorized();
+            }
+
+            var result = await _patientRepository.GetPatientById(id);
 
             if (result == null)
             {
@@ -35,7 +58,43 @@ namespace SuperDuperMedAPP.Controllers
             }
 
             return Ok(result);
+        }
 
+        [HttpPost]
+        [Route("patient/login")]
+        public async Task<ActionResult> Login([FromForm] SessionData data)
+        {
+            if (data.HashPassword.Equals("") || data.Username.Equals(""))
+            {
+                return Unauthorized("Please fill both username/password");
+            }
+
+            var patient = await _patientRepository.GetPatientById(data.ID);
+            if (patient == null)
+            {
+                return Unauthorized("Password, or username doesent match.");
+            }
+
+            HttpContext.Session.SetString("username", data.Username);
+            HttpContext.Session.SetInt32("ID", data.ID);
+
+            return Ok("Login successful.");
+        }
+
+        [Route("patient/{id}/medication")]
+        public async Task<ActionResult> GetPatientMedication([FromRoute] int id)
+        {
+            if (id != HttpContext.Session.GetInt32("ID"))
+            {
+                return Unauthorized();
+            }
+
+            var userMedication = await _medicationRepository.GetAllMedication(id);
+            if (userMedication==null)
+            {
+                return NoContent();
+            }
+            return Ok(userMedication);
         }
     }
 }
