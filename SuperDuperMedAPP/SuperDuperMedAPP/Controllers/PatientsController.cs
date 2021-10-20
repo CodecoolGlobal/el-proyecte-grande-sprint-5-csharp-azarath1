@@ -13,6 +13,7 @@ namespace SuperDuperMedAPP.Controllers
         private IPatientRepository _patientRepository;
         private IMedicationRepository _medicationRepository;
         private IMedicineRepository _medicineRepository;
+        private const string SessionId = "_Id";
 
         public PatientsController(IPatientRepository patientRepository, IMedicationRepository medicationRepository,
             MedicineRepository medicineRepository)
@@ -35,8 +36,7 @@ namespace SuperDuperMedAPP.Controllers
 
             await _patientRepository.AddPatient(patient);
 
-            HttpContext.Session.SetString("username", patient.Username);
-            HttpContext.Session.SetInt32("ID", patient.ID);
+            HttpContext.Session.SetInt32(SessionId, patient.ID);
 
 
             return Ok("Registration successful.");
@@ -45,7 +45,7 @@ namespace SuperDuperMedAPP.Controllers
         [Route("patient/{id:int}")]
         public async Task<ActionResult> GetLoggedInPatient([FromRoute] int id)
         {
-            if (id != HttpContext.Session.GetInt32("ID"))
+            if (id != HttpContext.Session.GetInt32(SessionId))
             {
                 return Unauthorized();
             }
@@ -72,11 +72,10 @@ namespace SuperDuperMedAPP.Controllers
             var patient = await _patientRepository.GetPatientById(data.ID);
             if (patient == null)
             {
-                return Unauthorized("Password, or username doesent match.");
+                return Unauthorized("Password, or username doesn't match.");
             }
 
-            HttpContext.Session.SetString("username", data.Username);
-            HttpContext.Session.SetInt32("ID", data.ID);
+            HttpContext.Session.SetInt32(SessionId, data.ID);
 
             return Ok("Login successful.");
         }
@@ -84,7 +83,7 @@ namespace SuperDuperMedAPP.Controllers
         [Route("patient/{id}/medication")]
         public async Task<ActionResult> GetPatientMedication([FromRoute] int id)
         {
-            if (id != HttpContext.Session.GetInt32("ID"))
+            if (id != HttpContext.Session.GetInt32(SessionId))
             {
                 return Unauthorized();
             }
@@ -95,6 +94,11 @@ namespace SuperDuperMedAPP.Controllers
                 return NoContent();
             }
             return Ok(userMedication);
+        }
+        public ActionResult Logout()
+        {
+            HttpContext.Session.Remove(SessionId);
+            return Ok("Successfully logged out.");
         }
     }
 }
