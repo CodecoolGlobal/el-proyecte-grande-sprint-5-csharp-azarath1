@@ -9,7 +9,7 @@ export class EditMedModal extends Component{
 
     handleSubmit(event){
         event.preventDefault();
-        fetch(process.env.ROOT_API_PATH+'/medicine',{
+        fetch(process.env.REACT_APP_BASE_URL+'medicine/'+this.props.medid,{
             method:'PUT',
             headers:{
                 'Accept':'application/json',
@@ -17,12 +17,14 @@ export class EditMedModal extends Component{
             },
             body:JSON.stringify({
                 medicineID:event.target.medicineID.value,
-                name:event.target.name.value
+                name:event.target.name.value,
+                // manufacturer:event.target.manufacturer.value,
+                // descriptionLink:event.target.descriptionLink.value
             })
         })
         .then(res=>res.json())
         .then((result)=>{
-            alert(result);
+            console.log(result);
         },
         (error)=>{
             alert('Failed');
@@ -38,7 +40,7 @@ size="lg"
 aria-labelledby="contained-modal-title-vcenter"
 centered
 >
-    <Modal.Header cloosebutton>
+    <Modal.Header closeButton={true}>
         <Modal.Title id="contained-modal-title-vcenter">
             Edit Medicine
         </Modal.Title>
@@ -62,6 +64,20 @@ centered
                         defaultValue={this.props.medname}
                         placeholder="name"/>
                     </Form.Group>
+
+                    {/* <Form.Group controlId="manufacturer">
+                        <Form.Label>manufacturer</Form.Label>
+                        <Form.Control type="text" name="manufacturer" required 
+                        defaultValue={this.props.manufacturer}
+                        placeholder="manufacturer"/>
+                    </Form.Group>
+
+                    <Form.Group controlId="descriptionLink">
+                        <Form.Label>descriptionLink</Form.Label>
+                        <Form.Control type="text" name="descriptionLink" required 
+                        defaultValue={this.props.descriptionLink}
+                        placeholder="descriptionLink"/>
+                    </Form.Group> */}
 
                     <Form.Group>
                         <Button variant="primary" type="submit">
