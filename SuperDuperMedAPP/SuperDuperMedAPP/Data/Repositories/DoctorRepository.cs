@@ -30,6 +30,24 @@ namespace SuperDuperMedAPP.Data.Repositories
 
         }
 
+        public async Task UpdateDoctorContacts(UserContacts contacts,int id)
+        {
+            var doctor = await _db.Doctors.FirstOrDefaultAsync(x => x.ID == id);
+            if (contacts.Email != null)
+            {
+                doctor.Email = contacts.Email;
+                _db.Entry(doctor).Property("Email").IsModified = true;
+            }
+
+            if (contacts.PhoneNumber != null)
+            {
+                doctor.PhoneNumber = contacts.PhoneNumber;
+                _db.Entry(doctor).Property("PhoneNumber").IsModified = true;
+            }
+
+            await _db.SaveChangesAsync();
+        }
+
         public async Task DeleteDoctor(int id)
         {
             var DoctorToDelete = await _db.Doctors.FirstAsync(x => x.ID == id);
