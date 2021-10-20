@@ -43,7 +43,7 @@ export class Medicine extends Component{
         }
     }
     render(){
-        const {meds, medid, medname}=this.state;
+        const {meds, medid, medname, manufacturer, descriptionlink}=this.state;
         let addModalClose=()=>this.setState({addModalShow:false});
         let editModalClose=()=>this.setState({editModalShow:false});
         return(
@@ -65,7 +65,7 @@ export class Medicine extends Component{
 <ButtonToolbar>
     <Button className="mr-2" variant="info"
     onClick={()=>this.setState({editModalShow:true,
-        medid:med.medicineID,medname:med.name})}>
+        medid:med.medicineID,medname:med.name,manufacturer:med.manufacturer,descriptionlink:med.descriptionLink})}>
             Edit
         </Button>
 
@@ -77,7 +77,10 @@ export class Medicine extends Component{
         <EditMedModal show={this.state.editModalShow}
         onHide={editModalClose}
         medid={medid}
-        medname={medname}/>
+        medname={medname}
+        manufacturer={manufacturer}
+        descriptionlink={descriptionlink}
+        />
 </ButtonToolbar>
 
                                 </td>
