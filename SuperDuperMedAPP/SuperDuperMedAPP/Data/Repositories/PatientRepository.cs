@@ -52,15 +52,17 @@ namespace SuperDuperMedAPP.Data.Repositories
             {
                 patient.Email = contacts.Email;
                 _db.Entry(patient).Property("Email").IsModified = true;
+                await _db.SaveChangesAsync();
             }
 
             if (contacts.PhoneNumber!=null)
             {
                 patient.PhoneNumber = contacts.PhoneNumber;
                 _db.Entry(patient).Property("PhoneNumber").IsModified = true;
+                await _db.SaveChangesAsync();
             }
 
-            await _db.SaveChangesAsync();
+
         }
 
         public async Task DeletePatient(int id)
