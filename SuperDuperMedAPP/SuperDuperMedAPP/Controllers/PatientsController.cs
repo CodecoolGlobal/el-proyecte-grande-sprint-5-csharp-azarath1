@@ -6,7 +6,7 @@ using SuperDuperMedAPP.Models;
 
 namespace SuperDuperMedAPP.Controllers
 {
-    [Route("patient")]
+    [Route("[controller]")]
     [ApiController]
     public class PatientsController : ControllerBase
     {
@@ -24,7 +24,7 @@ namespace SuperDuperMedAPP.Controllers
         }
 
         [HttpPost]
-        [Route("[action]")]
+        [Route("[contorller]/[action]")]
         public async Task<ActionResult> RegisterPatient(
             [FromBody] [Bind("SocialSecurityNumber,DoctorID,Name,DateOfBirth,Email,PhoneNumber,Username,HashPassword")]
             Patient patient)
@@ -40,24 +40,6 @@ namespace SuperDuperMedAPP.Controllers
 
 
             return Ok("Registration successful.");
-        }
-
-        [Route("patient/{id:int}")]
-        public async Task<ActionResult> GetLoggedInPatient([FromRoute] int id)
-        {
-            if (id != HttpContext.Session.GetInt32(SessionId))
-            {
-                return Unauthorized();
-            }
-
-            var result = await _patientRepository.GetPatientById(id);
-
-            if (result == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(result);
         }
 
         [HttpPost]
@@ -80,6 +62,30 @@ namespace SuperDuperMedAPP.Controllers
             return Ok("Login successful.");
         }
 
+        public ActionResult Logout()
+        {
+            HttpContext.Session.Remove(SessionId);
+            return Ok("Successfully logged out.");
+        }
+
+        [Route("patient/{id:int}")]
+        public async Task<ActionResult> GetLoggedInPatientDetails([FromRoute] int id)
+        {
+            if (id != HttpContext.Session.GetInt32(SessionId))
+            {
+                return Unauthorized();
+            }
+
+            var result = await _patientRepository.GetPatientById(id);
+
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(result);
+        }
+
         [Route("patient/{id}/medication")]
         public async Task<ActionResult> GetPatientMedication([FromRoute] int id)
         {
@@ -95,10 +101,18 @@ namespace SuperDuperMedAPP.Controllers
             }
             return Ok(userMedication);
         }
-        public ActionResult Logout()
+
+        [HttpPut]
+        [Route("patient/{id}/EditContacts")]
+        public ActionResult Editcontacts(UserContacts userContact, int id)
         {
-            HttpContext.Session.Remove(SessionId);
-            return Ok("Successfully logged out.");
+            if (id != HttpContext.Session.GetInt32(SessionId))
+            {
+                return Unauthorized();
+            }
+
+            _patientRepository.UpdatePatientContacts(userContact, id);
+            return Ok();
         }
     }
 }

@@ -13,6 +13,7 @@ namespace SuperDuperMedAPP.Data.Repositories
         Task<Patient?> GetPatientByDoctorId(int doctorId);
         Task<List<Patient>?> GetAllPatients();
         Task UpdatePatient(Patient patient);
+        Task UpdatePatientContacts(UserContacts contacts,int id);
         Task DeletePatient(int id);
         Task<string?>  GetHashedPassword(string username);
     }
