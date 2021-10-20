@@ -24,7 +24,7 @@ namespace SuperDuperMedAPP.Controllers
         }
 
         [HttpPost]
-        [Route("[contorller]/[action]")]
+        [Route("[controller]/[action]")]
         public async Task<ActionResult> RegisterPatient(
             [FromBody] [Bind("SocialSecurityNumber,DoctorID,Name,DateOfBirth,Email,PhoneNumber,Username,HashPassword")]
             Patient patient)
