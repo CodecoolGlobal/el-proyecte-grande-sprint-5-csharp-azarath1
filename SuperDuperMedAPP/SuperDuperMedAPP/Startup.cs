@@ -35,6 +35,7 @@ namespace SuperDuperMedAPP
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });
+            services.AddMemoryCache();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddDbContext<AppDbContext>();
