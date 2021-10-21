@@ -96,7 +96,6 @@ export class PatientRegistration extends Component {
                         onChange={this.handleInputChange} />
                 </label>
                 </div>
-
                 <div>
                 <label>
                     Date of Birth:
@@ -143,7 +142,7 @@ export class PatientRegistration extends Component {
                     <input
                         name="password"
                         type="textarea"
-                        value={this.state.password}
+                        value={this.state.password} />
                 </label>
                 </div>
                 <br />
