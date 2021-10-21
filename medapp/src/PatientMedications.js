@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
-import {Table} from 'react-bootstrap';
-
+import {Table, ButtonToolbar, Button} from 'react-bootstrap';
+import {ChangePatientDetailsModal} from './ChangePatientDetailsModal';
 
 export class PatientMedications extends Component{
 
@@ -10,7 +10,7 @@ export class PatientMedications extends Component{
     }
 
     refreshList(){
-         fetch(process.env.REACT_APP_BASE+'patient/'+this.props.patientid+'/medication',
+         fetch(process.env.REACT_APP_BASE+'patient/'+1+'/medication',
                 { method: 'GET',
                 headers: {
                 'Accept': 'application/json',
@@ -19,6 +19,7 @@ export class PatientMedications extends Component{
             .then(response=>response.json())
             .then(data=>{
             this.setState({meddata:data});
+            console.log(data);
         });
     }
 
@@ -26,12 +27,12 @@ export class PatientMedications extends Component{
         this.refreshList();
     }
 
-    componentDidUpdate(){
-        this.refreshList();
-    }
+    // componentDidUpdate(){
+    //     this.refreshList();
+    // }
 
     render(){
-        const {meddata}=this.state;
+        // const {meddata, patientid}=this.state;
         let editModalClose=()=>this.setState({editModalShow:false});
         return(
             <div >
@@ -47,13 +48,13 @@ export class PatientMedications extends Component{
                         </tr>
                     </thead>
                     <tbody>
-                        {meddata.map(dat=>
+                        {/* {meddata.map(dat=>
                             <tr key={dat.date}>
                                 <td>{dat.date}</td>
                                 <td>{dat.name}</td>
                                 <td>{dat.dosage}</td>
                                 <td>{dat.doctorNotes}</td>
-                            </tr>)}
+                            </tr>)} */}
                     </tbody>
                 </Table>
                 <ButtonToolbar>
@@ -61,7 +62,7 @@ export class PatientMedications extends Component{
                     onClick={()=>this.setState({editModalShow:true})}>
                     Change my details</Button>
 
-                    <ChangePatientDetailsModal show={this.state. editModalShow}
+                    <ChangePatientDetailsModal show={this.state.editModalShow}
                     onHide={editModalClose}/>
                 </ButtonToolbar>
             </div>

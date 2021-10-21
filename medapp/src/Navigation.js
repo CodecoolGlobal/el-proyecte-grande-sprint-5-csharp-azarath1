@@ -16,8 +16,8 @@ export class Navigation extends Component{
                 <NavLink className="d-inline p-2 bg-dark text-white" to="/signup">
                     Sign Up
                 </NavLink>
-                <NavLink className="d-inline p-2 bg-dark text-white" to="/medicines">
-                    Medicine Api
+                <NavLink className="d-inline p-2 bg-dark text-white" to="/medicine">
+                    Medicines
                 </NavLink>
 
                 </Nav>
