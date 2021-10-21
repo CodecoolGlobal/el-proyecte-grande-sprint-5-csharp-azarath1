@@ -15,9 +15,7 @@ function App() {
      <h3 className="m-3 d-flex justify-content-center">
        MedApp
      </h3>
-
      <Navigation/>
-
      <Switch>
        <Route path='/' component={Home} exact/>
        <Route path='/signup' component={Signup}/>

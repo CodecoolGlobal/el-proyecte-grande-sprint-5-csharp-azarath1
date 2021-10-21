@@ -77,10 +77,10 @@ namespace SuperDuperMedAPP.Controllers
         [Route("patient/{id}/details")]
         public async Task<ActionResult> GetLoggedInPatientDetails([FromRoute] int id)
         {
-            if (id != HttpContext.Session.GetInt32(SessionId))
-            {
-                return Unauthorized();
-            }
+            //if (id != HttpContext.Session.GetInt32(SessionId))
+            //{
+            //    return Unauthorized();
+            //}
 
             var result = await _patientRepository.GetPatientById(id);
 

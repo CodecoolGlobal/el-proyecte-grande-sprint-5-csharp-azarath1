@@ -86,7 +86,6 @@ export class PatientRegistration extends Component {
                         onChange={this.handleInputChange} />
                 </label>
                 </div>
-                
                 <div>
                 <label>
                     Name:
@@ -108,7 +107,6 @@ export class PatientRegistration extends Component {
                         onChange={this.handleInputChange} />
                 </label>
                 </div>
-
                 <div>
                 <label>
                     Email:
@@ -119,7 +117,6 @@ export class PatientRegistration extends Component {
                         onChange={this.handleInputChange} />
                 </label>
                 </div>
-
                 <div>
                 <label>
                     Phone Number:
@@ -130,7 +127,6 @@ export class PatientRegistration extends Component {
                         onChange={this.handleInputChange} />
                 </label>
                 </div>
-
                 <div>
                 <label>
                     Username:
@@ -141,7 +137,6 @@ export class PatientRegistration extends Component {
                         onChange={this.handleInputChange} />
                 </label>
                 </div>
-
                 <div>
                 <label>
                     Password:
@@ -149,7 +144,6 @@ export class PatientRegistration extends Component {
                         name="password"
                         type="textarea"
                         value={this.state.password}
-                        onChange={this.handleInputChange} />
                 </label>
                 </div>
                 <br />
