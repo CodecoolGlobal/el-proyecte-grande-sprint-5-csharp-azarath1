@@ -89,7 +89,7 @@ centered
         </Row>
     </Modal.Body>
     <Modal.Footer>
-        <Button variant="danger" className='mt-5' onClick={this.props.onHide}>Close</Button>
+        <Button variant="danger" onClick={this.props.onHide}>Close</Button>
     </Modal.Footer>
 
 </Modal>

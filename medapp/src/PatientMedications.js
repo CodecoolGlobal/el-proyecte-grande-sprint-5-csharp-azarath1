@@ -6,7 +6,7 @@ export class PatientMedications extends Component{
 
     constructor(props){
         super(props);
-        this.state={meddata:[]}
+        this.state={meddata:[], editModalShow:false}
     }
 
     refreshList(){
@@ -32,6 +32,7 @@ export class PatientMedications extends Component{
 
     render(){
         const {meddata}=this.state;
+        let editModalClose=()=>this.setState({editModalShow:false});
         return(
             <div >
                 <h2>Welcome!</h2>
@@ -46,16 +47,23 @@ export class PatientMedications extends Component{
                         </tr>
                     </thead>
                     <tbody>
-                        {meddata.map(med=>
-                            <tr key={med.date}>
-                                <td>{med.date}</td>
-                                <td>{med.name}</td>
-                                <td>{med.dosage}</td>
-                                <td>{med.doctorNotes}</td>
+                        {meddata.map(dat=>
+                            <tr key={dat.date}>
+                                <td>{dat.date}</td>
+                                <td>{dat.name}</td>
+                                <td>{dat.dosage}</td>
+                                <td>{dat.doctorNotes}</td>
                             </tr>)}
                     </tbody>
                 </Table>
-                
+                <ButtonToolbar>
+                    <Button variant='primary'
+                    onClick={()=>this.setState({editModalShow:true})}>
+                    Change my details</Button>
+
+                    <ChangePatientDetailsModal show={this.state. editModalShow}
+                    onHide={editModalClose}/>
+                </ButtonToolbar>
             </div>
         )
     }
