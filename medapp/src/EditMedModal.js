@@ -88,7 +88,6 @@ centered
             </Col>
         </Row>
     </Modal.Body>
-    
     <Modal.Footer>
         <Button variant="danger" onClick={this.props.onHide}>Close</Button>
     </Modal.Footer>

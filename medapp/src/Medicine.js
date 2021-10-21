@@ -86,7 +86,7 @@ export class Medicine extends Component{
                         </tr>)}
                     </tbody>
                 </Table>
-
+                <br/>
                 <ButtonToolbar>
                     <Button variant='primary'
                     onClick={()=>this.setState({addModalShow:true})}>
