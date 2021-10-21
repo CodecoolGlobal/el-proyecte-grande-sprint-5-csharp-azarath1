@@ -24,7 +24,7 @@ export class Login extends Component {
 
     async handleSubmit(event) {
         event.preventDefault();
-        await fetch('https://localhost:5001/patient/login', {
+        await fetch(process.env.REACT_APP_BASE_URL_PATIENT+'login', {
             method: 'post',
             headers : { 
                 'Content-Type': 'application/json',

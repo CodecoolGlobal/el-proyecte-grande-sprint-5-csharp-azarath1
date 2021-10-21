@@ -47,7 +47,7 @@ export class PatientRegistration extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        fetch('https://localhost:44314/patient/register', {
+        fetch(process.eng.REACT_APP_BASE_URL_PATIENT+'register', {
             method: 'post',
             headers: {
                 'Content-Type': 'application/json'

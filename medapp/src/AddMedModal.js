@@ -9,7 +9,7 @@ export class AddMedModal extends Component{
 
     handleSubmit(event){
         event.preventDefault();
-        fetch(process.env.REACT_APP_BASE_URL+'medicines',{
+        fetch(process.env.REACT_APP_BASE_URL_WITH_API+'medicines',{
             method:'POST',
             headers:{
                 'Accept':'application/json',
