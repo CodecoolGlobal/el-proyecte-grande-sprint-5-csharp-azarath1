@@ -13,7 +13,7 @@ export class Medicine extends Component{
     }
 
     refreshList(){
-        fetch('https://localhost:44314/api/medicines',
+        fetch(process.env.REACT_APP_BASE_URL_WITH_API+'medicines',
                 { method: 'GET',
                 headers: {
                 'Accept': 'application/json',

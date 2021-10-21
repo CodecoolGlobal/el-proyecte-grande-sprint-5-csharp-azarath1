@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -25,11 +26,11 @@ namespace SuperDuperMedAPP.Controllers
 
         [HttpPost]
         [Route("patient/register")]
-        public async Task<ActionResult> RegisterPatient(
-            [FromBody] [Bind("SocialSecurityNumber,DoctorID,Name,DateOfBirth,Email,PhoneNumber,Username,HashPassword")]
-            Patient patient)
+        public async Task<ActionResult> RegisterPatient([FromBody] Patient patient)
         {
-            if (await _patientRepository.GetPatientByUsername(patient.Username) != null)
+            var result = await _patientRepository.GetPatientByUsername(patient.Username);
+
+            if (result != null)
             {
                 return BadRequest("Username already in use!");
             }
@@ -40,7 +41,7 @@ namespace SuperDuperMedAPP.Controllers
 
 
             //return Ok("Registration successful.");
-            return Ok($"{patient.Name} has successfuly registered.");
+            return Ok("Succesfully registered.");
         }
 
         [HttpPost]
@@ -52,13 +53,16 @@ namespace SuperDuperMedAPP.Controllers
                 return Unauthorized("Please fill both username/password");
             }
 
-            var patient = await _patientRepository.GetPatientById(data.ID);
-            if (patient == null)
+            var all = await _patientRepository.GetAllPatients();
+
+            if (!all.Any(x => x.Username.Equals(data.Username)
+                              && x.HashPassword.Equals(data.HashPassword)))
             {
                 return Unauthorized("Password, or username doesn't match.");
             }
 
-            HttpContext.Session.SetInt32(SessionId, data.ID);
+            var patient = await _patientRepository.GetPatientByUsername(data.Username);
+            HttpContext.Session.SetInt32(SessionId, patient.ID);
 
             return Ok("Login successful.");
         }

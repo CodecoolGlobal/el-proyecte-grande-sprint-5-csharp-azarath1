@@ -25,9 +25,6 @@ export class Home extends Component{
        this.refreshList();
    }
 
-   componentDidUpdate(){
-       this.refreshList();
-   }
     render(){
         return(
             <div className="mt-5 justify-content-center">

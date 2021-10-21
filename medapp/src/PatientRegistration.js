@@ -1,8 +1,8 @@
-import React,{Component} from 'react';
-import { Form, Button } from 'react-bootstrap';
+import React, { Component } from 'react';
+// import { Form, Button } from 'react-bootstrap';
 
 
-export class PatientRegistration extends Component{
+export class PatientRegistration extends Component {
 
     constructor(props) {
         super(props);
@@ -27,23 +27,27 @@ export class PatientRegistration extends Component{
         else if (event.target.name === "name") {
             this.setState({ name: event.target.value })
         }
+        else if (event.target.name === "dateOfBirth") {
+            this.setState({ DateOfBirth: event.target.value })
+        }
         else if (event.target.name === "email") {
             this.setState({ email: event.target.value })
         }
         else if (event.target.name === "phoneNumber") {
             this.setState({ phoneNumber: event.target.value })
         }
-        else if (event.target.name === "userName") {
+        else if (event.target.name === "username") {
             this.setState({ userName: event.target.value })
         }
         else if (event.target.name === "password") {
             this.setState({ password: event.target.value })
         }
+        //alert(this.state.socialSecurityNumber+this.state.name+this.state.DateOfBirth+this.state.email+this.state.phoneNumber+this.state.userName+this.state.password)
     }
 
     handleSubmit(event) {
         event.preventDefault();
-        fetch('https://localhost:44314/patient/register', {
+        fetch(process.eng.REACT_APP_BASE_URL_PATIENT+'register', {
             method: 'post',
             headers: {
                 'Content-Type': 'application/json'
@@ -69,6 +73,7 @@ export class PatientRegistration extends Component{
     }
 
     render() {
+        
         return (
             <form onSubmit={this.handleSubmit}>
                 <div>
@@ -79,7 +84,7 @@ export class PatientRegistration extends Component{
                         type="number"
                         value={this.state.socialSecurityNumber}
                         onChange={this.handleInputChange} />
-                    </label>
+                </label>
                 </div>
                 <div>
                 <label>
@@ -89,7 +94,18 @@ export class PatientRegistration extends Component{
                         type="textarea"
                         value={this.state.name}
                         onChange={this.handleInputChange} />
-                    </label>
+                </label>
+                </div>
+
+                <div>
+                <label>
+                    Date of Birth:
+                    <input
+                        name="dateOfBirth"
+                        type="textarea"
+                        value={this.state.DateOfBirth}
+                        onChange={this.handleInputChange} />
+                </label>
                 </div>
                 <div>
                 <label>
@@ -109,17 +125,17 @@ export class PatientRegistration extends Component{
                         type="number"
                         value={this.state.phoneNumber}
                         onChange={this.handleInputChange} />
-                    </label>
+                </label>
                 </div>
                 <div>
                 <label>
                     Username:
                     <input
-                        name="userName"
+                        name="username"
                         type="textarea"
                         value={this.state.userName}
                         onChange={this.handleInputChange} />
-                    </label>
+                </label>
                 </div>
                 <div>
                 <label>
@@ -128,11 +144,9 @@ export class PatientRegistration extends Component{
                         name="password"
                         type="textarea"
                         value={this.state.password}
-                        onChange={this.handleInputChange} />
-                    </label>
+                </label>
                 </div>
-
-                <br/>
+                <br />
                 <input type="submit" value="Submit" />
             </form>
         );
