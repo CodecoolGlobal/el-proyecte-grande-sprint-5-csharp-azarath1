@@ -1,14 +1,15 @@
-import React,{Component} from 'react';
+import React, { Component } from 'react';
 import { Form, Button } from 'react-bootstrap';
 
 
-export class PatientRegistration extends Component{
+export class PatientRegistration extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
             socialSecurityNumber: 0,
             name: "asd",
+            DateOfBirth: "1990-01-01",
             email: "youremail@gmail.com",
             phoneNumber: 67067700670,
             userName: "u name",
@@ -26,36 +27,50 @@ export class PatientRegistration extends Component{
         else if (event.target.name === "name") {
             this.setState({ name: event.target.value })
         }
+        else if (event.target.name === "dateOfBirth") {
+            this.setState({ DateOfBirth: event.target.value })
+        }
         else if (event.target.name === "email") {
             this.setState({ email: event.target.value })
         }
         else if (event.target.name === "phoneNumber") {
             this.setState({ phoneNumber: event.target.value })
         }
-        else if (event.target.name === "userName") {
+        else if (event.target.name === "username") {
             this.setState({ userName: event.target.value })
         }
         else if (event.target.name === "password") {
             this.setState({ password: event.target.value })
         }
+        //alert(this.state.socialSecurityNumber+this.state.name+this.state.DateOfBirth+this.state.email+this.state.phoneNumber+this.state.userName+this.state.password)
     }
 
-    handleSubmit(event) {
+    async handleSubmit(event) {
         event.preventDefault();
-        fetch('https://localhost:44314/Patient/Create',{
+        await fetch('https://localhost:44314/patient/register', {
             method: 'post',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                "socialSecurityNumber": this.state.socialSecurityNumber,
-                "name": this.state.name,
-                "email": this.state.email,
-                "phoneNumber": this.state.phoneNumber,
-                "userName": this.state.userName,
-                "password": this.state.password
-            })
+                "SocialSecurityNumber": parseInt(this.state.socialSecurityNumber),
+                "Name": this.state.name.toString(),
+                "DateOfBirth": this.state.DateOfBirth.toString(),
+                "Email": this.state.email.toString(),
+                "PhoneNumber": this.state.phoneNumber.toString(),
+                "Username": this.state.userName.toString(),
+                "HashPassword": this.state.password.toString()
+            }),
         })
+            .then(res => res.json())
+            .then((result) => {
+                console.log(result);
+                alert('Sucessfully Changed');
+            },
+                (error) => {
+                    console.log(error);
+                    alert('Failed');
+                })
     }
 
     render() {
@@ -80,6 +95,15 @@ export class PatientRegistration extends Component{
                 </label>
                 <br />
                 <label>
+                    Date of Birth:
+                    <input
+                        name="dateOfBirth"
+                        type="textarea"
+                        value={this.state.DateOfBirth}
+                        onChange={this.handleInputChange} />
+                </label>
+                <br />
+                <label>
                     Email:
                     <input
                         name="email"
@@ -100,8 +124,8 @@ export class PatientRegistration extends Component{
                 <label>
                     Username:
                     <input
-                        name="Username"
-                        type="textare"
+                        name="username"
+                        type="textarea"
                         value={this.state.userName}
                         onChange={this.handleInputChange} />
                 </label>
@@ -114,7 +138,7 @@ export class PatientRegistration extends Component{
                         value={this.state.password}
                         onChange={this.handleInputChange} />
                 </label>
-                <br/>
+                <br />
                 <input type="submit" value="Submit" />
             </form>
         );
