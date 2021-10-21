@@ -41,7 +41,7 @@ namespace SuperDuperMedAPP.Controllers
 
 
             //return Ok("Registration successful.");
-            return Ok("Succesfully registered.");
+            return Ok(patient.ID);
         }
 
         [HttpPost]
@@ -64,7 +64,7 @@ namespace SuperDuperMedAPP.Controllers
             var patient = await _patientRepository.GetPatientByUsername(data.Username);
             HttpContext.Session.SetInt32(SessionId, patient.ID);
 
-            return Ok("Login successful.");
+            return Ok(patient.ID);
         }
 
         [Route("patient/{id}/logout")]
