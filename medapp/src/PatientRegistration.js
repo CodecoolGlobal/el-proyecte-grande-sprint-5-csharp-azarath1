@@ -9,6 +9,7 @@ export class PatientRegistration extends Component{
         this.state = {
             socialSecurityNumber: 0,
             name: "asd",
+            DateOfBirth: "1990-01-01",
             email: "youremail@gmail.com",
             phoneNumber: 67067700670,
             userName: "u name",
@@ -42,25 +43,35 @@ export class PatientRegistration extends Component{
 
     handleSubmit(event) {
         event.preventDefault();
-        fetch('https://localhost:44314/Patient/Create',{
+        fetch('https://localhost:44314/patient/register', {
             method: 'post',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                "socialSecurityNumber": this.state.socialSecurityNumber,
-                "name": this.state.name,
-                "email": this.state.email,
-                "phoneNumber": this.state.phoneNumber,
-                "userName": this.state.userName,
-                "password": this.state.password
-            })
+                "SocialSecurityNumber": parseInt(this.state.socialSecurityNumber),
+                "Name": this.state.name.toString(),
+                "DateOfBirth": this.state.DateOfBirth.toString(),
+                "Email": this.state.email.toString(),
+                "PhoneNumber": this.state.phoneNumber.toString(),
+                "Username": this.state.userName.toString(),
+                "HashPassword": this.state.password.toString()
+            }),
         })
+            .then(res => res.json())
+            .then((result) => {
+                console.log(result);
+                alert('Sucessfully Changed');
+            },
+                (error) => {
+                    alert('Succesful registration!');
+                })
     }
 
     render() {
         return (
             <form onSubmit={this.handleSubmit}>
+                <div>
                 <label>
                     Social Security Number:
                     <input
@@ -68,8 +79,9 @@ export class PatientRegistration extends Component{
                         type="number"
                         value={this.state.socialSecurityNumber}
                         onChange={this.handleInputChange} />
-                </label>
-                <br />
+                    </label>
+                </div>
+                <div>
                 <label>
                     Name:
                     <input
@@ -77,8 +89,9 @@ export class PatientRegistration extends Component{
                         type="textarea"
                         value={this.state.name}
                         onChange={this.handleInputChange} />
-                </label>
-                <br />
+                    </label>
+                </div>
+                <div>
                 <label>
                     Email:
                     <input
@@ -87,7 +100,8 @@ export class PatientRegistration extends Component{
                         value={this.state.email}
                         onChange={this.handleInputChange} />
                 </label>
-                <br />
+                </div>
+                <div>
                 <label>
                     Phone Number:
                     <input
@@ -95,17 +109,19 @@ export class PatientRegistration extends Component{
                         type="number"
                         value={this.state.phoneNumber}
                         onChange={this.handleInputChange} />
-                </label>
-                <br />
+                    </label>
+                </div>
+                <div>
                 <label>
                     Username:
                     <input
-                        name="Username"
-                        type="textare"
+                        name="userName"
+                        type="textarea"
                         value={this.state.userName}
                         onChange={this.handleInputChange} />
-                </label>
-                <br />
+                    </label>
+                </div>
+                <div>
                 <label>
                     Password:
                     <input
@@ -113,7 +129,9 @@ export class PatientRegistration extends Component{
                         type="textarea"
                         value={this.state.password}
                         onChange={this.handleInputChange} />
-                </label>
+                    </label>
+                </div>
+
                 <br/>
                 <input type="submit" value="Submit" />
             </form>
