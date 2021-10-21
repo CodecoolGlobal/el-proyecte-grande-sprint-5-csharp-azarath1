@@ -71,9 +71,9 @@ namespace SuperDuperMedAPP.Data.Repositories
             await _db.SaveChangesAsync();
         }
 
-        public async Task<string> GetHashedPassword(string username)
+        public async Task<string?> GetHashedPassword(int id)
         {
-            return await _db.Patients.Where(x => x.Username.Equals(username)).Select(x => x.HashPassword)
+            return await _db.Patients.Where(x => x.ID.Equals(id)).Select(x => x.HashPassword)
                 .FirstOrDefaultAsync();
         }
 
