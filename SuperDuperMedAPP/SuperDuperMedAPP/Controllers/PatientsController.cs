@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -52,13 +53,17 @@ namespace SuperDuperMedAPP.Controllers
                 return Unauthorized("Please fill both username/password");
             }
 
-            var patient = await _patientRepository.GetPatientById(data.ID);
-            if (patient == null)
+            // Extract to method!!
+            var all = await _patientRepository.GetAllPatients();
+
+            if (!all.Any(x => x.Username.Equals(data.Username)
+                              && x.HashPassword.Equals(data.HashPassword)))
             {
                 return Unauthorized("Password, or username doesn't match.");
             }
 
-            HttpContext.Session.SetInt32(SessionId, data.ID);
+            var patient = await _patientRepository.GetPatientByUsername(data.Username);
+            HttpContext.Session.SetInt32(SessionId, patient.ID);
 
             return Ok("Login successful.");
         }
@@ -137,7 +142,7 @@ namespace SuperDuperMedAPP.Controllers
                 return Unauthorized();
             }
 
-            await _patientRepository.EditPassword(id,password);
+            await _patientRepository.EditPassword(id, password);
             return Ok();
         }
     }
