@@ -19,7 +19,7 @@ namespace SuperDuperMedAPP.Data
 
             var doctors = new Doctor[]
             {
-            new Doctor{Name="Dr. Bubo", DateOfBirth=DateTime.Parse("2078-09-01")}
+            new Doctor{Name="Dr. Bubo", DateOfBirth=DateTime.Parse("2078-09-01"),Email = "Dr@bubo@mail.hu",HashPassword = "bubo",Username = "Bubo"}
             };
             foreach (Doctor d in doctors)
             {
@@ -30,9 +30,9 @@ namespace SuperDuperMedAPP.Data
 
             var patients = new Patient[]
 {
-            new Patient{SocialSecurityNumber = 044033999, DoctorID = 1, Name="Mr. Instance Imre", DateOfBirth=DateTime.Parse("2005-09-01")},
-            new Patient{SocialSecurityNumber = 044033919, DoctorID = 1, Name="Miss Exampli Gratia", DateOfBirth=DateTime.Parse("2002-09-01")},
-            new Patient{SocialSecurityNumber = 044033929, DoctorID = 1, Name="Mr. Standard Arturo", DateOfBirth=DateTime.Parse("2003-09-01")}
+            new Patient{SocialSecurityNumber = 044033999, DoctorID = 1, Name="Mr. Instance Imre", DateOfBirth=DateTime.Parse("2005-09-01"),HashPassword = "Imre",Username = "Imre"},
+            new Patient{SocialSecurityNumber = 044033919, DoctorID = 1, Name="Miss Exampli Gratia", DateOfBirth=DateTime.Parse("2002-09-01"),HashPassword = "Gratia",Username = "Gratia"},
+            new Patient{SocialSecurityNumber = 044033929, DoctorID = 1, Name="Mr. Standard Arturo", DateOfBirth=DateTime.Parse("2003-09-01"),HashPassword = "Arturo",Username = "Arturo"}
 };
             foreach (Patient p in patients)
             {

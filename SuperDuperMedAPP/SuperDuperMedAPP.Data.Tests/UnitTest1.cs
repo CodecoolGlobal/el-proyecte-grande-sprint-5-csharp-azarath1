@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
+using SuperDuperMedAPP.Data.Repositories;
 using SuperDuperMedAPP.Models;
 
 namespace SuperDuperMedAPP.Data.Tests
