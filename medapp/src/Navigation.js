@@ -23,8 +23,8 @@ export class Navigation extends Component{
                 <Button className="d-inline p-2 bg-dark text-white" onClick={() => this.setState({ SignUpModalShow: true })}>
                     Sign Up
                 </Button><SignUpModal show={this.state.SignUpModalShow}onHide={SignUpModalClose}/>
-                <NavLink className="d-inline p-2 bg-dark text-white" to="/medicines">
-                    Medicine Api
+                <NavLink className="d-inline p-2 bg-dark text-white" to="/personal">
+                    Personal Details Page
                 </NavLink>
                 <NavLink className="d-inline p-2 bg-dark text-white" to="/login">
                     Login

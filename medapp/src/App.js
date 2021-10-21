@@ -21,7 +21,7 @@ function App() {
      <Switch>
        <Route path='/' component={Home} exact/>
        <Route path='/signup' component={Signup}/>
-       <Route path='/medicines' component={Medicine}/>
+       <Route path='/personal' component={Medicine}/>
        <Route path='/patientRegistration' component={PatientRegistration}/>
        <Route path='/login' component={Login}/>
      </Switch>
