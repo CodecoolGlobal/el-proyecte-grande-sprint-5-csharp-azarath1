@@ -1,16 +1,15 @@
 import React,{Component} from 'react';
-import {Table, ButtonToolbar, Button} from 'react-bootstrap';
-import {ChangePatientDetailsModal} from './ChangePatientDetailsModal';
+import {Table} from 'react-bootstrap';
 
 export class PatientMedications extends Component{
 
     constructor(props){
         super(props);
-        this.state={meddata:[], editModalShow:false}
+        this.state={meddata:[]}
     }
 
     refreshList(){
-         fetch(process.env.REACT_APP_BASE+'patient/'+1+'/medication',
+         fetch(process.env.REACT_APP_BASE+'patient/'+2+'/medication',
                 { method: 'GET',
                 headers: {
                 'Accept': 'application/json',
@@ -33,7 +32,6 @@ export class PatientMedications extends Component{
 
     render(){
         // const {meddata, patientid}=this.state;
-        let editModalClose=()=>this.setState({editModalShow:false});
         return(
             <div >
                 <h2>Welcome!</h2>
@@ -57,14 +55,6 @@ export class PatientMedications extends Component{
                             </tr>)} */}
                     </tbody>
                 </Table>
-                <ButtonToolbar>
-                    <Button variant='primary'
-                    onClick={()=>this.setState({editModalShow:true})}>
-                    Change my details</Button>
-
-                    <ChangePatientDetailsModal show={this.state.editModalShow}
-                    onHide={editModalClose}/>
-                </ButtonToolbar>
             </div>
         )
     }

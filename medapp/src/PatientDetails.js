@@ -1,21 +1,22 @@
 import { useState, useEffect } from 'react';
+import { Modal, Button} from 'react-bootstrap';
+// import {ChangePatientDetailsModal} from './ChangePatientDetailsModal';
 
 function PatientPage() {
   const [patientdetails, setDetails] = useState(null);
+  const [show, setShow] = useState(false);
+  const handleShow = () => setShow(true);
+  const handleClose = () => setShow(false);
 
-  // + adding the use
   useEffect(() => {
     getData();
 
-    // we will use async/await to fetch this data
     async function getData() {
       const response = await fetch("https://localhost:5001/patient/"+2+"/details");
       const data = await response.json();
-
-      // store the data into our patientdetails variable
       setDetails(data);
     }
-  }, []); // <- you may need to put the setDetails function in this array
+  }, []);
   if(patientdetails){
     return (
         <div>
@@ -23,12 +24,26 @@ function PatientPage() {
             <div className="patientdetails">
                 <div>
                   <h5>{patientdetails.name}</h5>
-                  <p>Social Security Number: {patientdetails.socialSecurityNumber}</p>
-                  <p>Date of Birth: {patientdetails.dateOfBirth}</p>
-                  <p>E-mail address: {patientdetails.email}</p>
-                  <p>Phone Number: {patientdetails.phoneNumber}</p>
-                  <p>Username: {patientdetails.username}</p>
+                  <p><strong>Social Security Number: </strong>{patientdetails.socialSecurityNumber}</p>
+                  <p><strong>Date of Birth: </strong>{patientdetails.dateOfBirth}</p>
+                  <p><strong>E-mail address: </strong>{patientdetails.email}</p>
+                  <p><strong>Phone Number: </strong>{patientdetails.phoneNumber}</p>
+                  <p><strong>Username: </strong>{patientdetails.username}</p>
                 </div>
+                <Button variant="primary" onClick={handleShow}>
+                   Change my details
+                </Button>
+                <Modal show={show}>
+                  <Modal.Header closeButton>
+                    <Modal.Title>My Details</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                    <div><p>HEY</p></div>
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>Close Modal</Button>
+                  </Modal.Footer>
+                </Modal>
             </div>
         </div>
       )

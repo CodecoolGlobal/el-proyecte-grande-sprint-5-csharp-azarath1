@@ -3,6 +3,6 @@ export class ChangePatientDetailsModal extends Component{
 
     render(){
         return (
-            <div></div>
+            <div><p>HEY</p></div>
         )}
 }
