@@ -74,8 +74,10 @@ export class PatientRegistration extends Component {
     }
 
     render() {
+        
         return (
             <form onSubmit={this.handleSubmit}>
+                <div>
                 <label>
                     Social Security Number:
                     <input
@@ -84,7 +86,9 @@ export class PatientRegistration extends Component {
                         value={this.state.socialSecurityNumber}
                         onChange={this.handleInputChange} />
                 </label>
-                <br />
+                </div>
+                
+                <div>
                 <label>
                     Name:
                     <input
@@ -93,7 +97,9 @@ export class PatientRegistration extends Component {
                         value={this.state.name}
                         onChange={this.handleInputChange} />
                 </label>
-                <br />
+                </div>
+
+                <div>
                 <label>
                     Date of Birth:
                     <input
@@ -102,7 +108,9 @@ export class PatientRegistration extends Component {
                         value={this.state.DateOfBirth}
                         onChange={this.handleInputChange} />
                 </label>
-                <br />
+                </div>
+
+                <div>
                 <label>
                     Email:
                     <input
@@ -111,7 +119,9 @@ export class PatientRegistration extends Component {
                         value={this.state.email}
                         onChange={this.handleInputChange} />
                 </label>
-                <br />
+                </div>
+
+                <div>
                 <label>
                     Phone Number:
                     <input
@@ -120,7 +130,9 @@ export class PatientRegistration extends Component {
                         value={this.state.phoneNumber}
                         onChange={this.handleInputChange} />
                 </label>
-                <br />
+                </div>
+
+                <div>
                 <label>
                     Username:
                     <input
@@ -129,7 +141,9 @@ export class PatientRegistration extends Component {
                         value={this.state.userName}
                         onChange={this.handleInputChange} />
                 </label>
-                <br />
+                </div>
+
+                <div>
                 <label>
                     Password:
                     <input
@@ -138,6 +152,7 @@ export class PatientRegistration extends Component {
                         value={this.state.password}
                         onChange={this.handleInputChange} />
                 </label>
+                </div>
                 <br />
                 <input type="submit" value="Submit" />
             </form>
