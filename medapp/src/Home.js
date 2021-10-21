@@ -56,6 +56,8 @@ export class Home extends Component{
                         </tr>
                     </tbody>
                 </Table>
+                <h4>Placeholder articles</h4>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras pulvinar urna nisi, non interdum ipsum pulvinar ullamcorper. Suspendisse eros lorem, mollis vel pellentesque molestie, dictum dictum lorem. Duis ipsum dui, accumsan at eleifend quis, sodales dignissim eros. Nunc at sollicitudin leo, vel sagittis ligula. Nullam massa velit, mattis eget dolor nec, posuere molestie ante. Maecenas in ipsum sit amet justo ultrices placerat dignissim ac nibh. Nunc a felis lacus.</p>
             </div>
         )
     }
