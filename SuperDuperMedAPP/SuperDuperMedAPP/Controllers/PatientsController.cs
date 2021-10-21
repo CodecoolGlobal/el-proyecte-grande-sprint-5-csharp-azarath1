@@ -24,7 +24,7 @@ namespace SuperDuperMedAPP.Controllers
         }
 
         [HttpPost]
-        [Route("[action]")]
+        [Route("patient/register")]
         public async Task<ActionResult> RegisterPatient([FromBody] Patient patient)
         {
             var result = await _patientRepository.GetPatientByUsername(patient.Username);

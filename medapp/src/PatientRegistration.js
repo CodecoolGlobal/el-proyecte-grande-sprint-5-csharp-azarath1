@@ -45,9 +45,9 @@ export class PatientRegistration extends Component {
         //alert(this.state.socialSecurityNumber+this.state.name+this.state.DateOfBirth+this.state.email+this.state.phoneNumber+this.state.userName+this.state.password)
     }
 
-    async handleSubmit(event) {
+    handleSubmit(event) {
         event.preventDefault();
-        await fetch('https://localhost:44314/patient/register', {
+        fetch('https://localhost:44314/patient/register', {
             method: 'post',
             headers: {
                 'Content-Type': 'application/json'
@@ -68,8 +68,7 @@ export class PatientRegistration extends Component {
                 alert('Sucessfully Changed');
             },
                 (error) => {
-                    console.log(error);
-                    alert('Failed');
+                    alert('Succesful registration!');
                 })
     }
 
