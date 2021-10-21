@@ -1,6 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, } from 'react';
 import { Modal, Button} from 'react-bootstrap';
-// import {ChangePatientDetailsModal} from './ChangePatientDetailsModal';
 
 function PatientPage() {
   const [patientdetails, setDetails] = useState(null);
@@ -12,7 +11,7 @@ function PatientPage() {
     getData();
 
     async function getData() {
-      const response = await fetch("https://localhost:5001/patient/"+2+"/details");
+      const response = await fetch(process.env.REACT_APP_BASE_URL_PATIENT+2+"/details");
       const data = await response.json();
       setDetails(data);
     }
@@ -38,7 +37,7 @@ function PatientPage() {
                     <Modal.Title>My Details</Modal.Title>
                   </Modal.Header>
                   <Modal.Body>
-                    <div><p>HEY</p></div>
+                    <div><p>HEY! :) I'll be a feature in the next sprint</p></div>
                   </Modal.Body>
                   <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>Close Modal</Button>
