@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using SuperDuperMedAPP.Models;
 using SuperDuperMedAPP.Data;
+using SuperDuperMedAPP.Data.Repositories;
 
 namespace SuperDuperMedAPP.Controllers
 {
