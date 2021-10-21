@@ -42,7 +42,7 @@ export class SignUpModal extends Component{
                                     </Form.Group>
                     
                                     <Form.Group>
-                                        <Link to={signUpLink}>Click Me</Link>
+                                        <Link to={signUpLink} onClick={this.props.onHide}>Confirm</Link>
                                     </Form.Group>
                                 </Form>
                             </Col>
