@@ -24,7 +24,7 @@ export class SignUpModal extends Component{
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
                 >
-                    <Modal.Header clooseButton>
+                    <Modal.Header closeButton={true}>
                         <Modal.Title id="contained-modal-title-vcenter">
                             Select account type
                         </Modal.Title>

@@ -13,7 +13,7 @@ export class Medicine extends Component{
     }
 
     refreshList(){
-        fetch('https://localhost:44314/api/medicines',
+        fetch('https://localhost:5001/api/medicines',
                 { method: 'GET',
                 headers: {
                 'Accept': 'application/json',

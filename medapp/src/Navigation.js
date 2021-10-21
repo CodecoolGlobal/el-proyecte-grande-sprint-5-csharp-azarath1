@@ -22,14 +22,13 @@ export class Navigation extends Component{
                 </NavLink>
                 <Button className="d-inline p-2 bg-dark text-white" onClick={() => this.setState({ SignUpModalShow: true })}>
                     Sign Up
-                        </Button>
-                        <SignUpModal show={this.state.SignUpModalShow}
-                            onHide={SignUpModalClose}
-                             />
+                </Button><SignUpModal show={this.state.SignUpModalShow}onHide={SignUpModalClose}/>
                 <NavLink className="d-inline p-2 bg-dark text-white" to="/medicines">
                     Medicine Api
                 </NavLink>
-
+                <NavLink className="d-inline p-2 bg-dark text-white" to="/login">
+                    Login
+                </NavLink>
                 </Nav>
                 </Navbar.Collapse>
             </Navbar>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Button } from 'react-bootstrap';
+// import { Form, Button } from 'react-bootstrap';
 
 
 export class PatientRegistration extends Component {
@@ -47,7 +47,7 @@ export class PatientRegistration extends Component {
 
     async handleSubmit(event) {
         event.preventDefault();
-        await fetch('https://localhost:44314/patient/register', {
+        await fetch('https://localhost:5001/patient/register', {
             method: 'post',
             headers: {
                 'Content-Type': 'application/json'

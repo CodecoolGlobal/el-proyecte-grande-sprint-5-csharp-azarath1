@@ -18,7 +18,6 @@ export class Home extends Component{
            .then(response=>response.json())
            .then(data=>{
            this.setState({coro:data.summaryStats.global, corohun:data.rawData.find(item => item.Country_Region === "Hungary")});
-           console.log(data.rawData.find(item => item.Country_Region === "Hungary"));
        });
    }
 
@@ -26,9 +25,6 @@ export class Home extends Component{
        this.refreshList();
    }
 
-   componentDidUpdate(){
-       this.refreshList();
-   }
     render(){
         return(
             <div className="mt-5 justify-content-center">

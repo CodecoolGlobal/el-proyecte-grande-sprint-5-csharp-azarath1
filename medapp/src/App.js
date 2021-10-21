@@ -5,6 +5,7 @@ import {Navigation} from './Navigation';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import { Medicine } from './Medicine';
 import { PatientRegistration } from './PatientRegistration';
+import { Login } from './Login';
 
   
 function App() {
@@ -20,8 +21,9 @@ function App() {
      <Switch>
        <Route path='/' component={Home} exact/>
        <Route path='/signup' component={Signup}/>
-       <Route path='/medicines' component={Medicine} />
-       <Route path='/patientRegistration' component={PatientRegistration} />
+       <Route path='/medicines' component={Medicine}/>
+       <Route path='/patientRegistration' component={PatientRegistration}/>
+       <Route path='/login' component={Login}/>
      </Switch>
     </div>
     </BrowserRouter>
