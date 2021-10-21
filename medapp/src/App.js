@@ -4,6 +4,8 @@ import {Signup} from './Signup';
 import {Navigation} from './Navigation';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import { Medicine } from './Medicine';
+import { PatientRegistration } from './PatientRegistration';
+
   
 function App() {
   return (
@@ -18,7 +20,8 @@ function App() {
      <Switch>
        <Route path='/' component={Home} exact/>
        <Route path='/signup' component={Signup}/>
-       <Route path='/medicines' component={Medicine}/>
+       <Route path='/medicines' component={Medicine} />
+       <Route path='/patientRegistration' component={PatientRegistration} />
      </Switch>
     </div>
     </BrowserRouter>

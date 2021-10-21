@@ -1,10 +1,17 @@
 import React,{Component} from 'react';
 import {NavLink} from 'react-router-dom';
-import {Navbar,Nav} from 'react-bootstrap';
+import {Button,Navbar,Nav} from 'react-bootstrap';
+import { SignUpModal } from './SignUpModal';
 
 export class Navigation extends Component{
 
-    render(){
+    constructor(props) {
+        super(props);
+        this.state = {SignUpModalShow: false}
+    }
+
+    render() {
+        let SignUpModalClose = () => this.setState({ SignUpModalShow: false });
         return(
             <Navbar bg="dark" expand="lg">
                 <Navbar.Toggle aria-controls="basic-navbar-nav"/>
@@ -13,9 +20,12 @@ export class Navigation extends Component{
                 <NavLink className="d-inline p-2 bg-dark text-white" to="/">
                     Home
                 </NavLink>
-                <NavLink className="d-inline p-2 bg-dark text-white" to="/signup">
+                <Button className="d-inline p-2 bg-dark text-white" onClick={() => this.setState({ SignUpModalShow: true })}>
                     Sign Up
-                </NavLink>
+                        </Button>
+                        <SignUpModal show={this.state.SignUpModalShow}
+                            onHide={SignUpModalClose}
+                             />
                 <NavLink className="d-inline p-2 bg-dark text-white" to="/medicines">
                     Medicine Api
                 </NavLink>
