@@ -3,9 +3,10 @@ import {Home} from './Home';
 import {Signup} from './Signup';
 import {Navigation} from './Navigation';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
-import { Medicine } from './Medicine';
+// import { Medicine } from './Medicine';
 import { PatientRegistration } from './PatientRegistration';
 import { Login } from './Login';
+import PatientPage from './PatientDetails';
 
   
 function App() {
@@ -19,7 +20,7 @@ function App() {
      <Switch>
        <Route path='/' component={Home} exact/>
        <Route path='/signup' component={Signup}/>
-       <Route path='/personal' component={Medicine}/>
+       <Route path='/personal' component={PatientPage}/>
        <Route path='/patientRegistration' component={PatientRegistration}/>
        <Route path='/login' component={Login}/>
      </Switch>
