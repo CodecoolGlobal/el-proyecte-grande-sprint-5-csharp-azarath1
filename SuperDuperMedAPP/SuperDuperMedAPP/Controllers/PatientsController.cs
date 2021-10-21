@@ -108,15 +108,25 @@ namespace SuperDuperMedAPP.Controllers
 
         [HttpPut]
         [Route("patient/{id}/EditContacts")]
-        public ActionResult Editcontacts(UserContacts userContact, int id)
+        public async Task<ActionResult>  Editcontacts(UserContacts userContact, int id)
         {
             if (id != HttpContext.Session.GetInt32(SessionId))
             {
                 return Unauthorized();
             }
 
-            _patientRepository.UpdatePatientContacts(userContact, id);
+            await _patientRepository.UpdatePatientContacts(userContact, id);
             return Ok();
+        }
+
+        [Route("patient/{id}/medicine/{medicineID}")]
+        public async Task<ActionResult> GetPatientsMedicine(int medicineID,int id)
+        {
+            if (id != HttpContext.Session.GetInt32(SessionId))
+            {
+                return Unauthorized();
+            }
+            return Ok(await _medicineRepository.GetMedicineById(medicineID));
         }
     }
 }
