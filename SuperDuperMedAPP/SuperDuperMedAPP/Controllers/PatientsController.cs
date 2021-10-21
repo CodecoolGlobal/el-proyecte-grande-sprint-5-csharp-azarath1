@@ -1,12 +1,12 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using SuperDuperMedAPP.Data.Repositories;
 using SuperDuperMedAPP.Models;
 
 namespace SuperDuperMedAPP.Controllers
 {
-    
     [ApiController]
     public class PatientsController : ControllerBase
     {
@@ -29,7 +29,6 @@ namespace SuperDuperMedAPP.Controllers
             [FromBody] [Bind("SocialSecurityNumber,DoctorID,Name,DateOfBirth,Email,PhoneNumber,Username,HashPassword")]
             Patient patient)
         {
-            
             if (await _patientRepository.GetPatientByUsername(patient.Username) != null)
             {
                 return BadRequest("Username already in use!");
@@ -107,8 +106,8 @@ namespace SuperDuperMedAPP.Controllers
         }
 
         [HttpPut]
-        [Route("patient/{id}/EditContacts")]
-        public async Task<ActionResult>  Editcontacts(UserContacts userContact, int id)
+        [Route("patient/{id}/edit-contacts")]
+        public async Task<ActionResult> Editcontacts(UserContacts userContact, int id)
         {
             if (id != HttpContext.Session.GetInt32(SessionId))
             {
@@ -120,13 +119,26 @@ namespace SuperDuperMedAPP.Controllers
         }
 
         [Route("patient/{id}/medicine/{medicineID}")]
-        public async Task<ActionResult> GetPatientsMedicine(int medicineID,int id)
+        public async Task<ActionResult> GetPatientsMedicine(int medicineID, int id)
         {
             if (id != HttpContext.Session.GetInt32(SessionId))
             {
                 return Unauthorized();
             }
+
             return Ok(await _medicineRepository.GetMedicineById(medicineID));
+        }
+
+        [Route("patient/{id}/password")]
+        public async Task<ActionResult> EditPatient(int id, string password)
+        {
+            if (id != HttpContext.Session.GetInt32(SessionId))
+            {
+                return Unauthorized();
+            }
+
+            await _patientRepository.EditPassword(id,password);
+            return Ok();
         }
     }
 }
