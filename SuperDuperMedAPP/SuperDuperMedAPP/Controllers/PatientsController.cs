@@ -1,12 +1,12 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using SuperDuperMedAPP.Data.Repositories;
 using SuperDuperMedAPP.Models;
 
 namespace SuperDuperMedAPP.Controllers
 {
-    [Route("[controller]")]
     [ApiController]
     public class PatientsController : ControllerBase
     {
@@ -16,7 +16,7 @@ namespace SuperDuperMedAPP.Controllers
         private const string SessionId = "_Id";
 
         public PatientsController(IPatientRepository patientRepository, IMedicationRepository medicationRepository,
-            MedicineRepository medicineRepository)
+            IMedicineRepository medicineRepository)
         {
             _patientRepository = patientRepository;
             _medicationRepository = medicationRepository;
@@ -24,12 +24,12 @@ namespace SuperDuperMedAPP.Controllers
         }
 
         [HttpPost]
-        [Route("[controller]/[action]")]
+        [Route("patient/register")]
         public async Task<ActionResult> RegisterPatient(
             [FromBody] [Bind("SocialSecurityNumber,DoctorID,Name,DateOfBirth,Email,PhoneNumber,Username,HashPassword")]
             Patient patient)
         {
-            if (_patientRepository.GetPatientByUsername(patient.Username) != null)
+            if (await _patientRepository.GetPatientByUsername(patient.Username) != null)
             {
                 return BadRequest("Username already in use!");
             }
@@ -39,12 +39,13 @@ namespace SuperDuperMedAPP.Controllers
             HttpContext.Session.SetInt32(SessionId, patient.ID);
 
 
-            return Ok("Registration successful.");
+            //return Ok("Registration successful.");
+            return Ok($"{patient.Name} has successfuly registered.");
         }
 
         [HttpPost]
         [Route("patient/login")]
-        public async Task<ActionResult> Login([FromForm] SessionData data)
+        public async Task<ActionResult> Login([FromBody] SessionData data)
         {
             if (data.HashPassword.Equals("") || data.Username.Equals(""))
             {
@@ -62,13 +63,14 @@ namespace SuperDuperMedAPP.Controllers
             return Ok("Login successful.");
         }
 
+        [Route("patient/{id}/logout")]
         public ActionResult Logout()
         {
             HttpContext.Session.Remove(SessionId);
             return Ok("Successfully logged out.");
         }
 
-        [Route("patient/{id:int}")]
+        [Route("patient/{id}/details")]
         public async Task<ActionResult> GetLoggedInPatientDetails([FromRoute] int id)
         {
             if (id != HttpContext.Session.GetInt32(SessionId))
@@ -95,23 +97,47 @@ namespace SuperDuperMedAPP.Controllers
             }
 
             var userMedication = await _medicationRepository.GetAllMedication(id);
-            if (userMedication==null)
+            if (userMedication == null)
             {
                 return NoContent();
             }
+
             return Ok(userMedication);
         }
 
         [HttpPut]
-        [Route("patient/{id}/EditContacts")]
-        public ActionResult Editcontacts(UserContacts userContact, int id)
+        [Route("patient/{id}/edit-contacts")]
+        public async Task<ActionResult> Editcontacts(UserContacts userContact, int id)
         {
             if (id != HttpContext.Session.GetInt32(SessionId))
             {
                 return Unauthorized();
             }
 
-            _patientRepository.UpdatePatientContacts(userContact, id);
+            await _patientRepository.UpdatePatientContacts(userContact, id);
+            return Ok();
+        }
+
+        [Route("patient/{id}/medicine/{medicineID}")]
+        public async Task<ActionResult> GetPatientsMedicine(int medicineID, int id)
+        {
+            if (id != HttpContext.Session.GetInt32(SessionId))
+            {
+                return Unauthorized();
+            }
+
+            return Ok(await _medicineRepository.GetMedicineById(medicineID));
+        }
+
+        [Route("patient/{id}/password")]
+        public async Task<ActionResult> EditPatient(int id, string password)
+        {
+            if (id != HttpContext.Session.GetInt32(SessionId))
+            {
+                return Unauthorized();
+            }
+
+            await _patientRepository.EditPassword(id,password);
             return Ok();
         }
     }

@@ -11,5 +11,6 @@ namespace SuperDuperMedAPP.Data.Repositories
         Task UpdateDoctorContacts(UserContacts contacts,int id);
         Task DeleteDoctor(int id);
         Task<string?> GetHashedPassword(string username);
+        Task EditPassword(int id, string password);
     }
 }

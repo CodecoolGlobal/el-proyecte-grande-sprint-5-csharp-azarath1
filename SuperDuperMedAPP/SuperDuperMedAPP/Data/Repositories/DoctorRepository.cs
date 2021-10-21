@@ -23,14 +23,14 @@ namespace SuperDuperMedAPP.Data.Repositories
         {
             return await _db.Doctors.FirstOrDefaultAsync(x => x.Username.Equals(username));
         }
+
         public async Task UpdateDoctor(Doctor doctor)
         {
             _db.Update(doctor);
             await _db.SaveChangesAsync();
-
         }
 
-        public async Task UpdateDoctorContacts(UserContacts contacts,int id)
+        public async Task UpdateDoctorContacts(UserContacts contacts, int id)
         {
             var doctor = await _db.Doctors.FirstOrDefaultAsync(x => x.ID == id);
             if (contacts.Email != null)
@@ -57,7 +57,16 @@ namespace SuperDuperMedAPP.Data.Repositories
 
         public async Task<string?> GetHashedPassword(string username)
         {
-            return await _db.Doctors.Where(x => x.Username.Equals(username)).Select(x => x.HashPassword).FirstOrDefaultAsync();
+            return await _db.Doctors.Where(x => x.Username.Equals(username)).Select(x => x.HashPassword)
+                .FirstOrDefaultAsync();
+        }
+
+        public async Task EditPassword(int id, string password)
+        {
+            var doctor = await _db.Doctors.FirstOrDefaultAsync(x => x.ID == id);
+            doctor.HashPassword = password;
+            _db.Entry(doctor).Property("HashPassword").IsModified = true;
+            await _db.SaveChangesAsync();
         }
     }
 }

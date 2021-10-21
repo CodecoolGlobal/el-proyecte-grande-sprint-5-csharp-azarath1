@@ -24,6 +24,7 @@ namespace SuperDuperMedAPP.Data.Repositories
         {
             return await _db.Patients.FirstOrDefaultAsync(x => x.Username.Equals(username));
         }
+
         public async Task<Patient?> GetPatientById(int userid)
         {
             return await _db.Patients.FirstOrDefaultAsync(x => x.ID.Equals(userid));
@@ -42,24 +43,24 @@ namespace SuperDuperMedAPP.Data.Repositories
         public async Task UpdatePatient(Patient patient)
         {
             _db.Update(patient);
-           await _db.SaveChangesAsync();
+            await _db.SaveChangesAsync();
         }
 
         public async Task UpdatePatientContacts(UserContacts contacts, int id)
         {
             var patient = await _db.Patients.FirstOrDefaultAsync(x => x.ID == id);
-            if (contacts.Email!=null)
+            if (contacts.Email != null)
             {
                 patient.Email = contacts.Email;
-                _db.Entry(patient).Property("Email").IsModified = true;
             }
 
-            if (contacts.PhoneNumber!=null)
+            if (contacts.PhoneNumber != null)
             {
                 patient.PhoneNumber = contacts.PhoneNumber;
-                _db.Entry(patient).Property("PhoneNumber").IsModified = true;
             }
 
+            _db.Entry(patient).Property("Email").IsModified = true;
+            _db.Entry(patient).Property("PhoneNumber").IsModified = true;
             await _db.SaveChangesAsync();
         }
 
@@ -70,9 +71,18 @@ namespace SuperDuperMedAPP.Data.Repositories
             await _db.SaveChangesAsync();
         }
 
-        public async Task<string?>  GetHashedPassword(string username)
+        public async Task<string> GetHashedPassword(string username)
         {
-            return await _db.Patients.Where(x => x.Username.Equals(username)).Select(x => x.HashPassword).FirstOrDefaultAsync();
+            return await _db.Patients.Where(x => x.Username.Equals(username)).Select(x => x.HashPassword)
+                .FirstOrDefaultAsync();
+        }
+
+        public async Task EditPassword(int id, string password)
+        {
+            var patient = await _db.Patients.FirstOrDefaultAsync(x => x.ID == id);
+            patient.HashPassword = password;
+            _db.Entry(patient).Property("HashPassword").IsModified = true;
+            await _db.SaveChangesAsync();
         }
     }
 }
