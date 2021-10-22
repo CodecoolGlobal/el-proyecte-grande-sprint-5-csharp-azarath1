@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -39,6 +40,7 @@ namespace SuperDuperMedAPP.Controllers
 
             HttpContext.Session.SetInt32(SessionId, patient.ID);
 
+            Response.Cookies.Append("ID", patient.ID.ToString());
 
             //return Ok("Registration successful.");
             return Ok($"{patient.Name} has successfuly registered.");
@@ -64,7 +66,7 @@ namespace SuperDuperMedAPP.Controllers
 
             var patient = await _patientRepository.GetPatientByUsername(data.Username);
             HttpContext.Session.SetInt32(SessionId, patient.ID);
-
+            Response.Cookies.Append("ID", patient.ID.ToString());
             return Ok("Login successful.");
         }
 
