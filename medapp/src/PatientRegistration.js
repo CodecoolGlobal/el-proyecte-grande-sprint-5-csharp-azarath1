@@ -8,12 +8,12 @@ export class PatientRegistration extends Component {
         super(props);
         this.state = {
             socialSecurityNumber: 0,
-            name: "asd",
+            name: "Your name",
             DateOfBirth: "1990-01-01",
-            email: "youremail@gmail.com",
-            phoneNumber: 67067700670,
-            userName: "u name",
-            password: "your password"
+            email: "youremail@email.com",
+            phoneNumber: 99999999999,
+            userName: "Username",
+            password: "Password"
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
