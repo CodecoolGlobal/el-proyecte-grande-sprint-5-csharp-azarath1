@@ -43,7 +43,7 @@ namespace SuperDuperMedAPP.Controllers
             Response.Cookies.Append("ID", patient.ID.ToString());
 
             //return Ok("Registration successful.");
-            return Ok($"{patient.Name} has successfuly registered.");
+            return Ok($"{patient.Name} has successfuly been registered.");
         }
 
         [HttpPost]
@@ -55,7 +55,7 @@ namespace SuperDuperMedAPP.Controllers
                 return Unauthorized("Please fill both username/password");
             }
 
-            // Extract to method!!
+
             var all = await _patientRepository.GetAllPatients();
 
             if (!all.Any(x => x.Username.Equals(data.Username)
@@ -137,7 +137,7 @@ namespace SuperDuperMedAPP.Controllers
         }
 
         [Route("patient/{id}/password")]
-        public async Task<ActionResult> EditPatient(int id, string password)
+        public async Task<ActionResult> EditPassword(int id, string password)
         {
             if (id != HttpContext.Session.GetInt32(SessionId))
             {
