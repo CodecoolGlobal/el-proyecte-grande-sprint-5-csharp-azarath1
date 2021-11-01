@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using SuperDuperMedAPP.Models;
 
 namespace SuperDuperMedAPP.Data.Repositories
@@ -7,6 +8,8 @@ namespace SuperDuperMedAPP.Data.Repositories
     {
         Task AddDoctor(Doctor doctor);
         Task<Doctor?> GetDoctorByUsername(string username);
+        Task<Doctor?> GetDoctorById(int userid);
+        Task<List<Doctor>?> GetAllDoctors();
         Task UpdateDoctor(Doctor doctor);
         Task UpdateDoctorContacts(UserContacts contacts,int id);
         Task DeleteDoctor(int id);
