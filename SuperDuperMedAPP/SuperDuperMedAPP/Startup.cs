@@ -40,12 +40,23 @@ namespace SuperDuperMedAPP
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddDbContext<AppDbContext>();
 
+            services.AddScoped<IDoctorsServices, DoctorsServices>();
             services.AddScoped<IDoctorRepository, DoctorRepository>();
             services.AddScoped<IPatientRepository, PatientRepository>();
             services.AddScoped<IMedicationRepository, MedicationRepository>();
             services.AddScoped<IMedicineRepository, MedicineRepository>();
 
             services.AddDatabaseDeveloperPageExceptionFilter();
+
+            //services.AddCors(options =>
+            //{
+            //    options.AddDefaultPolicy(
+            //        builder =>
+            //        {
+            //            builder.WithOrigins("http://example.com",
+            //                "http://www.contoso.com");
+            //        });
+            //});
 
             services.AddControllersWithViews();
         }
@@ -68,15 +79,13 @@ namespace SuperDuperMedAPP
             app.UseStaticFiles();
 
             app.UseRouting();
+            //app.UseCors();
 
             app.UseSession();
 
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
             //app.UseEndpoints(endpoints =>
             //{
             //    endpoints.MapControllerRoute(
