@@ -11,6 +11,7 @@ function PatientPage() {
     getData();
 
     async function getData() {
+
       const response = await fetch(process.env.REACT_APP_BASE_URL_PATIENT+5+"/details");
       const data = await response.json();
       setDetails(data);

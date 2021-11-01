@@ -27,11 +27,11 @@ namespace SuperDuperMedAPP.Controllers
 
         [HttpPost]
         [Route("patient/register")]
-        public async Task<ActionResult> RegisterPatient(
-            [FromBody] [Bind("SocialSecurityNumber,DoctorID,Name,DateOfBirth,Email,PhoneNumber,Username,HashPassword")]
-            Patient patient)
+        public async Task<ActionResult> RegisterPatient([FromBody] Patient patient)
         {
-            if (await _patientRepository.GetPatientByUsername(patient.Username) != null)
+            var result = await _patientRepository.GetPatientByUsername(patient.Username);
+
+            if (result != null)
             {
                 return BadRequest("Username already in use!");
             }
@@ -43,7 +43,8 @@ namespace SuperDuperMedAPP.Controllers
             Response.Cookies.Append("ID", patient.ID.ToString());
 
             //return Ok("Registration successful.");
-            return Ok($"{patient.Name} has successfuly been registered.");
+            return Ok(patient.ID);
+
         }
 
         [HttpPost]
@@ -55,7 +56,6 @@ namespace SuperDuperMedAPP.Controllers
                 return Unauthorized("Please fill both username/password");
             }
 
-
             var all = await _patientRepository.GetAllPatients();
 
             if (!all.Any(x => x.Username.Equals(data.Username)
@@ -66,8 +66,10 @@ namespace SuperDuperMedAPP.Controllers
 
             var patient = await _patientRepository.GetPatientByUsername(data.Username);
             HttpContext.Session.SetInt32(SessionId, patient.ID);
+
             Response.Cookies.Append("ID", patient.ID.ToString());
             return Ok("Login successful.");
+
         }
 
         [Route("patient/{id}/logout")]
@@ -80,10 +82,10 @@ namespace SuperDuperMedAPP.Controllers
         [Route("patient/{id}/details")]
         public async Task<ActionResult> GetLoggedInPatientDetails([FromRoute] int id)
         {
-            if (id != HttpContext.Session.GetInt32(SessionId))
-            {
-                return Unauthorized();
-            }
+            //if (id != HttpContext.Session.GetInt32(SessionId))
+            //{
+            //    return Unauthorized();
+            //}
 
             var result = await _patientRepository.GetPatientById(id);
 

@@ -37,7 +37,9 @@ export class Login extends Component {
         })
             .then(res => res.json())
             .then((res) => {
+
                 alert("Patient "+res+" has signed in.");
+
             })
     }
 
