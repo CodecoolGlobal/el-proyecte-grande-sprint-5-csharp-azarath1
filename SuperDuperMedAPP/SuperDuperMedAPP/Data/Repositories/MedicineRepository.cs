@@ -16,30 +16,35 @@ namespace SuperDuperMedAPP.Data.Repositories
 
         public async Task AddMedication(Medicine medicine)
         {
-            _db.Medicines.Add(medicine);
+            _db.Medicine.Add(medicine);
             await _db.SaveChangesAsync();
         }
 
-        public async Task<List<Medicine>?>  GetAllMedicine(int MedicineId)
+        public async Task<List<Medicine>?> GetAllMedicine()
         {
-            return await _db.Medicines.Where(x => x.MedicineID.Equals(MedicineId)).ToListAsync();
+            return await _db.Medicine.ToListAsync();
         }
 
-        public async Task<Medicine?>  GetMedicineById(int MedicineId)
+        public async Task<List<Medicine>?>  GetAllMedicineByPatientId(int medicineId)
         {
-            return await _db.Medicines.FirstOrDefaultAsync(x => x.MedicineID.Equals(MedicineId));
+            return await _db.Medicine.Where(x => x.MedicineID.Equals(medicineId)).ToListAsync();
+        }
+
+        public async Task<Medicine?>  GetMedicineById(int medicineId)
+        {
+            return await _db.Medicine.FirstOrDefaultAsync(x => x.MedicineID.Equals(medicineId));
         }
 
         public async Task UpdateMedicine(Medicine medication)
         {
-            _db.Medicines.Update(medication);
+            _db.Medicine.Update(medication);
             await _db.SaveChangesAsync();
         }
 
         public async Task DeleteMedicine(int medicineId)
         {
-            var MedicineToDelete = await _db.Medicines.FirstOrDefaultAsync(x => x.MedicineID == medicineId);
-            _db.Medicines.Remove(MedicineToDelete);
+            var medicineToDelete = await _db.Medicine.FirstOrDefaultAsync(x => x.MedicineID == medicineId);
+            _db.Medicine.Remove(medicineToDelete);
            await _db.SaveChangesAsync();
         }
     }

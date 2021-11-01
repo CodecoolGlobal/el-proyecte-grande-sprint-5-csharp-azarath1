@@ -57,7 +57,7 @@ namespace SuperDuperMedAPP.Data
 };
             foreach (Medicine m in medicines)
             {
-                context.Medicines.Add(m);
+                context.Medicine.Add(m);
             }
             context.SaveChanges();
 

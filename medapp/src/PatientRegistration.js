@@ -7,11 +7,11 @@ export class PatientRegistration extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            socialSecurityNumber: 0,
+            socialSecurityNumber: 99999999,
             name: "Your name",
             DateOfBirth: "1990-01-01",
             email: "youremail@email.com",
-            phoneNumber: 99999999999,
+            phoneNumber: 999999999,
             userName: "Username",
             password: "Password"
         };
@@ -47,7 +47,8 @@ export class PatientRegistration extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        fetch(process.eng.REACT_APP_BASE_URL_PATIENT+'register', {
+        fetch(process.env.REACT_APP_BASE_URL_PATIENT+'register', {
+
             method: 'post',
             headers: {
                 'Content-Type': 'application/json'

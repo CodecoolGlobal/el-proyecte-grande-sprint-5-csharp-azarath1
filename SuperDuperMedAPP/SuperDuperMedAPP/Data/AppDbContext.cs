@@ -25,7 +25,7 @@ namespace SuperDuperMedAPP.Data
 
         public DbSet<Doctor> Doctors { get; set; }
         public DbSet<Patient> Patients { get; set; }
-        public DbSet<Medicine> Medicines { get; set; }
+        public DbSet<Medicine> Medicine { get; set; }
         public DbSet<Medication> Medications { get; set; }
         public DbSet<User> Users { get; set; }
 
@@ -34,7 +34,6 @@ namespace SuperDuperMedAPP.Data
         {
             modelBuilder.Entity<Doctor>().ToTable("Doctor");
             modelBuilder.Entity<Patient>().ToTable("Patient");
-            modelBuilder.Entity<Medicine>().ToTable("Medicine");
             modelBuilder.Entity<Medication>().ToTable("Medication");
             modelBuilder.Entity<User>().ToTable("User");
         }

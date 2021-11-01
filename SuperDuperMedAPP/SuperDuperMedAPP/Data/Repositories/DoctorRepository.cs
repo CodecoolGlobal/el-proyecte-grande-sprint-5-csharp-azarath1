@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using SuperDuperMedAPP.Models;
@@ -22,6 +23,16 @@ namespace SuperDuperMedAPP.Data.Repositories
         public async Task<Doctor?> GetDoctorByUsername(string username)
         {
             return await _db.Doctors.FirstOrDefaultAsync(x => x.Username.Equals(username));
+        }
+
+        public async Task<Doctor?> GetDoctorById(int userid)
+        {
+            return await _db.Doctors.FirstOrDefaultAsync(x => x.ID.Equals(userid));
+        }
+
+        public async Task<List<Doctor>?> GetAllDoctors()
+        {
+            return await _db.Doctors.ToListAsync();
         }
 
         public async Task UpdateDoctor(Doctor doctor)

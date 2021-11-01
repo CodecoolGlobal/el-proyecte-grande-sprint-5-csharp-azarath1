@@ -21,18 +21,18 @@ namespace SuperDuperMedAPP.Controllers
             _context = context;
         }
 
-        // GET: api/Medicines
+        // GET: api/Medicine
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Medicine>>> GetMedicines()
         {
-            return await _context.Medicines.ToListAsync();
+            return await _context.Medicine.ToListAsync();
         }
 
-        // GET: api/Medicines/5
+        // GET: api/Medicine/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Medicine>> GetMedicine(int id)
         {
-            var medicine = await _context.Medicines.FindAsync(id);
+            var medicine = await _context.Medicine.FindAsync(id);
 
             if (medicine == null)
             {
@@ -42,7 +42,7 @@ namespace SuperDuperMedAPP.Controllers
             return medicine;
         }
 
-        // PUT: api/Medicines/5
+        // PUT: api/Medicine/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutMedicine(int id, Medicine medicine)
@@ -73,28 +73,28 @@ namespace SuperDuperMedAPP.Controllers
             return NoContent();
         }
 
-        // POST: api/Medicines
+        // POST: api/Medicine
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Medicine>> PostMedicine(Medicine medicine)
         {
-            _context.Medicines.Add(medicine);
+            _context.Medicine.Add(medicine);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetMedicine", new { id = medicine.MedicineID }, medicine);
         }
 
-        // DELETE: api/Medicines/5
+        // DELETE: api/Medicine/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteMedicine(int id)
         {
-            var medicine = await _context.Medicines.FindAsync(id);
+            var medicine = await _context.Medicine.FindAsync(id);
             if (medicine == null)
             {
                 return NotFound();
             }
 
-            _context.Medicines.Remove(medicine);
+            _context.Medicine.Remove(medicine);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -102,7 +102,7 @@ namespace SuperDuperMedAPP.Controllers
 
         private bool MedicineExists(int id)
         {
-            return _context.Medicines.Any(e => e.MedicineID == id);
+            return _context.Medicine.Any(e => e.MedicineID == id);
         }
     }
 }

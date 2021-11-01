@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -39,9 +40,11 @@ namespace SuperDuperMedAPP.Controllers
 
             HttpContext.Session.SetInt32(SessionId, patient.ID);
 
+            Response.Cookies.Append("ID", patient.ID.ToString());
 
             //return Ok("Registration successful.");
             return Ok(patient.ID);
+
         }
 
         [HttpPost]
@@ -64,7 +67,9 @@ namespace SuperDuperMedAPP.Controllers
             var patient = await _patientRepository.GetPatientByUsername(data.Username);
             HttpContext.Session.SetInt32(SessionId, patient.ID);
 
-            return Ok(patient.ID);
+            Response.Cookies.Append("ID", patient.ID.ToString());
+            return Ok("Login successful.");
+
         }
 
         [Route("patient/{id}/logout")]
@@ -134,14 +139,14 @@ namespace SuperDuperMedAPP.Controllers
         }
 
         [Route("patient/{id}/password")]
-        public async Task<ActionResult> EditPatient(int id, string password)
+        public async Task<ActionResult> EditPassword(int id, string password)
         {
             if (id != HttpContext.Session.GetInt32(SessionId))
             {
                 return Unauthorized();
             }
 
-            await _patientRepository.EditPassword(id,password);
+            await _patientRepository.EditPassword(id, password);
             return Ok();
         }
     }
