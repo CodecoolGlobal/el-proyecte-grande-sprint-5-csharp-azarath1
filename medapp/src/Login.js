@@ -26,7 +26,10 @@ export class Login extends Component {
         event.preventDefault();
         await fetch(process.env.REACT_APP_BASE_URL_PATIENT+'login', {
             method: 'post',
+            mode:'cors',
+            credentials: 'include',
             headers : { 
+                'Access-Control-Allow-Credentials':'true',
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
             },
