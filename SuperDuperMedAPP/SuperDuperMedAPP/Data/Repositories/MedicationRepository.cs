@@ -22,12 +22,12 @@ namespace SuperDuperMedAPP.Data.Repositories
 
         public async Task<List<Medication>?> GetAllMedication(int patientId)
         {
-            return await _db.Medications.Where(x => x.Patient.ID.Equals(patientId)).ToListAsync();
+            return await _db.Medications.Where(x => x.PatientID.Equals(patientId)).ToListAsync();
         }
 
         public async Task<Medication?> GetMedicationById(int patientId)
         {
-            return await _db.Medications.FirstOrDefaultAsync(x => x.Patient.ID.Equals(patientId));
+            return await _db.Medications.FirstOrDefaultAsync(x => x.PatientID.Equals(patientId));
         }
 
         public async Task UpdateMedication(Medication medication)
