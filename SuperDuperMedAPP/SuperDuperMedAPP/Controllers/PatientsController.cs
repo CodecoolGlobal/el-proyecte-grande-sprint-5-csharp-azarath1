@@ -151,17 +151,6 @@ namespace SuperDuperMedAPP.Controllers
             return Ok();
         }
 
-        [Route("patient/{id}/medicine/{medicineID}")]
-        public async Task<ActionResult> GetPatientsMedicine(int medicineID, int id)
-        {
-            if (id != HttpContext.Session.GetInt32(SessionId))
-            {
-                return Unauthorized();
-            }
-
-            return Ok(await _medicineRepository.GetMedicineById(medicineID));
-        }
-
         [Route("patient/{id}/password")]
         public async Task<ActionResult> EditPassword(int id, string password)
         {
