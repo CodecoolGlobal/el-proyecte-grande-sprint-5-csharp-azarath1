@@ -23,8 +23,8 @@ namespace SuperDuperMedAPP.Controllers
 
         [HttpPost]
         [Route("doctor/register")]
-        public async Task<ActionResult> RegisterPatient(
-            [FromBody] [Bind("SocialSecurityNumber,DoctorID,Name,DateOfBirth,Email,PhoneNumber,Username,HashPassword")]
+        public async Task<ActionResult> RegisterDoctor(
+            [FromBody] [Bind("RegistrationNumber,Name,DateOfBirth,Email,PhoneNumber,Username,HashPassword")]
             Doctor doctor)
         {
             if (await _services.GetDoctorByUsername(doctor.Username) != null)
@@ -76,6 +76,7 @@ namespace SuperDuperMedAPP.Controllers
         [Route("doctor/{id:int}/details")]
         public async Task<ActionResult> GetLoggedInPatientDetails([FromRoute] int id)
         {
+            //patient dto
             if (id != HttpContext.Session.GetInt32(SessionId))
             {
                 return Unauthorized();
