@@ -54,8 +54,7 @@ namespace SuperDuperMedAPP
             //    options.AddDefaultPolicy(
             //        builder =>
             //        {
-            //            builder.WithOrigins("http://example.com",
-            //                "http://www.contoso.com");
+            //            builder.WithOrigins("http://localhost:3000");
             //        });
             //});
 

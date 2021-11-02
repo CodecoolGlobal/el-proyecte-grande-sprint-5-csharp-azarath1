@@ -160,6 +160,7 @@ namespace SuperDuperMedAPP.Controllers
                 return Unauthorized();
             }
 
+            //Valid, or through doctors patient navigation property?
             var medications = await _services.GetAllMedicationByPatientId(patientId);
 
             if (medications == null)
