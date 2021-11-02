@@ -32,8 +32,7 @@ namespace SuperDuperMedAPP
 
             services.AddSession(options =>
             {
-                options.IdleTimeout = TimeSpan.FromSeconds(700);
-                options.Cookie.HttpOnly = true;
+                //options.IdleTimeout = TimeSpan.FromSeconds(700);
                 options.Cookie.IsEssential = true;
             });
             services.AddMemoryCache();
@@ -82,7 +81,7 @@ namespace SuperDuperMedAPP
             //app.UseCors();
 
             app.UseSession();
-            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000"));
+            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("http://localhost:3000"));
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
