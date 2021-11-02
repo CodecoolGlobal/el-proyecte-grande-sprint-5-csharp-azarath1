@@ -10,8 +10,6 @@ export class SignUpModal extends Component{
     }
 
     handleChange(event) {
-        console.log("hello");
-        console.log(event.target.value);
         this.setState({ signUpOption: event.target.value })
     }
     
