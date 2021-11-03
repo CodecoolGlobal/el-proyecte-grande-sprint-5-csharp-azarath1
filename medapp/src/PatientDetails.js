@@ -8,6 +8,10 @@ function PatientPage() {
   const handleClose = () => setShow(false);
   const [key, id] = document.cookie.valueOf().split('=');
 
+  function saveEditedDetails() {
+    console.log('wave');
+  }
+
   useEffect(() => {
     getData();
 
@@ -35,14 +39,15 @@ function PatientPage() {
                    Change my details
                 </Button>
                 <Modal show={show}>
-                  <Modal.Header closeButton>
+                  <Modal.Header closeButton={true} onClick={handleClose}>
                     <Modal.Title>My Details</Modal.Title>
                   </Modal.Header>
                   <Modal.Body>
-                    <div><p>HEY! :) I'll be a feature in the next sprint</p></div>
+                    <div></div>
                   </Modal.Body>
                   <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>Close Modal</Button>
+                    <Button variant="secondary" onClick={() => {saveEditedDetails(); handleClose();}}>Close</Button>
+                    <Button variant="success" onClick={handleClose}>Save Changes</Button>
                   </Modal.Footer>
                 </Modal>
             </div>
@@ -54,4 +59,7 @@ function PatientPage() {
   }
   
 }
+
 export default PatientPage;
+
+
