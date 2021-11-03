@@ -24,10 +24,12 @@ namespace SuperDuperMedAPP.Controllers
         [HttpPost]
         [Route("doctor/register")]
         public async Task<ActionResult> RegisterDoctor(
-            [FromBody] [Bind("RegistrationNumber,Name,DateOfBirth,Email,PhoneNumber,Username,HashPassword")]
+            [FromBody] 
             Doctor doctor)
         {
-            if (await _services.GetDoctorByUsername(doctor.Username) != null)
+            var result = await _services.GetDoctorByUsername(doctor.Username);
+
+            if (result != null)
             {
                 return BadRequest("Username already in use!");
             }
@@ -38,7 +40,7 @@ namespace SuperDuperMedAPP.Controllers
 
             Response.Cookies.Append("ID", doctor.ID.ToString());
 
-            return Ok("Registration successful.");
+            return Ok(doctor.ID);
             //return Ok($"{doctor.Name} has been successfuly registered.");
         }
 

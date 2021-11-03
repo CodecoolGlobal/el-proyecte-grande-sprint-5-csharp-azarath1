@@ -8,10 +8,11 @@ export class DoctorRegistration extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            registrationNumber: "99999999",
             name: "Your name",
             DateOfBirth: "1990-01-01",
             email: "youremail@email.com",
-            phoneNumber: 999999999,
+            phoneNumber: "999999999",
             userName: "Username",
             password: "Password"
         };
@@ -21,6 +22,9 @@ export class DoctorRegistration extends Component {
     }
 
     handleInputChange(event) {
+        if (event.target.name === "registrationNumber") {
+            this.setState({ registrationNumber: event.target.value })
+        }
         if (event.target.name === "name") {
             this.setState({ name: event.target.value })
         }
@@ -44,19 +48,21 @@ export class DoctorRegistration extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        fetch(process.env.REACT_APP_BASE_URL_PATIENT + 'register', {
+        fetch('https://localhost:44314/doctor/register', {
 
             method: 'post',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
             },
             body: JSON.stringify({
-                "Name": this.state.name.toString(),
-                "DateOfBirth": this.state.DateOfBirth.toString(),
-                "Email": this.state.email.toString(),
-                "PhoneNumber": this.state.phoneNumber.toString(),
-                "Username": this.state.userName.toString(),
-                "HashPassword": this.state.password.toString()
+                "RegistrationNumber": this.state.registrationNumber,
+                "Name": this.state.name,
+                "DateOfBirth": this.state.DateOfBirth,
+                "Email": this.state.email,
+                "PhoneNumber": this.state.phoneNumber,
+                "Username": this.state.userName,
+                "HashPassword": this.state.password
             }),
         })
             .then(res => res.json())
@@ -65,7 +71,8 @@ export class DoctorRegistration extends Component {
                 alert('Sucessfully Changed');
             },
                 (error) => {
-                    alert('Succesful registration!');
+                    console.log(error);
+                    alert('Failed registration');
                 })
     }
 
@@ -73,6 +80,16 @@ export class DoctorRegistration extends Component {
 
         return (
             <form onSubmit={this.handleSubmit}>
+                <div>
+                <label>
+                    Registration Number:
+                    <input
+                        name="registrationNumber"
+                        type="textarea"
+                        value={this.state.registrationNumber}
+                        onChange={this.handleInputChange} />
+                </label>
+                </div>
                 <div>
                     <label>
                         Name:
@@ -108,7 +125,7 @@ export class DoctorRegistration extends Component {
                         Phone Number:
                         <input
                             name="phoneNumber"
-                            type="number"
+                            type="textarea"
                             value={this.state.phoneNumber}
                             onChange={this.handleInputChange} />
                     </label>
@@ -129,7 +146,8 @@ export class DoctorRegistration extends Component {
                         <input
                             name="password"
                             type="textarea"
-                            value={this.state.password} />
+                            value={this.state.password} 
+                            onChange={this.handleInputChange} />
                     </label>
                 </div>
                 <br />
