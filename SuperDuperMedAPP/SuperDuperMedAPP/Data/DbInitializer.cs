@@ -19,7 +19,7 @@ namespace SuperDuperMedAPP.Data
 
             var doctors = new Doctor[]
             {
-            new Doctor{RegistrationNumber=122312, Name="Dr. Bubo", DateOfBirth=DateTime.Parse("2078-09-01"),Email = "Dr@bubo@mail.hu",HashPassword = "bubo",Username = "Bubo"}
+            new Doctor{ RegistrationNumber=122312, Name="Dr. Bubo", DateOfBirth=DateTime.Parse("2078-09-01"),Email = "Dr@bubo@mail.hu",HashPassword = "bubo",Username = "Bubo"}
             };
             foreach (Doctor d in doctors)
             {
