@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import {Modal,Button, Row, Col, Form} from 'react-bootstrap';
 
 export class SignUpModal extends Component{
@@ -42,7 +41,7 @@ export class SignUpModal extends Component{
                                     </Form.Group>
                     
                                     <Form.Group>
-                                        <Link to={signUpLink} onClick={this.props.onHide}>Confirm</Link>
+                                        <Button variant="success" to={signUpLink} onClick={this.props.onHide}>Confirm</Button>
                                     </Form.Group>
                                 </Form>
                             </Col>
