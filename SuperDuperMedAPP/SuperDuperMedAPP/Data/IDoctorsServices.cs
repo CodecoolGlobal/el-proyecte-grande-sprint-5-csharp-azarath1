@@ -17,6 +17,8 @@ namespace SuperDuperMedAPP.Data
         Task EditPassword(int id, string password);
         Task<List<Medicine>?> GetAllMedicine();
         Task<List<Patient>?> GetAllPatients();
+        Task<List<Patient>?> GetDoctorsPatients(int doctorId);
         Task<List<Medication>?> GetAllMedicationByPatientId(int patientId);
+        Task<Medication?> GetMedicationByPatientId(int patientId);
     }
 }

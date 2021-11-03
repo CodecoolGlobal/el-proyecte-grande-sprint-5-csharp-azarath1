@@ -30,9 +30,9 @@ namespace SuperDuperMedAPP.Data.Repositories
             return await _db.Patients.FirstOrDefaultAsync(x => x.ID.Equals(userid));
         }
 
-        public async Task<Patient?> GetPatientByDoctorId(int doctorId)
+        public async Task<List<Patient>?> GetPatientsByDoctorId(int doctorId)
         {
-            return await _db.Patients.FirstOrDefaultAsync(x => x.DoctorID.Equals(doctorId));
+            return await _db.Patients.Where(x => x.DoctorID.Equals(doctorId)).ToListAsync();
         }
 
         public async Task<List<Patient>?> GetAllPatients()
@@ -79,9 +79,17 @@ namespace SuperDuperMedAPP.Data.Repositories
 
         public async Task EditPassword(int id, string password)
         {
-            var patient = await _db.Patients.FirstOrDefaultAsync(x => x.ID == id);
+            var patient = await _db.Patients.SingleOrDefaultAsync(x => x.ID == id);
             patient.HashPassword = password;
             _db.Entry(patient).Property("HashPassword").IsModified = true;
+            await _db.SaveChangesAsync();
+        }
+
+        public async Task EditDoctorId(int id, int newDoctorId)
+        {
+            var patient = await _db.Patients.SingleOrDefaultAsync(x => x.ID == id);
+            patient.DoctorID = newDoctorId;
+            _db.Entry(patient).Property("DoctorID").IsModified = true;
             await _db.SaveChangesAsync();
         }
     }
