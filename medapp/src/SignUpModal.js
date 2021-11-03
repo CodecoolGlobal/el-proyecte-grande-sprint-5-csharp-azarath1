@@ -6,11 +6,11 @@ export class SignUpModal extends Component{
     constructor(props){
         super(props);
         this.handleChange = this.handleChange.bind(this);
-        this.state = { signUpOption: "patient"}
+        this.state = { signUpOption: "doctor"}
     }
 
     handleChange(event) {
-        this.setState({ signUpOption: event.value })
+        this.setState({ signUpOption: event.target.value })
     }
     
     render() {
