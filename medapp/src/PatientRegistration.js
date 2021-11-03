@@ -81,15 +81,18 @@ export class PatientRegistration extends Component {
                 <label>
                     Social Security Number:
                 </label>
+                <br/>
                     <input
                         name="socialSecurityNumber"
                         type="number"
-                        onChange={this.handleInputChange} />
+                        onChange={this.handleInputChange}
+                         />
                 </div>
                 <div>
                 <label>
                     Name:
                 </label>
+                <br/>
                     <input
                         name="name"
                         type="textarea"
@@ -109,6 +112,7 @@ export class PatientRegistration extends Component {
                 <label>
                     Email:
                 </label>
+                <br/>
                     <input
                         name="email"
                         type="textarea"
@@ -118,6 +122,7 @@ export class PatientRegistration extends Component {
                 <label>
                     Phone Number:
                 </label>
+                <br/>
                     <input
                         name="phoneNumber"
                         type="number"
@@ -127,6 +132,7 @@ export class PatientRegistration extends Component {
                 <label>
                     Username:
                 </label>
+                <br/>
                     <input
                         name="username"
                         type="textarea"
