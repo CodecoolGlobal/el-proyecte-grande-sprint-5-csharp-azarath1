@@ -34,10 +34,11 @@ export class Navigation extends Component{
                 </NavLink>
                 <Button className="d-inline p-2 bg-dark text-white" onClick={() => this.setState({ LoginModalShow: true })}>
                     Login
-                </Button><LoginModal show={this.state.LoginModalShow} onHide={LoginModalClose} />
+                </Button>
                 </Nav>
                 </Navbar.Collapse>
             </Navbar>
+            <LoginModal show={this.state.LoginModalShow} onHide={LoginModalClose}/>
             <SignUpModal show={this.state.SignUpModalShow}onHide={SignUpModalClose}/>
         </div>
             
