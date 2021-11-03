@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using SuperDuperMedAPP.Data;
 using SuperDuperMedAPP.Data.Repositories;
 using SuperDuperMedAPP.Models;
+using SuperDuperMedAPP.Models.DTO;
 
 namespace SuperDuperMedAPP.Controllers
 {
@@ -24,8 +25,7 @@ namespace SuperDuperMedAPP.Controllers
         [HttpPost]
         [Route("doctor/register")]
         public async Task<ActionResult> RegisterDoctor(
-            [FromBody] 
-            Doctor doctor)
+            [FromBody] Doctor doctor)
         {
             var result = await _services.GetDoctorByUsername(doctor.Username);
 
@@ -281,7 +281,7 @@ namespace SuperDuperMedAPP.Controllers
                 return NotFound();
             }
 
-            await _services.EditMedicationDosage(medicationId,newDosage);
+            await _services.EditMedicationDosage(medicationId, newDosage);
             return NoContent();
         }
 
@@ -303,6 +303,54 @@ namespace SuperDuperMedAPP.Controllers
 
             await _services.EditMedicationNote(medicationId, newNote);
             return NoContent();
+        }
+
+        [HttpPost]
+        [Route("doctor/{id:int}/medication/add")]
+        public async Task<ActionResult> AddMedication(int id, [FromBody] AddMedicationDTO medicationDto)
+        {
+            if (id != HttpContext.Session.GetInt32(SessionId))
+            {
+                return Unauthorized();
+            }
+
+            var allmedicine = await _services.GetAllMedicine();
+            var medicine = allmedicine.SingleOrDefault(x => x.MedicineID.Equals(medicationDto.MedicineID));
+            if (medicine==null)
+            {
+                return NotFound();
+            }
+
+            var medication = new Medication
+            {
+                Name = medicationDto.Name,
+                Dose = medicationDto.Dose,
+                DoctorNote = medicationDto.DoctorNote,
+                Date = new DateTime().ToLocalTime(),
+                PatientID = medicationDto.PatientID,
+                Medicine = medicine
+            };
+            return NoContent();
+        }
+
+        [HttpDelete]
+        [Route("doctor/{id:int}/medication/{medId:int}/delete")]
+        public async Task<ActionResult> DeleteMedication(int id, int medId)
+        {
+            if (id != HttpContext.Session.GetInt32(SessionId))
+            {
+                return Unauthorized();
+            }
+            var allmedicine = await _services.GetAllMedicine();
+            var medicine = allmedicine.SingleOrDefault(x => x.MedicineID.Equals(medId));
+            if (medicine == null)
+            {
+                return NotFound();
+            }
+
+            await _services.Deletemedication(medId);
+            return NotFound();
+
         }
     }
 }
