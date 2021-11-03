@@ -25,11 +25,6 @@ namespace SuperDuperMedAPP.Data.Repositories
             return await _db.Medicine.ToListAsync();
         }
 
-        public async Task<List<Medicine>?>  GetAllMedicineByPatientId(int medicineId)
-        {
-            return await _db.Medicine.Where(x => x.MedicineID.Equals(medicineId)).ToListAsync();
-        }
-
         public async Task<Medicine?>  GetMedicineById(int medicineId)
         {
             return await _db.Medicine.FirstOrDefaultAsync(x => x.MedicineID.Equals(medicineId));
