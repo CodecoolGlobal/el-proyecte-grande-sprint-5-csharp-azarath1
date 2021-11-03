@@ -28,7 +28,20 @@ namespace SuperDuperMedAPP.Controllers
                 return Unauthorized();
             }
 
-            return Ok(await _medicineRepository.GetMedicineById(medicineID));
+            var medicine = await _medicineRepository.GetMedicineById(medicineID)
+            return Ok(medicine);
+        }
+
+        [Route("doctor/{id}/medicine")]
+        public async Task<ActionResult> GetAllMedicine(int id)
+        {
+            if (id != HttpContext.Session.GetInt32(SessionId))
+            {
+                return Unauthorized();
+            }
+
+            var meds = await _medicineRepository.GetAllMedicine();
+            return Ok(meds);
         }
     }
 }
