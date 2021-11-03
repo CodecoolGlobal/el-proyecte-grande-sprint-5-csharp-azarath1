@@ -145,17 +145,28 @@ namespace SuperDuperMedAPP.Controllers
                 return Unauthorized();
             }
 
-            var patients = await _services.GetAllPatients();
+            var allPatients = await _services.GetAllPatients();
 
-            if (patients == null)
+            if (allPatients == null)
             {
                 return NotFound();
             }
 
+            var patients = allPatients
+                .Select(x => new
+                {
+                    x.Name,
+                    DateOfBirth = x.DateOfBirth.ToLocalTime().ToShortDateString(),
+                    x.SocialSecurityNumber,
+                    x.Email,
+                    x.PhoneNumber,
+                    x.ID
+                }).ToList();
+
             return Ok(patients);
         }
 
-        [Route("doctor/{id:int}/patient-medications/{patientId:int}")]
+        [Route("doctor/{id:int}/patients-medication/{patientId:int}")]
         public async Task<ActionResult> GetPatientsMedications(int id, int patientId)
         {
             if (id != HttpContext.Session.GetInt32(SessionId))
@@ -163,13 +174,21 @@ namespace SuperDuperMedAPP.Controllers
                 return Unauthorized();
             }
 
-            //Valid, or through doctors patient navigation property?
             var medications = await _services.GetAllMedicationByPatientId(patientId);
 
             if (medications == null)
             {
                 return NotFound();
             }
+
+            var list = medications.Select(x => new
+            {
+                x.Name,
+                x.Dose,
+                Date = x.Date.ToLocalTime().ToShortDateString(),
+                x.MedicationID,
+                x.Medicine.MedicineID
+            }).ToList();
 
             return Ok(medications);
         }
