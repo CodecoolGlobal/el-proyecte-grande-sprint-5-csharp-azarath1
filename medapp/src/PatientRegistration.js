@@ -85,6 +85,7 @@ export class PatientRegistration extends Component {
                     <input
                         name="socialSecurityNumber"
                         type="number"
+                        placeholder="000999000"
                         onChange={this.handleInputChange}
                          />
                 </div>
@@ -96,6 +97,7 @@ export class PatientRegistration extends Component {
                     <input
                         name="name"
                         type="textarea"
+                        placeholder="Example Béla"
                         onChange={this.handleInputChange} />
                 </div>
                 <div>
@@ -106,6 +108,7 @@ export class PatientRegistration extends Component {
                     <input
                         name="dateOfBirth"
                         type="date"
+                        placeholder="1991.01.01"
                         onChange={this.handleInputChange} />
                 </div>
                 <div>
@@ -116,6 +119,7 @@ export class PatientRegistration extends Component {
                     <input
                         name="email"
                         type="textarea"
+                        placeholder="mail@mail.com"
                         onChange={this.handleInputChange} />
                 </div>
                 <div>
@@ -125,7 +129,8 @@ export class PatientRegistration extends Component {
                 <br/>
                     <input
                         name="phoneNumber"
-                        type="number"
+                        type="textarea"
+                        placeholder="+36304443333"
                         onChange={this.handleInputChange} />
                 </div>
                 <div>
@@ -136,6 +141,7 @@ export class PatientRegistration extends Component {
                     <input
                         name="username"
                         type="textarea"
+                        placeholder="SnoopDoge"
                         onChange={this.handleInputChange} />
                 </div>
                 <div>
@@ -146,6 +152,7 @@ export class PatientRegistration extends Component {
                     <input
                         name="password"
                         type="password"
+                        onChange={this.handleInputChange}
                         />
                 </div>
                 <br />
