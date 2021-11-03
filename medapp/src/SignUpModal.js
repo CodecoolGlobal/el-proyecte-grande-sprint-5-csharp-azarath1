@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import {Modal,Button, Row, Col, Form} from 'react-bootstrap';
 
 export class SignUpModal extends Component{
@@ -39,9 +40,8 @@ export class SignUpModal extends Component{
                                             <option value="doctor">Doctor</option>
                                         </select>
                                     </Form.Group>
-                    
                                     <Form.Group>
-                                        <Button variant="success" to={signUpLink} onClick={this.props.onHide}>Confirm</Button>
+                                        <Button variant="success" onClick={this.props.onHide} ><Link to={signUpLink}>Confirm</Link></Button>
                                     </Form.Group>
                                 </Form>
                             </Col>

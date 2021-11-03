@@ -13,17 +13,18 @@ export class Navigation extends Component{
     render() {
         let SignUpModalClose = () => this.setState({ SignUpModalShow: false });
         return(
-            <Navbar bg="dark" expand="lg">
+            <div>
+                <Navbar bg="dark" expand="lg">
                 <Navbar.Toggle aria-controls="basic-navbar-nav"/>
                 <Navbar.Collapse id="basic-navbar-nav">
                 <Nav>
                 <NavLink className="d-inline p-2 bg-dark text-white" to="/">
                     Home
-                </NavLink>
+                </NavLink >
                 <Button className="d-inline p-2 bg-dark text-white" onClick={() => this.setState({ SignUpModalShow: true })}>
                     Sign Up
-                </Button><SignUpModal show={this.state.SignUpModalShow}onHide={SignUpModalClose}/>
-                <NavLink className="d-inline p-2 bg-dark text-white" to="/personal">
+                </Button>
+                <NavLink  className="d-inline p-2 bg-dark text-white" to="/personal">
                     Personal Details Page
                 </NavLink>
                 <NavLink className="d-inline p-2 bg-dark text-white" to="/login">
@@ -32,6 +33,9 @@ export class Navigation extends Component{
                 </Nav>
                 </Navbar.Collapse>
             </Navbar>
+            <SignUpModal show={this.state.SignUpModalShow}onHide={SignUpModalClose}/>
+        </div>
+            
         )
     }
 }
