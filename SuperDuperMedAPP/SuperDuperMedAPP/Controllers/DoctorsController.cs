@@ -163,6 +163,7 @@ namespace SuperDuperMedAPP.Controllers
 
             return Ok(patients);
         }
+
         [Route("doctor/{id:int}/patients")]
         public async Task<ActionResult> GetDoctorsPatients(int id)
         {
@@ -226,31 +227,80 @@ namespace SuperDuperMedAPP.Controllers
                 return Unauthorized();
             }
 
-            var medication = await _services.GetMedicationByPatientId(patientId);
+            var medication = await _services.GetAllMedicationByPatientId(patientId);
 
             if (medication == null)
             {
                 return NotFound();
             }
 
-            return Ok(new
+            var list = medication.Select(x => new
             {
-                medication.Name,
-                medication.Date,
-                medication.Dose,
-                medication.DoctorNote
-            });
+                x.Name,
+                x.Date,
+                x.Dose,
+                x.DoctorNote
+            }).ToList();
+            return Ok(list);
         }
 
         [HttpPut]
         [Route("doctor/{id:int}/register-patient")]
-        public async Task<ActionResult> ModifyDoctorId(int id, [FromBody] int patientid)
+        public async Task<ActionResult> ModifyDoctorId(int id, [FromBody] int patientId)
         {
             if (id != HttpContext.Session.GetInt32(SessionId))
             {
                 return Unauthorized();
             }
 
+            var patient = await _services.GetPatientById(patientId);
+            if (patient == null)
+            {
+                return NotFound();
+            }
+
+            await _services.EditDoctorId(patientId, id);
+            return NoContent();
         }
-}
+
+        [HttpPut]
+        [Route("doctor/{id:int}/medication/{medicationId}/edit-dosage")]
+        public async Task<ActionResult> ModifyMedicationDosage(int id, int medicationId,
+            [FromBody] string newDosage)
+        {
+            if (id != HttpContext.Session.GetInt32(SessionId))
+            {
+                return Unauthorized();
+            }
+
+            var medication = await _services.GetMedicationById(medicationId);
+            if (medication == null)
+            {
+                return NotFound();
+            }
+
+            await _services.EditMedicationDosage(medicationId,newDosage);
+            return NoContent();
+        }
+
+        [HttpPut]
+        [Route("doctor/{id:int}/medication/{medicationId}/edit-dosage")]
+        public async Task<ActionResult> ModifyMedicationNote(int id, [FromBody] int medicationId,
+            [FromBody] string newNote)
+        {
+            if (id != HttpContext.Session.GetInt32(SessionId))
+            {
+                return Unauthorized();
+            }
+
+            var medication = await _services.GetMedicationById(medicationId);
+            if (medication == null)
+            {
+                return NotFound();
+            }
+
+            await _services.EditMedicationNote(medicationId, newNote);
+            return NoContent();
+        }
+    }
 }
