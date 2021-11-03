@@ -62,9 +62,9 @@ namespace SuperDuperMedAPP.Controllers
                 return Unauthorized("Password, or username doesn't match.");
             }
 
-            var patient = await _services.GetDoctorByUsername(data.Username);
-            HttpContext.Session.SetInt32(SessionId, patient.ID);
-            Response.Cookies.Append("ID", patient.ID.ToString());
+            var doctor = await _services.GetDoctorByUsername(data.Username);
+            HttpContext.Session.SetInt32(SessionId, doctor.ID);
+            Response.Cookies.Append("ID", doctor.ID.ToString());
             return Ok("Login successful.");
         }
 
@@ -140,10 +140,10 @@ namespace SuperDuperMedAPP.Controllers
         [Route("doctor/{id:int}/all-patients")]
         public async Task<ActionResult> GetAllPatients(int id)
         {
-            if (id != HttpContext.Session.GetInt32(SessionId))
-            {
-                return Unauthorized();
-            }
+            //if (id != HttpContext.Session.GetInt32(SessionId))
+            //{
+            //    return Unauthorized();
+            //}
 
             var allPatients = await _services.GetAllPatients();
 
