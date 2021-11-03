@@ -79,7 +79,7 @@ namespace SuperDuperMedAPP.Controllers
             return Ok("Successfully logged out.");
         }
 
-        [Route("patient/{id}/details")]
+        [Route("patient/{id:int}/details")]
         public async Task<ActionResult> GetLoggedInPatientDetails([FromRoute] int id)
         {
             //if (id != HttpContext.Session.GetInt32(SessionId))
@@ -97,7 +97,7 @@ namespace SuperDuperMedAPP.Controllers
             return Ok(result);
         }
 
-        [Route("patient/{id}/medication")]
+        [Route("patient/{id:int}/medication")]
         public async Task<ActionResult> GetPatientMedication([FromRoute] int id)
         {
             if (id != HttpContext.Session.GetInt32(SessionId))
@@ -115,8 +115,8 @@ namespace SuperDuperMedAPP.Controllers
         }
 
         [HttpPut]
-        [Route("patient/{id}/edit-contacts")]
-        public async Task<ActionResult> Editcontacts(UserContacts userContact, int id)
+        [Route("patient/{id:int}/edit-contacts")]
+        public async Task<ActionResult> Editcontacts(UserContacts userContact, [FromRoute] int id)
         {
             if (id != HttpContext.Session.GetInt32(SessionId))
             {
@@ -127,8 +127,8 @@ namespace SuperDuperMedAPP.Controllers
             return Ok();
         }
 
-        [Route("patient/{id}/password")]
-        public async Task<ActionResult> EditPassword(int id, string password)
+        [Route("patient/{id:int}/password")]
+        public async Task<ActionResult> EditPassword([FromRoute] int id, string password)
         {
             if (id != HttpContext.Session.GetInt32(SessionId))
             {
