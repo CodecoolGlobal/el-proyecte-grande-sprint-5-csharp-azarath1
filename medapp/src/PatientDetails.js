@@ -17,7 +17,7 @@ function PatientPage() {
       const data = await response.json();
       setDetails(data);
     }
-  }, [id]);
+  }, [key, id]);
   if(patientdetails){
     return (
         <div>
