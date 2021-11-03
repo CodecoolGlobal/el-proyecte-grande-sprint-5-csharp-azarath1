@@ -25,6 +25,11 @@ namespace SuperDuperMedAPP.Data
             await _doctorRepository.AddDoctor(doctor);
         }
 
+        public async Task<Patient?> GetPatientById(int PatientId)
+        {
+            return await _patientRepository.GetPatientById(PatientId);
+        }
+
         public async Task<Doctor?> GetDoctorByUsername(string username)
         {
             return await _doctorRepository.GetDoctorByUsername(username);
@@ -65,6 +70,21 @@ namespace SuperDuperMedAPP.Data
             await _doctorRepository.EditPassword(id, password);
         }
 
+        public async Task EditDoctorId(int id, int newDoctorId)
+        {
+            await _patientRepository.EditDoctorId(id, newDoctorId);
+        }
+
+        public async Task EditMedicationDosage(int medicationId, string newDosage)
+        {
+            await _medicationRepository.EditMedicationDosage(medicationId, newDosage);
+        }
+
+        public async Task EditMedicationNote(int medicationId, string newNote)
+        {
+            await _medicationRepository.EditMedicationNote(medicationId, newNote);
+        }
+
         public async Task<List<Medicine>?> GetAllMedicine()
         {
             return await _medicineRepository.GetAllMedicine();
@@ -73,9 +93,19 @@ namespace SuperDuperMedAPP.Data
         {
             return await _patientRepository.GetAllPatients();
         }
+
+        public async Task<List<Patient>?> GetDoctorsPatients(int doctorId)
+        {
+            return await _patientRepository.GetPatientsByDoctorId(doctorId);
+        }
+
         public async Task<List<Medication>?> GetAllMedicationByPatientId(int patientId)
         {
             return await _medicationRepository.GetAllMedication(patientId);
+        }
+        public async Task<Medication?> GetMedicationById(int medicationId)
+        {
+            return await _medicationRepository.GetMedicationById(medicationId);
         }
 
 

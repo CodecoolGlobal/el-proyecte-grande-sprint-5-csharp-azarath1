@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -45,6 +44,7 @@ namespace SuperDuperMedAPP.Controllers
 
             //return Ok("Registration successful.");
             return Ok(patient.ID);
+
         }
 
         [HttpPost]
@@ -69,6 +69,7 @@ namespace SuperDuperMedAPP.Controllers
 
             Response.Cookies.Append("ID", patient.ID.ToString());
             return Ok("Login successful.");
+
         }
 
         [Route("patient/{id}/logout")]
@@ -110,32 +111,7 @@ namespace SuperDuperMedAPP.Controllers
                 return NoContent();
             }
 
-            var list = userMedication.Select(x => new
-            {
-                x.Name, x.Dose,
-                Date = x.Date.ToLocalTime().ToShortDateString(),
-                x.MedicationID,
-                x.Medicine.MedicineID
-            }).ToList();
-
-            return Ok(list);
-        }
-
-        [Route("patient/{id}/medication-note/{medId}")]
-        public async Task<ActionResult> getMedicationNote([FromRoute] int id, [FromRoute] int medId)
-        {
-            if (id != HttpContext.Session.GetInt32(SessionId))
-            {
-                return Unauthorized();
-            }
-
-            var userMedication = await _medicationRepository.GetMedicationById(medId);
-            if (userMedication == null)
-            {
-                return NoContent();
-            }
-
-            return Ok(userMedication.DoctorNote);
+            return Ok(userMedication);
         }
 
         [HttpPut]

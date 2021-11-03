@@ -160,13 +160,42 @@ namespace SuperDuperMedAPP.Controllers
                     x.SocialSecurityNumber,
                     x.Email,
                     x.PhoneNumber,
+                    x.DoctorID
+                }).ToList();
+
+            return Ok(patients);
+        }
+
+        [Route("doctor/{id:int}/patients")]
+        public async Task<ActionResult> GetDoctorsPatients(int id)
+        {
+            if (id != HttpContext.Session.GetInt32(SessionId))
+            {
+                return Unauthorized();
+            }
+
+            var allPatients = await _services.GetDoctorsPatients(id);
+
+            if (allPatients == null)
+            {
+                return NotFound();
+            }
+
+            var patients = allPatients
+                .Select(x => new
+                {
+                    x.Name,
+                    DateOfBirth = x.DateOfBirth.ToLocalTime().ToShortDateString(),
+                    x.SocialSecurityNumber,
+                    x.Email,
+                    x.PhoneNumber,
                     x.ID
                 }).ToList();
 
             return Ok(patients);
         }
 
-        [Route("doctor/{id:int}/patients-medication/{patientId:int}")]
+        [Route("doctor/{id:int}/patients-medications/{patientId:int}")]
         public async Task<ActionResult> GetPatientsMedications(int id, int patientId)
         {
             if (id != HttpContext.Session.GetInt32(SessionId))
@@ -187,10 +216,93 @@ namespace SuperDuperMedAPP.Controllers
                 x.Dose,
                 Date = x.Date.ToLocalTime().ToShortDateString(),
                 x.MedicationID,
-                x.Medicine.MedicineID
             }).ToList();
 
             return Ok(medications);
+        }
+
+        [Route("doctor/{id:int}/patients-medication/{patientId:int}")]
+        public async Task<ActionResult> GetPatientsMedication(int id, int patientId)
+        {
+            if (id != HttpContext.Session.GetInt32(SessionId))
+            {
+                return Unauthorized();
+            }
+
+            var medication = await _services.GetAllMedicationByPatientId(patientId);
+
+            if (medication == null)
+            {
+                return NotFound();
+            }
+
+            var list = medication.Select(x => new
+            {
+                x.Name,
+                x.Date,
+                x.Dose,
+                x.DoctorNote
+            }).ToList();
+            return Ok(list);
+        }
+
+        [HttpPut]
+        [Route("doctor/{id:int}/register-patient")]
+        public async Task<ActionResult> ModifyDoctorId(int id, [FromBody] int patientId)
+        {
+            if (id != HttpContext.Session.GetInt32(SessionId))
+            {
+                return Unauthorized();
+            }
+
+            var patient = await _services.GetPatientById(patientId);
+            if (patient == null)
+            {
+                return NotFound();
+            }
+
+            await _services.EditDoctorId(patientId, id);
+            return NoContent();
+        }
+
+        [HttpPut]
+        [Route("doctor/{id:int}/medication/{medicationId}/edit-dosage")]
+        public async Task<ActionResult> ModifyMedicationDosage(int id, int medicationId,
+            [FromBody] string newDosage)
+        {
+            if (id != HttpContext.Session.GetInt32(SessionId))
+            {
+                return Unauthorized();
+            }
+
+            var medication = await _services.GetMedicationById(medicationId);
+            if (medication == null)
+            {
+                return NotFound();
+            }
+
+            await _services.EditMedicationDosage(medicationId,newDosage);
+            return NoContent();
+        }
+
+        [HttpPut]
+        [Route("doctor/{id:int}/medication/{medicationId}/edit-dosage")]
+        public async Task<ActionResult> ModifyMedicationNote(int id, [FromBody] int medicationId,
+            [FromBody] string newNote)
+        {
+            if (id != HttpContext.Session.GetInt32(SessionId))
+            {
+                return Unauthorized();
+            }
+
+            var medication = await _services.GetMedicationById(medicationId);
+            if (medication == null)
+            {
+                return NotFound();
+            }
+
+            await _services.EditMedicationNote(medicationId, newNote);
+            return NoContent();
         }
     }
 }
