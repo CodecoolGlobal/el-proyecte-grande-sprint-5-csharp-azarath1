@@ -25,9 +25,9 @@ namespace SuperDuperMedAPP.Data.Repositories
             return await _db.Medications.Where(x => x.PatientID.Equals(patientId)).ToListAsync();
         }
 
-        public async Task<Medication?> GetMedicationById(int patientId)
+        public async Task<Medication?> GetMedicationById(int medicationId)
         {
-            return await _db.Medications.FirstOrDefaultAsync(x => x.PatientID.Equals(patientId));
+            return await _db.Medications.FirstOrDefaultAsync(x => x.MedicationID.Equals(medicationId));
         }
 
         public async Task UpdateMedication(Medication medication)
@@ -40,6 +40,22 @@ namespace SuperDuperMedAPP.Data.Repositories
         {
             var medicationToDelete = await _db.Medications.FirstOrDefaultAsync(x => x.MedicationID == medicationId);
             _db.Medications.Remove(medicationToDelete);
+            await _db.SaveChangesAsync();
+        }
+
+        public async Task EditMedicationDosage(int medicationId, string newDosage)
+        {
+            var medication = await _db.Medications.SingleOrDefaultAsync(x => x.MedicationID == medicationId);
+            medication.Dose = newDosage;
+            _db.Entry(medication).Property("Dose").IsModified = true;
+            await _db.SaveChangesAsync();
+        }
+
+        public async Task EditMedicationNote(int medicationId, string newNote)
+        {
+            var medication = await _db.Medications.SingleOrDefaultAsync(x => x.MedicationID == medicationId);
+            medication.DoctorNote = newNote;
+            _db.Entry(medication).Property("DoctorNote").IsModified = true;
             await _db.SaveChangesAsync();
         }
     }
