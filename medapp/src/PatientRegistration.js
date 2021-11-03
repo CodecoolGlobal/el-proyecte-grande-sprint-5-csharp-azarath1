@@ -80,71 +80,71 @@ export class PatientRegistration extends Component {
                 <div>
                 <label>
                     Social Security Number:
+                </label>
                     <input
                         name="socialSecurityNumber"
                         type="number"
                         value={this.state.socialSecurityNumber}
                         onChange={this.handleInputChange} />
-                </label>
                 </div>
                 <div>
                 <label>
                     Name:
+                </label>
                     <input
                         name="name"
                         type="textarea"
                         value={this.state.name}
                         onChange={this.handleInputChange} />
-                </label>
                 </div>
                 <div>
                 <label>
                     Date of Birth:
+                </label>
                     <input
                         name="dateOfBirth"
                         type="textarea"
                         value={this.state.DateOfBirth}
                         onChange={this.handleInputChange} />
-                </label>
                 </div>
                 <div>
                 <label>
                     Email:
+                </label>
                     <input
                         name="email"
                         type="textarea"
                         value={this.state.email}
                         onChange={this.handleInputChange} />
-                </label>
                 </div>
                 <div>
                 <label>
                     Phone Number:
+                </label>
                     <input
                         name="phoneNumber"
                         type="number"
                         value={this.state.phoneNumber}
                         onChange={this.handleInputChange} />
-                </label>
                 </div>
                 <div>
                 <label>
                     Username:
+                </label>
                     <input
                         name="username"
                         type="textarea"
                         value={this.state.userName}
                         onChange={this.handleInputChange} />
-                </label>
                 </div>
                 <div>
                 <label>
                     Password:
+                </label>
                     <input
                         name="password"
                         type="textarea"
                         value={this.state.password} />
-                </label>
                 </div>
                 <br />
                 <input type="submit" value="Submit" />
