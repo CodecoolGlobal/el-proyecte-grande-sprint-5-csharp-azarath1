@@ -1,5 +1,5 @@
 import { useState, useEffect, } from 'react';
-import { Modal, Button} from 'react-bootstrap';
+import { Modal, Button } from 'react-bootstrap';
 
 function PatientPage() {
   const [patientdetails, setDetails] = useState(null);
@@ -7,10 +7,6 @@ function PatientPage() {
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
   const [key, id] = document.cookie.valueOf().split('=');
-
-  function saveEditedDetails() {
-    console.log('wave');
-  }
 
   useEffect(() => {
     getData();
@@ -43,11 +39,11 @@ function PatientPage() {
                     <Modal.Title>My Details</Modal.Title>
                   </Modal.Header>
                   <Modal.Body>
-                    <div></div>
+                    <p></p>
                   </Modal.Body>
                   <Modal.Footer>
-                    <Button variant="secondary" onClick={() => {saveEditedDetails(); handleClose();}}>Close</Button>
-                    <Button variant="success" onClick={handleClose}>Save Changes</Button>
+                    <Button variant="secondary" onClick={handleClose}>Close</Button>
+                    <Button variant="success" type="submit" onClick={() => {saveEditedDetails(); handleClose();}}>Save Changes</Button>
                   </Modal.Footer>
                 </Modal>
             </div>
@@ -57,7 +53,9 @@ function PatientPage() {
   else{
     return (<div></div>)
   }
-  
+  function saveEditedDetails() {
+    console.log(key);
+  }  
 }
 
 export default PatientPage;
