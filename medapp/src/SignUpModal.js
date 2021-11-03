@@ -41,7 +41,9 @@ export class SignUpModal extends Component{
                                         </select>
                                     </Form.Group>
                                     <Form.Group>
-                                        <Button variant="success" onClick={this.props.onHide} ><Link to={signUpLink}>Confirm</Link></Button>
+                                        <Link to={signUpLink}>
+                                            <Button variant="success" onClick={this.props.onHide}>Confirm</Button>
+                                        </Link>
                                     </Form.Group>
                                 </Form>
                             </Col>
