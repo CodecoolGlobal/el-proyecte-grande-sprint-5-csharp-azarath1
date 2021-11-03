@@ -6,17 +6,18 @@ function PatientPage() {
   const [show, setShow] = useState(false);
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
+  const [key, id] = document.cookie.valueOf().split('=');
 
   useEffect(() => {
     getData();
 
     async function getData() {
 
-      const response = await fetch(process.env.REACT_APP_BASE_URL_PATIENT+5+"/details");
+      const response = await fetch(process.env.REACT_APP_BASE_URL_PATIENT+id+"/details");
       const data = await response.json();
       setDetails(data);
     }
-  }, []);
+  }, [id]);
   if(patientdetails){
     return (
         <div>

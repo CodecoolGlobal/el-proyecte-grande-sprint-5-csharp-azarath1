@@ -19,7 +19,8 @@ namespace SuperDuperMedAPP.Data
 
             var doctors = new Doctor[]
             {
-            new Doctor{Name="Dr. Bubo", DateOfBirth=DateTime.Parse("2078-09-01"),Email = "Dr@bubo@mail.hu",HashPassword = "bubo",Username = "Bubo", RegistrationNumber="12"}
+            new Doctor{RegistrationNumber=122312, Name="Dr. Bubo", DateOfBirth=DateTime.Parse("2078-09-01"),Email = "Dr@bubo@mail.hu",HashPassword = "bubo",Username = "Bubo"}
+
             };
             foreach (Doctor d in doctors)
             {
@@ -40,7 +41,7 @@ namespace SuperDuperMedAPP.Data
             }
             context.SaveChanges();
 
-
+            var medic = new Medicine { Name = "Medicine 8", Manufacturer = "Tova Gyógyszerkereskedelmi Zrt.", DescriptionLink = "" };
             var medicines = new Medicine[]
 {
             new Medicine{ Name = "Medicine 1", Manufacturer = "Tova Gyógyszerkereskedelmi Zrt.", DescriptionLink = ""},
@@ -50,7 +51,6 @@ namespace SuperDuperMedAPP.Data
             new Medicine{ Name = "Medicine 5", Manufacturer = "Pfaizer", DescriptionLink = ""},
             new Medicine{ Name = "Medicine 6", Manufacturer = "Tova Gyógyszerkereskedelmi Zrt.", DescriptionLink = ""},
             new Medicine{ Name = "Medicine 7", Manufacturer = "Tova Gyógyszerkereskedelmi Zrt.", DescriptionLink = ""},
-            new Medicine{ Name = "Medicine 8", Manufacturer = "Tova Gyógyszerkereskedelmi Zrt.", DescriptionLink = ""},
             new Medicine{ Name = "Medicine 9", Manufacturer = "Pfaizer", DescriptionLink = ""},
             new Medicine{ Name = "Medicine 10", Manufacturer = "Tova Gyógyszerkereskedelmi Zrt.", DescriptionLink = ""}
 
@@ -61,16 +61,16 @@ namespace SuperDuperMedAPP.Data
             }
             context.SaveChanges();
 
-            ////TODO: fix medication init
-            //var medications = new Medication[]
-            //{
-            //new Medication{ Doses = 3, DoctorNotes = "Daily dose of 1 pill", Date = DateTime.Parse("2021-10-05"), MedicineID = 1, PatientID = 1 }
-            //};
-            //foreach (Medication me in medications)
-            //{
-            //    context.Medications.Add(me);
-            //}
-            //context.SaveChanges();
+            
+            var medications = new Medication[]
+            {
+            new Medication{ Name = "Medication daily", Dose="3", DoctorNote="Daily pill of 1", Date=DateTime.Parse("2021-11-03"), Medicine=medic, PatientID=2 }
+            };
+            foreach (Medication me in medications)
+            {
+                context.Medications.Add(me);
+            }
+            context.SaveChanges();
 
         }
     }
