@@ -84,7 +84,6 @@ export class PatientRegistration extends Component {
                     <input
                         name="socialSecurityNumber"
                         type="number"
-                        value={this.state.socialSecurityNumber}
                         onChange={this.handleInputChange} />
                 </div>
                 <div>
@@ -94,17 +93,16 @@ export class PatientRegistration extends Component {
                     <input
                         name="name"
                         type="textarea"
-                        value={this.state.name}
                         onChange={this.handleInputChange} />
                 </div>
                 <div>
                 <label>
                     Date of Birth:
                 </label>
+                <br/>
                     <input
                         name="dateOfBirth"
-                        type="textarea"
-                        value={this.state.DateOfBirth}
+                        type="date"
                         onChange={this.handleInputChange} />
                 </div>
                 <div>
@@ -114,7 +112,6 @@ export class PatientRegistration extends Component {
                     <input
                         name="email"
                         type="textarea"
-                        value={this.state.email}
                         onChange={this.handleInputChange} />
                 </div>
                 <div>
@@ -124,7 +121,6 @@ export class PatientRegistration extends Component {
                     <input
                         name="phoneNumber"
                         type="number"
-                        value={this.state.phoneNumber}
                         onChange={this.handleInputChange} />
                 </div>
                 <div>
@@ -134,17 +130,17 @@ export class PatientRegistration extends Component {
                     <input
                         name="username"
                         type="textarea"
-                        value={this.state.userName}
                         onChange={this.handleInputChange} />
                 </div>
                 <div>
                 <label>
                     Password:
                 </label>
+                <br/>
                     <input
                         name="password"
-                        type="textarea"
-                        value={this.state.password} />
+                        type="password"
+                        />
                 </div>
                 <br />
                 <input type="submit" value="Submit" />
