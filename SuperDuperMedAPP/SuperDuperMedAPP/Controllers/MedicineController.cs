@@ -28,7 +28,7 @@ namespace SuperDuperMedAPP.Controllers
                 return Unauthorized();
             }
 
-            var medicine = await _medicineRepository.GetMedicineById(medicineID)
+            var medicine = await _medicineRepository.GetMedicineById(medicineID);
             return Ok(medicine);
         }
 

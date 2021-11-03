@@ -60,6 +60,11 @@ namespace SuperDuperMedAPP.Data
             await _doctorRepository.DeleteDoctor(id);
         }
 
+        public async Task Deletemedication(int medId)
+        {
+            await _medicationRepository.DeleteMedication(medId);
+        }
+
         public async Task<string?> GetHashedPassword(string username)
         {
             return await _doctorRepository.GetHashedPassword(username);

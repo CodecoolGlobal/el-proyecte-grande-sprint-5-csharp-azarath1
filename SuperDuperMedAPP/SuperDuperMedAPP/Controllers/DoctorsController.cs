@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using SuperDuperMedAPP.Data;
 using SuperDuperMedAPP.Data.Repositories;
 using SuperDuperMedAPP.Models;
+using SuperDuperMedAPP.Models.DTO;
 
 namespace SuperDuperMedAPP.Controllers
 {
@@ -24,8 +25,7 @@ namespace SuperDuperMedAPP.Controllers
         [HttpPost]
         [Route("doctor/register")]
         public async Task<ActionResult> RegisterDoctor(
-            [FromBody] 
-            Doctor doctor)
+            [FromBody] Doctor doctor)
         {
             var result = await _services.GetDoctorByUsername(doctor.Username);
 
@@ -96,7 +96,7 @@ namespace SuperDuperMedAPP.Controllers
 
         [HttpPut]
         [Route("doctor/{id:int}/edit-contacts")]
-        public async Task<ActionResult> Editcontacts(UserContacts userContact, int id)
+        public async Task<ActionResult> Editcontacts(UserContacts userContact, [FromRoute] int id)
         {
             if (id != HttpContext.Session.GetInt32(SessionId))
             {
@@ -108,7 +108,7 @@ namespace SuperDuperMedAPP.Controllers
         }
 
         [Route("doctor/{id:int}/password")]
-        public async Task<ActionResult> EditPassword(int id, string password)
+        public async Task<ActionResult> EditPassword([FromRoute] int id, string password)
         {
             if (id != HttpContext.Session.GetInt32(SessionId))
             {
@@ -120,7 +120,7 @@ namespace SuperDuperMedAPP.Controllers
         }
 
         [Route("doctor/{id:int}/all-medicine")]
-        public async Task<ActionResult> GetAllMedicine(int id)
+        public async Task<ActionResult> GetAllMedicine([FromRoute] int id)
         {
             if (id != HttpContext.Session.GetInt32(SessionId))
             {
@@ -138,7 +138,7 @@ namespace SuperDuperMedAPP.Controllers
         }
 
         [Route("doctor/{id:int}/all-patients")]
-        public async Task<ActionResult> GetAllPatients(int id)
+        public async Task<ActionResult> GetAllPatients([FromRoute] int id)
         {
             if (id != HttpContext.Session.GetInt32(SessionId))
             {
@@ -167,7 +167,7 @@ namespace SuperDuperMedAPP.Controllers
         }
 
         [Route("doctor/{id:int}/patients")]
-        public async Task<ActionResult> GetDoctorsPatients(int id)
+        public async Task<ActionResult> GetDoctorsPatients([FromRoute]int id)
         {
             if (id != HttpContext.Session.GetInt32(SessionId))
             {
@@ -196,7 +196,7 @@ namespace SuperDuperMedAPP.Controllers
         }
 
         [Route("doctor/{id:int}/patients-medications/{patientId:int}")]
-        public async Task<ActionResult> GetPatientsMedications(int id, int patientId)
+        public async Task<ActionResult> GetPatientsMedications([FromRoute] int id, [FromRoute] int patientId)
         {
             if (id != HttpContext.Session.GetInt32(SessionId))
             {
@@ -222,7 +222,7 @@ namespace SuperDuperMedAPP.Controllers
         }
 
         [Route("doctor/{id:int}/patients-medication/{patientId:int}")]
-        public async Task<ActionResult> GetPatientsMedication(int id, int patientId)
+        public async Task<ActionResult> GetPatientsMedication([FromRoute] int id, [FromRoute] int patientId)
         {
             if (id != HttpContext.Session.GetInt32(SessionId))
             {
@@ -248,7 +248,7 @@ namespace SuperDuperMedAPP.Controllers
 
         [HttpPut]
         [Route("doctor/{id:int}/register-patient")]
-        public async Task<ActionResult> ModifyDoctorId(int id, [FromBody] int patientId)
+        public async Task<ActionResult> ModifyDoctorId([FromRoute] int id, [FromBody] int patientId)
         {
             if (id != HttpContext.Session.GetInt32(SessionId))
             {
@@ -267,7 +267,7 @@ namespace SuperDuperMedAPP.Controllers
 
         [HttpPut]
         [Route("doctor/{id:int}/medication/{medicationId}/edit-dosage")]
-        public async Task<ActionResult> ModifyMedicationDosage(int id, int medicationId,
+        public async Task<ActionResult> ModifyMedicationDosage([FromRoute] int id, [FromRoute] int medicationId,
             [FromBody] string newDosage)
         {
             if (id != HttpContext.Session.GetInt32(SessionId))
@@ -281,13 +281,13 @@ namespace SuperDuperMedAPP.Controllers
                 return NotFound();
             }
 
-            await _services.EditMedicationDosage(medicationId,newDosage);
+            await _services.EditMedicationDosage(medicationId, newDosage);
             return NoContent();
         }
 
         [HttpPut]
-        [Route("doctor/{id:int}/medication/{medicationId}/edit-dosage")]
-        public async Task<ActionResult> ModifyMedicationNote(int id, [FromBody] int medicationId,
+        [Route("doctor/{id:int}/medication/{medicationId}/edit-note")]
+        public async Task<ActionResult> ModifyMedicationNote([FromRoute] int id, [FromRoute] int medicationId,
             [FromBody] string newNote)
         {
             if (id != HttpContext.Session.GetInt32(SessionId))
@@ -303,6 +303,54 @@ namespace SuperDuperMedAPP.Controllers
 
             await _services.EditMedicationNote(medicationId, newNote);
             return NoContent();
+        }
+
+        [HttpPost]
+        [Route("doctor/{id:int}/medication/add")]
+        public async Task<ActionResult> AddMedication([FromRoute] int id, [FromBody] AddMedicationDTO medicationDto)
+        {
+            if (id != HttpContext.Session.GetInt32(SessionId))
+            {
+                return Unauthorized();
+            }
+
+            var allmedicine = await _services.GetAllMedicine();
+            var medicine = allmedicine.SingleOrDefault(x => x.MedicineID.Equals(medicationDto.MedicineID));
+            if (medicine==null)
+            {
+                return NotFound();
+            }
+
+            var medication = new Medication
+            {
+                Name = medicationDto.Name,
+                Dose = medicationDto.Dose,
+                DoctorNote = medicationDto.DoctorNote,
+                Date = new DateTime().ToLocalTime(),
+                PatientID = medicationDto.PatientID,
+                Medicine = medicine
+            };
+            return NoContent();
+        }
+
+        [HttpDelete]
+        [Route("doctor/{id:int}/medication/{medId:int}/delete")]
+        public async Task<ActionResult> DeleteMedication([FromRoute] int id, [FromRoute] int medId)
+        {
+            if (id != HttpContext.Session.GetInt32(SessionId))
+            {
+                return Unauthorized();
+            }
+            var allmedicine = await _services.GetAllMedicine();
+            var medicine = allmedicine.SingleOrDefault(x => x.MedicineID.Equals(medId));
+            if (medicine == null)
+            {
+                return NotFound();
+            }
+
+            await _services.Deletemedication(medId);
+            return NotFound();
+
         }
     }
 }
