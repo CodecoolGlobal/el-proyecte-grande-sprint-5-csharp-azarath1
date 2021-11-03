@@ -77,17 +77,17 @@ namespace SuperDuperMedAPP.Data.Repositories
                 .FirstOrDefaultAsync();
         }
 
-        public async Task EditPassword(int id, string password)
+        public async Task EditPassword(int patientId, string password)
         {
-            var patient = await _db.Patients.SingleOrDefaultAsync(x => x.ID == id);
+            var patient = await _db.Patients.SingleOrDefaultAsync(x => x.ID == patientId);
             patient.HashPassword = password;
             _db.Entry(patient).Property("HashPassword").IsModified = true;
             await _db.SaveChangesAsync();
         }
 
-        public async Task EditDoctorId(int id, int newDoctorId)
+        public async Task EditDoctorId(int PatientId, int newDoctorId)
         {
-            var patient = await _db.Patients.SingleOrDefaultAsync(x => x.ID == id);
+            var patient = await _db.Patients.SingleOrDefaultAsync(x => x.ID == PatientId);
             patient.DoctorID = newDoctorId;
             _db.Entry(patient).Property("DoctorID").IsModified = true;
             await _db.SaveChangesAsync();
