@@ -41,9 +41,9 @@ namespace SuperDuperMedAPP.Controllers
             HttpContext.Session.SetInt32(SessionId, patient.ID);
 
             Response.Cookies.Append("ID", patient.ID.ToString());
+            Response.Cookies.Append("user", "patient");
 
-            //return Ok("Registration successful.");
-            return Ok(patient.ID);
+            return Ok("Registration successful.");
 
         }
 
@@ -68,6 +68,8 @@ namespace SuperDuperMedAPP.Controllers
             HttpContext.Session.SetInt32(SessionId, patient.ID);
 
             Response.Cookies.Append("ID", patient.ID.ToString());
+            Response.Cookies.Append("user", "patient");
+            Response.Cookies.Append("user", "doctor");
             return Ok("Login successful.");
 
         }
@@ -75,7 +77,9 @@ namespace SuperDuperMedAPP.Controllers
         [Route("patient/{id}/logout")]
         public ActionResult Logout()
         {
-            HttpContext.Session.Remove(SessionId);
+            HttpContext.Session.Clear();
+            Response.Cookies.Delete("ID");
+            Response.Cookies.Delete("user");
             return Ok("Successfully logged out.");
         }
 

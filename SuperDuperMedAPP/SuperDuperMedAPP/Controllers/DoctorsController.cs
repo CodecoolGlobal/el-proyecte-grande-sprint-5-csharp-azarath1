@@ -39,6 +39,8 @@ namespace SuperDuperMedAPP.Controllers
             HttpContext.Session.SetInt32(SessionId, doctor.ID);
 
             Response.Cookies.Append("ID", doctor.ID.ToString());
+            Response.Cookies.Append("user", "doctor");
+
 
             return Ok(doctor.ID);
             //return Ok($"{doctor.Name} has been successfuly registered.");
@@ -65,13 +67,18 @@ namespace SuperDuperMedAPP.Controllers
             var patient = await _services.GetDoctorByUsername(data.Username);
             HttpContext.Session.SetInt32(SessionId, patient.ID);
             Response.Cookies.Append("ID", patient.ID.ToString());
+            Response.Cookies.Append("user", "doctor");
+
             return Ok("Login successful.");
         }
 
         [Route("doctor/{id:int}/logout")]
         public ActionResult Logout()
         {
-            HttpContext.Session.Remove(SessionId);
+            HttpContext.Session.Clear();
+            
+            Response.Cookies.Delete("ID");
+            Response.Cookies.Delete("user");
             return Ok("Successfully logged out.");
         }
 
@@ -315,7 +322,7 @@ namespace SuperDuperMedAPP.Controllers
             }
 
             var allmedicine = await _services.GetAllMedicine();
-            var medicine = allmedicine.SingleOrDefault(x => x.MedicineID.Equals(medicationDto.MedicineID));
+            var medicine = allmedicine?.SingleOrDefault(x => x.MedicineID.Equals(medicationDto.MedicineID));
             if (medicine==null)
             {
                 return NotFound();
