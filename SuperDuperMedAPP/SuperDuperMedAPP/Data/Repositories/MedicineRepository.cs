@@ -8,7 +8,7 @@ namespace SuperDuperMedAPP.Data.Repositories
 {
     public class MedicineRepository : IMedicineRepository
     {
-        private AppDbContext _db;
+        private readonly AppDbContext _db;
 
         public MedicineRepository() => _db = new AppDbContext();
 

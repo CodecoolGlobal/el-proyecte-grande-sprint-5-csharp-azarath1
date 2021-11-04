@@ -1,6 +1,6 @@
 ﻿namespace SuperDuperMedAPP.Models.DTO
 {
-    public class GetPatientsMedicationsDTO
+    public class GetPatientsMedicationAllDTO
     {
         public string Name { get; set; }
         public string Dose { get; set; }

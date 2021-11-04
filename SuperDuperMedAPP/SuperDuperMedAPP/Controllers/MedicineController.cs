@@ -11,7 +11,7 @@ namespace SuperDuperMedAPP.Controllers
     [ApiController]
     public class MedicineController : ControllerBase
     {
-        private IMedicineRepository _medicineRepository;
+        private readonly IMedicineRepository _medicineRepository;
         private const string SessionId = "_Id";
 
         public MedicineController(IMedicineRepository medicineRepository)

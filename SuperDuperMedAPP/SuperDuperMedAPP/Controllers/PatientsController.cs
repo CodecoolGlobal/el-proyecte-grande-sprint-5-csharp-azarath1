@@ -13,17 +13,14 @@ namespace SuperDuperMedAPP.Controllers
     [ApiController]
     public class PatientsController : ControllerBase
     {
-        private IPatientRepository _patientRepository;
-        private IMedicationRepository _medicationRepository;
-        private IMedicineRepository _medicineRepository;
+        private readonly IPatientRepository _patientRepository;
+        private readonly IMedicationRepository _medicationRepository;
         private const string SessionId = "_Id";
 
-        public PatientsController(IPatientRepository patientRepository, IMedicationRepository medicationRepository,
-            IMedicineRepository medicineRepository)
+        public PatientsController(IPatientRepository patientRepository, IMedicationRepository medicationRepository)
         {
             _patientRepository = patientRepository;
             _medicationRepository = medicationRepository;
-            _medicineRepository = medicineRepository;
         }
 
         [HttpPost]
@@ -59,13 +56,17 @@ namespace SuperDuperMedAPP.Controllers
 
             var all = await _patientRepository.GetAllPatients();
 
-            if (!all.Any(x => x.Username.Equals(data.Username)
-                              && x.HashPassword.Equals(data.HashPassword)))
+            if (all != null && !all.Any(x => x.Username.Equals(data.Username)
+                                             && x.HashPassword.Equals(data.HashPassword)))
             {
                 return Unauthorized("Password, or username doesn't match.");
             }
 
             var patient = await _patientRepository.GetPatientByUsername(data.Username);
+            if (patient == null)
+            {
+                return NotFound();
+            }
             HttpContext.Session.SetInt32(SessionId, patient.ID);
 
             Response.Cookies.Append("ID", patient.ID.ToString());

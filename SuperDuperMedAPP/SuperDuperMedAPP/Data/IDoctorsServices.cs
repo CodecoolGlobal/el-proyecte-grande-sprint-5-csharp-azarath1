@@ -8,8 +8,10 @@ namespace SuperDuperMedAPP.Data
     public interface IDoctorsServices
     {
         Task AddDoctor(Doctor doctor);
+        Task AddMedication(Medication medication);
         Task<Patient?> GetPatientById(int PatientId);
         Task<Doctor?> GetDoctorByUsername(string username);
+        Task<Medicine?> GetMedicineById(int medId);
         Task<Doctor?> GetDoctorById(int id);
         Task<List<Doctor>?> GetAllDoctors();
         Task UpdateDoctor(Doctor doctor);
