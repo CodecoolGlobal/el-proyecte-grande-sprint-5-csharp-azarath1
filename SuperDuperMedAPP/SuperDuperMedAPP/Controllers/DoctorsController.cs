@@ -198,10 +198,10 @@ namespace SuperDuperMedAPP.Controllers
         [Route("doctor/{id:int}/patients-medications/{patientId:int}")]
         public async Task<ActionResult> GetPatientsMedications([FromRoute] int id, [FromRoute] int patientId)
         {
-            if (id != HttpContext.Session.GetInt32(SessionId))
-            {
-                return Unauthorized();
-            }
+            //if (id != HttpContext.Session.GetInt32(SessionId))
+            //{
+            //    return Unauthorized();
+            //}
 
             var medications = await _services.GetAllMedicationByPatientId(patientId);
 
