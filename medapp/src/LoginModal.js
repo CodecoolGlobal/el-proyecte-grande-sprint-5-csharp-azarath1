@@ -42,7 +42,9 @@ export class LoginModal extends Component {
                                     </Form.Group>
 
                                     <Form.Group>
-                                        <Link to={LoginLink} onClick={this.props.onHide}>Confirm</Link>
+                                        <Link to={LoginLink}>
+                                            <Button variant="success" onClick={this.props.onHide}>Confirm</Button>
+                                        </Link>
                                     </Form.Group>
                                 </Form>
                             </Col>
