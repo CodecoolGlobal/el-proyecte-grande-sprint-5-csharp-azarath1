@@ -43,6 +43,7 @@ export class DoctorLogin extends Component {
 
                 alert("Doctor " + res + " has signed in.");
 
+
             })
     }
 
@@ -51,21 +52,22 @@ export class DoctorLogin extends Component {
             <form onSubmit={this.handleSubmit}>
                 <label>
                     Username:
+                </label>
+                    <br />
                     <input
                         name="username"
                         type="textarea"
-                        value={this.state.userName}
+                        placeholder="eg. MaxMed11"
                         onChange={this.handleInputChange} />
-                </label>
                 <br />
                 <label>
                     Password:
+                </label>
+                <br />
                     <input
                         name="password"
-                        type="textarea"
-                        value={this.state.password}
+                        type="password"
                         onChange={this.handleInputChange} />
-                </label>
                 <br />
                 <input type="submit" value="Submit" />
             </form>

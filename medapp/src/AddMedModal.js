@@ -11,6 +11,7 @@ export class AddMedModal extends Component{
         event.preventDefault();
         fetch(process.env.REACT_APP_BASE_URL_WITH_API+'medicines',{
             method:'POST',
+            credentials:'include',
             headers:{
                 'Accept':'application/json',
                 'Content-Type':'application/json'

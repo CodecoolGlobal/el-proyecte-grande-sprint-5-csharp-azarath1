@@ -68,7 +68,7 @@ namespace SuperDuperMedAPP.Controllers
                 return NotFound();
             }
             HttpContext.Session.SetInt32(SessionId, patient.ID);
-
+            Response.Cookies.Append("user", "patient");
             Response.Cookies.Append("ID", patient.ID.ToString());
             Response.Cookies.Append("user", "patient");
             return Ok("Login successful.");

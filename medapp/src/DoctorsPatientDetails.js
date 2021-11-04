@@ -5,7 +5,7 @@ import { NavLink, useLocation } from 'react-router-dom';
 
 function DoctorsPatientDetails()  {
     let location = useLocation();
-    const [key, id] = document.cookie.valueOf().split('=');
+    const [userkey, type, id, _] = document.cookie.valueOf().split('=');
     const [patientdetails, setDetails] = useState(null);
     const [patientmedications, setMedications] = useState(null);
     //   const [show, setShow] = useState(false);
@@ -35,7 +35,7 @@ function DoctorsPatientDetails()  {
 
 
 
-    }, [], [key, id, patientdetails, patientmedications]);
+    }, [location.state.patientid, id], [userkey, type, _, id, patientdetails, patientmedications]);
     if (patientdetails && patientmedications) {
         console.log(patientdetails);
         console.log(patientmedications);
