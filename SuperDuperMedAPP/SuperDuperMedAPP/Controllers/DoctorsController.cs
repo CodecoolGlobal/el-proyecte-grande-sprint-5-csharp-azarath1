@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using SuperDuperMedAPP.Data;
 using SuperDuperMedAPP.Data.Repositories;
+using SuperDuperMedAPP.Infrastructure;
 using SuperDuperMedAPP.Models;
 using SuperDuperMedAPP.Models.DTO;
 
@@ -162,22 +163,12 @@ namespace SuperDuperMedAPP.Controllers
                 return NotFound();
             }
 
-            var patients = allPatients
-                .Select(x => new
-                {
-                    x.Name,
-                    DateOfBirth = x.DateOfBirth.ToLocalTime().ToShortDateString(),
-                    x.SocialSecurityNumber,
-                    x.Email,
-                    x.PhoneNumber,
-                    x.DoctorID
-                }).ToList();
 
-            return Ok(patients);
+            return Ok(DTOExtension.ToGetAllPatientsDTOs(allPatients));
         }
 
         [Route("doctor/{id:int}/patients")]
-        public async Task<ActionResult> GetDoctorsPatients([FromRoute]int id)
+        public async Task<ActionResult> GetDoctorsPatients([FromRoute] int id)
         {
             var sessionID = HttpContext.Session.GetInt32(SessionId);
             if (id != sessionID)
@@ -192,22 +183,11 @@ namespace SuperDuperMedAPP.Controllers
                 return NotFound();
             }
 
-            var patients = allPatients
-                .Select(x => new
-                {
-                    x.Name,
-                    DateOfBirth = x.DateOfBirth.ToLocalTime().ToShortDateString(),
-                    x.SocialSecurityNumber,
-                    x.Email,
-                    x.PhoneNumber,
-                    x.ID
-                }).ToList();
-
-            return Ok(patients);
+            return Ok(DTOExtension.ToGetDoctorsPatientsDTOs(allPatients));
         }
 
         [Route("doctor/{id:int}/patients-medications/{patientId:int}")]
-        public async Task<ActionResult> GetPatientsMedications([FromRoute] int id, [FromRoute] int patientId)
+        public async Task<ActionResult> GetPatientsMedicationAll([FromRoute] int id, [FromRoute] int patientId)
         {
             var sessionID = HttpContext.Session.GetInt32(SessionId);
             if (id != sessionID)
@@ -222,19 +202,11 @@ namespace SuperDuperMedAPP.Controllers
                 return NotFound();
             }
 
-            var list = medications.Select(x => new
-            {
-                x.Name,
-                x.Dose,
-                Date = x.Date.ToLocalTime().ToShortDateString(),
-                x.MedicationID,
-            }).ToList();
-
-            return Ok(medications);
+            return Ok(DTOExtension.ToGetPatientsMedicationAllDTO(medications));
         }
 
-        [Route("doctor/{id:int}/patients-medication/{patientId:int}")]
-        public async Task<ActionResult> GetPatientsMedication([FromRoute] int id, [FromRoute] int patientId)
+        [Route("doctor/{id:int}/patients-medication/{medicationtId:int}")]
+        public async Task<ActionResult> GetPatientsMedicationSingle([FromRoute] int id, [FromRoute] int medicationtId)
         {
             var sessionID = HttpContext.Session.GetInt32(SessionId);
             if (id != sessionID)
@@ -242,22 +214,14 @@ namespace SuperDuperMedAPP.Controllers
                 return Unauthorized();
             }
 
-            var medication = await _services.GetAllMedicationByPatientId(patientId);
+            var medication = await _services.GetMedicationById(medicationtId);
 
             if (medication == null)
             {
                 return NotFound();
             }
 
-            var list = medication.Select(x => new
-            {
-                x.Name,
-                x.Date,
-                x.Dose,
-                x.DoctorNote,
-                x.MedicationID
-            }).ToList();
-            return Ok(list);
+            return Ok(DTOExtension.ToGetPatientsMedicationSingleDto(medication));
         }
 
         [HttpPut]
@@ -306,7 +270,7 @@ namespace SuperDuperMedAPP.Controllers
         public async Task<ActionResult> ModifyMedicationNote([FromRoute] int id, [FromRoute] int medicationId,
             [FromBody] string newNote)
         {
-            ivar sessionID = HttpContext.Session.GetInt32(SessionId);
+            var sessionID = HttpContext.Session.GetInt32(SessionId);
             if (id != sessionID)
             {
                 return Unauthorized();
@@ -332,22 +296,14 @@ namespace SuperDuperMedAPP.Controllers
                 return Unauthorized();
             }
 
-            var allmedicine = await _services.GetAllMedicine();
-            var medicine = allmedicine.SingleOrDefault(x => x.MedicineID.Equals(medicationDto.MedicineID));
-            if (medicine==null)
+
+            var medicine = await _services.GetMedicineById(medicationDto.MedicineID);
+            if (medicine == null)
             {
                 return NotFound();
             }
 
-            var medication = new Medication
-            {
-                Name = medicationDto.Name,
-                Dose = medicationDto.Dose,
-                DoctorNote = medicationDto.DoctorNote,
-                Date = new DateTime().ToLocalTime(),
-                PatientID = medicationDto.PatientID,
-                Medicine = medicine
-            };
+            await _services.AddMedication(DTOExtension.ToMedication(medicationDto, medicine));
             return NoContent();
         }
 
@@ -360,6 +316,7 @@ namespace SuperDuperMedAPP.Controllers
             {
                 return Unauthorized();
             }
+
             var allmedicine = await _services.GetAllMedicine();
             var medicine = allmedicine.SingleOrDefault(x => x.MedicineID.Equals(medId));
             if (medicine == null)
@@ -369,7 +326,6 @@ namespace SuperDuperMedAPP.Controllers
 
             await _services.DeleteMedication(medId);
             return NotFound();
-
         }
     }
 }

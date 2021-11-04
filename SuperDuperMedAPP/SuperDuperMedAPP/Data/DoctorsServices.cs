@@ -26,6 +26,11 @@ namespace SuperDuperMedAPP.Data
             await _doctorRepository.AddDoctor(doctor);
         }
 
+        public async Task AddMedication(Medication medication)
+        {
+            await _medicationRepository.AddMedication(medication);
+        }
+
         public async Task<Patient?> GetPatientById(int PatientId)
         {
             return await _patientRepository.GetPatientById(PatientId);
@@ -34,6 +39,11 @@ namespace SuperDuperMedAPP.Data
         public async Task<Doctor?> GetDoctorByUsername(string username)
         {
             return await _doctorRepository.GetDoctorByUsername(username);
+        }
+
+        public async Task<Medicine?> GetMedicineById(int medId)
+        {
+           return await _medicineRepository.GetMedicineById(medId);
         }
 
         public async Task<Doctor?> GetDoctorById(int id)

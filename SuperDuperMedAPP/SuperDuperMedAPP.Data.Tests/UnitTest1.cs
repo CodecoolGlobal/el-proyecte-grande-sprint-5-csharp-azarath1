@@ -29,7 +29,7 @@ namespace SuperDuperMedAPP.Data.Tests
             _patient = new Patient()
             {
                 DateOfBirth = DateTime.Parse("1991.01.01"),
-                SocialSecurityNumber = 204001301,
+                SocialSecurityNumber = "204-001-301",
                 Email = "valami@valami.hu",
                 HashPassword = "asdasd",
                 Name = "Mr.Nobody",
@@ -40,7 +40,7 @@ namespace SuperDuperMedAPP.Data.Tests
             var patient = new Patient()
             {
                 DateOfBirth = DateTime.Parse("1992.01.01"),
-                SocialSecurityNumber = 01010101,
+                SocialSecurityNumber = "010-101-101",
                 Email = "I@am.hu",
                 HashPassword = "asd",
                 Name = "Mr.Me",
@@ -59,7 +59,7 @@ namespace SuperDuperMedAPP.Data.Tests
             var patient = new Patient()
             {
                 DateOfBirth = DateTime.Parse("1991.01.01"),
-                SocialSecurityNumber = 204001301,
+                SocialSecurityNumber = "204-001-301",
                 Email = "valami@valami.hu",
                 HashPassword = "asdasd",
                 Name = "Mr.Nobody",
@@ -106,7 +106,7 @@ namespace SuperDuperMedAPP.Data.Tests
             var patient = new Patient()
             {
                 DateOfBirth = DateTime.Parse("1991.01.01"),
-                SocialSecurityNumber = 204001301,
+                SocialSecurityNumber = "204-001-301",
                 Email = "valami@valami.hu",
                 HashPassword = "asdasd",
                 Name = "Mr.Nobody",
@@ -118,7 +118,7 @@ namespace SuperDuperMedAPP.Data.Tests
             await _pRepository.UpdatePatient(patient);
 
             Assert.That(_patient.DateOfBirth.ToString(), Is.EqualTo("1991. 01. 01. 0:00:00"));
-            Assert.That(_patient.SocialSecurityNumber, Is.EqualTo(204001301));
+            Assert.That(_patient.SocialSecurityNumber, Is.EqualTo("204-001-301"));
             Assert.That(_patient.Email, Is.EqualTo("valami@valami.hu"));
             Assert.That(_patient.HashPassword, Is.EqualTo("asdasd"));
             Assert.That(_patient.Name, Is.EqualTo("Mr.Nobody"));
