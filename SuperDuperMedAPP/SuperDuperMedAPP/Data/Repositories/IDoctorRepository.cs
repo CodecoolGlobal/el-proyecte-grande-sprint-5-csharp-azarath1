@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using SuperDuperMedAPP.Models;
+using SuperDuperMedAPP.Models.DTO;
 
 namespace SuperDuperMedAPP.Data.Repositories
 {

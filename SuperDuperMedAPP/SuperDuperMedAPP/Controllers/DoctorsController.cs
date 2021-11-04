@@ -39,9 +39,10 @@ namespace SuperDuperMedAPP.Controllers
             HttpContext.Session.SetInt32(SessionId, doctor.ID);
 
             Response.Cookies.Append("ID", doctor.ID.ToString());
+            Response.Cookies.Append("user", "doctor");
 
-            return Ok(doctor.ID);
-            //return Ok($"{doctor.Name} has been successfuly registered.");
+
+            return Ok($"{doctor.Name} has been successfuly registered.");
         }
 
         [HttpPost]
@@ -65,6 +66,8 @@ namespace SuperDuperMedAPP.Controllers
             var doctor = await _services.GetDoctorByUsername(data.Username);
             HttpContext.Session.SetInt32(SessionId, doctor.ID);
             Response.Cookies.Append("ID", doctor.ID.ToString());
+            Response.Cookies.Append("user", "doctor");
+
             return Ok("Login successful.");
         }
 
@@ -72,6 +75,8 @@ namespace SuperDuperMedAPP.Controllers
         public ActionResult Logout()
         {
             HttpContext.Session.Remove(SessionId);
+            Response.Cookies.Delete("ID");
+            Response.Cookies.Delete("user");
             return Ok("Successfully logged out.");
         }
 
@@ -79,7 +84,8 @@ namespace SuperDuperMedAPP.Controllers
         public async Task<ActionResult> GetLoggedInPatientDetails([FromRoute] int id)
         {
             //patient dto
-            if (id != HttpContext.Session.GetInt32(SessionId))
+            var sessionID = HttpContext.Session.GetInt32(SessionId);
+            if (id != sessionID)
             {
                 return Unauthorized();
             }
@@ -98,7 +104,8 @@ namespace SuperDuperMedAPP.Controllers
         [Route("doctor/{id:int}/edit-contacts")]
         public async Task<ActionResult> Editcontacts(UserContacts userContact, [FromRoute] int id)
         {
-            if (id != HttpContext.Session.GetInt32(SessionId))
+            var sessionID = HttpContext.Session.GetInt32(SessionId);
+            if (id != sessionID)
             {
                 return Unauthorized();
             }
@@ -110,7 +117,8 @@ namespace SuperDuperMedAPP.Controllers
         [Route("doctor/{id:int}/password")]
         public async Task<ActionResult> EditPassword([FromRoute] int id, string password)
         {
-            if (id != HttpContext.Session.GetInt32(SessionId))
+            var sessionID = HttpContext.Session.GetInt32(SessionId);
+            if (id != sessionID)
             {
                 return Unauthorized();
             }
@@ -122,7 +130,8 @@ namespace SuperDuperMedAPP.Controllers
         [Route("doctor/{id:int}/all-medicine")]
         public async Task<ActionResult> GetAllMedicine([FromRoute] int id)
         {
-            if (id != HttpContext.Session.GetInt32(SessionId))
+            var sessionID = HttpContext.Session.GetInt32(SessionId);
+            if (id != sessionID)
             {
                 return Unauthorized();
             }
@@ -140,10 +149,11 @@ namespace SuperDuperMedAPP.Controllers
         [Route("doctor/{id:int}/all-patients")]
         public async Task<ActionResult> GetAllPatients([FromRoute] int id)
         {
-            //if (id != HttpContext.Session.GetInt32(SessionId))
-            //{
-            //    return Unauthorized();
-            //}
+            var sessionID = HttpContext.Session.GetInt32(SessionId);
+            if (id != sessionID)
+            {
+                return Unauthorized();
+            }
 
             var allPatients = await _services.GetAllPatients();
 
@@ -169,10 +179,11 @@ namespace SuperDuperMedAPP.Controllers
         [Route("doctor/{id:int}/patients")]
         public async Task<ActionResult> GetDoctorsPatients([FromRoute]int id)
         {
-            //if (id != HttpContext.Session.GetInt32(SessionId))
-            //{
-            //    return Unauthorized();
-            //}
+            var sessionID = HttpContext.Session.GetInt32(SessionId);
+            if (id != sessionID)
+            {
+                return Unauthorized();
+            }
 
             var allPatients = await _services.GetDoctorsPatients(id);
 
@@ -198,10 +209,11 @@ namespace SuperDuperMedAPP.Controllers
         [Route("doctor/{id:int}/patients-medications/{patientId:int}")]
         public async Task<ActionResult> GetPatientsMedications([FromRoute] int id, [FromRoute] int patientId)
         {
-            //if (id != HttpContext.Session.GetInt32(SessionId))
-            //{
-            //    return Unauthorized();
-            //}
+            var sessionID = HttpContext.Session.GetInt32(SessionId);
+            if (id != sessionID)
+            {
+                return Unauthorized();
+            }
 
             var medications = await _services.GetAllMedicationByPatientId(patientId);
 
@@ -224,7 +236,8 @@ namespace SuperDuperMedAPP.Controllers
         [Route("doctor/{id:int}/patients-medication/{patientId:int}")]
         public async Task<ActionResult> GetPatientsMedication([FromRoute] int id, [FromRoute] int patientId)
         {
-            if (id != HttpContext.Session.GetInt32(SessionId))
+            var sessionID = HttpContext.Session.GetInt32(SessionId);
+            if (id != sessionID)
             {
                 return Unauthorized();
             }
@@ -241,7 +254,8 @@ namespace SuperDuperMedAPP.Controllers
                 x.Name,
                 x.Date,
                 x.Dose,
-                x.DoctorNote
+                x.DoctorNote,
+                x.MedicationID
             }).ToList();
             return Ok(list);
         }
@@ -250,7 +264,8 @@ namespace SuperDuperMedAPP.Controllers
         [Route("doctor/{id:int}/register-patient")]
         public async Task<ActionResult> ModifyDoctorId([FromRoute] int id, [FromBody] int patientId)
         {
-            if (id != HttpContext.Session.GetInt32(SessionId))
+            var sessionID = HttpContext.Session.GetInt32(SessionId);
+            if (id != sessionID)
             {
                 return Unauthorized();
             }
@@ -270,7 +285,8 @@ namespace SuperDuperMedAPP.Controllers
         public async Task<ActionResult> ModifyMedicationDosage([FromRoute] int id, [FromRoute] int medicationId,
             [FromBody] string newDosage)
         {
-            if (id != HttpContext.Session.GetInt32(SessionId))
+            var sessionID = HttpContext.Session.GetInt32(SessionId);
+            if (id != sessionID)
             {
                 return Unauthorized();
             }
@@ -290,7 +306,8 @@ namespace SuperDuperMedAPP.Controllers
         public async Task<ActionResult> ModifyMedicationNote([FromRoute] int id, [FromRoute] int medicationId,
             [FromBody] string newNote)
         {
-            if (id != HttpContext.Session.GetInt32(SessionId))
+            ivar sessionID = HttpContext.Session.GetInt32(SessionId);
+            if (id != sessionID)
             {
                 return Unauthorized();
             }
@@ -309,7 +326,8 @@ namespace SuperDuperMedAPP.Controllers
         [Route("doctor/{id:int}/medication/add")]
         public async Task<ActionResult> AddMedication([FromRoute] int id, [FromBody] AddMedicationDTO medicationDto)
         {
-            if (id != HttpContext.Session.GetInt32(SessionId))
+            var sessionID = HttpContext.Session.GetInt32(SessionId);
+            if (id != sessionID)
             {
                 return Unauthorized();
             }
@@ -337,7 +355,8 @@ namespace SuperDuperMedAPP.Controllers
         [Route("doctor/{id:int}/medication/{medId:int}/delete")]
         public async Task<ActionResult> DeleteMedication([FromRoute] int id, [FromRoute] int medId)
         {
-            if (id != HttpContext.Session.GetInt32(SessionId))
+            var sessionID = HttpContext.Session.GetInt32(SessionId);
+            if (id != sessionID)
             {
                 return Unauthorized();
             }
@@ -348,7 +367,7 @@ namespace SuperDuperMedAPP.Controllers
                 return NotFound();
             }
 
-            await _services.Deletemedication(medId);
+            await _services.DeleteMedication(medId);
             return NotFound();
 
         }

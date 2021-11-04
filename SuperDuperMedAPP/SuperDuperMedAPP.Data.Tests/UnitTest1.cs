@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 using SuperDuperMedAPP.Data.Repositories;
 using SuperDuperMedAPP.Models;
+using SuperDuperMedAPP.Models.DTO;
 
 namespace SuperDuperMedAPP.Data.Tests
 {
