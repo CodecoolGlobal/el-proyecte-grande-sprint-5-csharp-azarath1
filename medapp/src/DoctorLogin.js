@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-export class Login extends Component {
+export class DoctorLogin extends Component {
 
     constructor(props) {
         super(props);
@@ -24,12 +24,12 @@ export class Login extends Component {
 
     async handleSubmit(event) {
         event.preventDefault();
-        await fetch(process.env.REACT_APP_BASE_URL_PATIENT+'login', {
+        await fetch(process.env.REACT_APP_BASE_URL_DOCTOR + 'login', {
             method: 'post',
-            mode:'cors',
+            mode: 'cors',
             credentials: 'include',
-            headers : { 
-                'Access-Control-Allow-Credentials':'true',
+            headers: {
+                'Access-Control-Allow-Credentials': 'true',
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
             },
@@ -41,7 +41,7 @@ export class Login extends Component {
             .then(res => res.json())
             .then((res) => {
 
-                alert("Patient "+res+" has signed in.");
+                alert("Doctor " + res + " has signed in.");
 
             })
     }
