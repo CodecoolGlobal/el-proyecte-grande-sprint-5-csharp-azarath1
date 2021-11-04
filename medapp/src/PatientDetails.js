@@ -6,7 +6,8 @@ function PatientPage() {
   const [show, setShow] = useState(false);
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
-  const [key, id] = document.cookie.valueOf().split('=');
+
+  const [userkey, type, id, _] = document.cookie.valueOf().split('=');
 
   useEffect(() => {
     getData();
@@ -16,8 +17,9 @@ function PatientPage() {
       const response = await fetch(process.env.REACT_APP_BASE_URL_PATIENT+id+"/details");
       const data = await response.json();
       setDetails(data);
+      console.log(type.split(";")[0]);
     }
-  }, [key, id]);
+  }, [userkey, type, id, _]);
   if(patientdetails){
     return (
         <div>
@@ -54,7 +56,7 @@ function PatientPage() {
     return (<div></div>)
   }
   function saveEditedDetails() {
-    console.log(key);
+    console.log(_);
   }  
 }
 

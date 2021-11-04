@@ -66,7 +66,7 @@ namespace SuperDuperMedAPP.Controllers
 
             var patient = await _patientRepository.GetPatientByUsername(data.Username);
             HttpContext.Session.SetInt32(SessionId, patient.ID);
-
+            Response.Cookies.Append("user", "patient");
             Response.Cookies.Append("ID", patient.ID.ToString());
             return Ok("Login successful.");
         }
