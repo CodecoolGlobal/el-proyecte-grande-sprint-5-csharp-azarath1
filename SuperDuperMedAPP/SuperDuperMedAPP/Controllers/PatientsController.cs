@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -45,6 +44,7 @@ namespace SuperDuperMedAPP.Controllers
 
             //return Ok("Registration successful.");
             return Ok(patient.ID);
+
         }
 
         [HttpPost]
@@ -69,6 +69,7 @@ namespace SuperDuperMedAPP.Controllers
             Response.Cookies.Append("user", "patient");
             Response.Cookies.Append("ID", patient.ID.ToString());
             return Ok("Login successful.");
+
         }
 
         [Route("patient/{id}/logout")]
@@ -78,7 +79,7 @@ namespace SuperDuperMedAPP.Controllers
             return Ok("Successfully logged out.");
         }
 
-        [Route("patient/{id}/details")]
+        [Route("patient/{id:int}/details")]
         public async Task<ActionResult> GetLoggedInPatientDetails([FromRoute] int id)
         {
             //if (id != HttpContext.Session.GetInt32(SessionId))
@@ -96,7 +97,7 @@ namespace SuperDuperMedAPP.Controllers
             return Ok(result);
         }
 
-        [Route("patient/{id}/medication")]
+        [Route("patient/{id:int}/medication")]
         public async Task<ActionResult> GetPatientMedication([FromRoute] int id)
         {
             if (id != HttpContext.Session.GetInt32(SessionId))
@@ -110,37 +111,12 @@ namespace SuperDuperMedAPP.Controllers
                 return NoContent();
             }
 
-            var list = userMedication.Select(x => new
-            {
-                x.Name, x.Dose,
-                Date = x.Date.ToLocalTime().ToShortDateString(),
-                x.MedicationID,
-                x.Medicine.MedicineID
-            }).ToList();
-
-            return Ok(list);
-        }
-
-        [Route("patient/{id}/medication-note/{medId}")]
-        public async Task<ActionResult> getMedicationNote([FromRoute] int id, [FromRoute] int medId)
-        {
-            if (id != HttpContext.Session.GetInt32(SessionId))
-            {
-                return Unauthorized();
-            }
-
-            var userMedication = await _medicationRepository.GetMedicationById(medId);
-            if (userMedication == null)
-            {
-                return NoContent();
-            }
-
-            return Ok(userMedication.DoctorNote);
+            return Ok(userMedication);
         }
 
         [HttpPut]
-        [Route("patient/{id}/edit-contacts")]
-        public async Task<ActionResult> Editcontacts(UserContacts userContact, int id)
+        [Route("patient/{id:int}/edit-contacts")]
+        public async Task<ActionResult> Editcontacts(UserContacts userContact, [FromRoute] int id)
         {
             if (id != HttpContext.Session.GetInt32(SessionId))
             {
@@ -151,8 +127,8 @@ namespace SuperDuperMedAPP.Controllers
             return Ok();
         }
 
-        [Route("patient/{id}/password")]
-        public async Task<ActionResult> EditPassword(int id, string password)
+        [Route("patient/{id:int}/password")]
+        public async Task<ActionResult> EditPassword([FromRoute] int id, string password)
         {
             if (id != HttpContext.Session.GetInt32(SessionId))
             {
