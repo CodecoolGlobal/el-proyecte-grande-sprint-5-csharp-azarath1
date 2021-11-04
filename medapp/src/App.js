@@ -11,6 +11,7 @@ import { DoctorLogin } from './DoctorLogin';
 import { PatientLogin } from './PatientLogin';
 import PatientPage from './PatientDetails';
 import DoctorsOwnPatientsPage from './DoctorsOwnPatients';
+import DoctorsPatientDetails from './DoctorsPatientDetails';
   
 function App() {
   return (
@@ -30,6 +31,8 @@ function App() {
        <Route path='/doctorLogin' component={DoctorLogin} />
        <Route path='/patientLogin' component={PatientLogin} />
        <Route path='/mypatients' component={DoctorsOwnPatientsPage} />
+       <Route path='/doctorspatient' component={DoctorsPatientDetails} />
+
      </Switch>
     </div>
     </BrowserRouter>
