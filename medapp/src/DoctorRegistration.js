@@ -51,6 +51,7 @@ export class DoctorRegistration extends Component {
         fetch('https://localhost:44314/doctor/register', {
 
             method: 'post',
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
@@ -83,72 +84,80 @@ export class DoctorRegistration extends Component {
                 <div>
                 <label>
                     Registration Number:
+                </label>
+                <br/>
                     <input
                         name="registrationNumber"
                         type="textarea"
-                        value={this.state.registrationNumber}
-                        onChange={this.handleInputChange} />
+                        placeholder="000999000"
+                        onChange={this.handleInputChange}
+                         />
+                </div>
+                <div>
+                <label>
+                    Name:
                 </label>
+                <br/>
+                    <input
+                        name="name"
+                        type="textarea"
+                        placeholder="Example Béla"
+                        onChange={this.handleInputChange} />
                 </div>
                 <div>
-                    <label>
-                        Name:
-                        <input
-                            name="name"
-                            type="textarea"
-                            value={this.state.name}
-                            onChange={this.handleInputChange} />
-                    </label>
+                <label>
+                    Date of Birth:
+                </label>
+                <br/>
+                    <input
+                        name="dateOfBirth"
+                        type="date"
+                        placeholder="1991.01.01"
+                        onChange={this.handleInputChange} />
                 </div>
                 <div>
-                    <label>
-                        Date of Birth:
-                        <input
-                            name="dateOfBirth"
-                            type="textarea"
-                            value={this.state.DateOfBirth}
-                            onChange={this.handleInputChange} />
-                    </label>
+                <label>
+                    Email:
+                </label>
+                <br/>
+                    <input
+                        name="email"
+                        type="textarea"
+                        placeholder="mail@mail.com"
+                        onChange={this.handleInputChange} />
                 </div>
                 <div>
-                    <label>
-                        Email:
-                        <input
-                            name="email"
-                            type="textarea"
-                            value={this.state.email}
-                            onChange={this.handleInputChange} />
-                    </label>
+                <label>
+                    Phone Number:
+                </label>
+                <br/>
+                    <input
+                        name="phoneNumber"
+                        type="textarea"
+                        placeholder="+36304443333"
+                        onChange={this.handleInputChange} />
                 </div>
                 <div>
-                    <label>
-                        Phone Number:
-                        <input
-                            name="phoneNumber"
-                            type="textarea"
-                            value={this.state.phoneNumber}
-                            onChange={this.handleInputChange} />
-                    </label>
+                <label>
+                    Username:
+                </label>
+                <br/>
+                    <input
+                        name="username"
+                        type="textarea"
+                        placeholder="SnoopDoge"
+                        onChange={this.handleInputChange} />
                 </div>
                 <div>
-                    <label>
-                        Username:
-                        <input
-                            name="username"
-                            type="textarea"
-                            value={this.state.userName}
-                            onChange={this.handleInputChange} />
-                    </label>
-                </div>
-                <div>
-                    <label>
-                        Password:
-                        <input
-                            name="password"
-                            type="textarea"
-                            value={this.state.password} 
-                            onChange={this.handleInputChange} />
-                    </label>
+                <label>
+                    Password:
+                </label>
+                <br/>
+                    <input
+                        name="password"
+                        type="password"
+                        onChange={this.handleInputChange}
+                        />
                 </div>
                 <br />
                 <input type="submit" value="Submit" />
