@@ -19,7 +19,7 @@ function DoctorsPatientDetails()  {
         async function getPatientMedications() {
             console.log("ez az" + location.state.patientid);
             
-            const response = await fetch(process.env.REACT_APP_BASE_URL_DOCTOR + id + '/patients-medications/' + location.state.patientid);
+            const response = await fetch(process.env.REACT_APP_BASE_URL_DOCTOR + id + '/patients-medications/' + location.state.patientid, {credentials:'include'});
             const data = await response.json();
             console.log(data);
             setMedications(data);
