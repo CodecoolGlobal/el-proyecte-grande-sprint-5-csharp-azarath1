@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using SuperDuperMedAPP.Models;
+using SuperDuperMedAPP.Models.DTO;
 
 namespace SuperDuperMedAPP.Data
 {
@@ -14,7 +15,7 @@ namespace SuperDuperMedAPP.Data
         Task UpdateDoctor(Doctor doctor);
         Task UpdateDoctorContacts(UserContacts contacts, int id);
         Task DeleteDoctor(int id);
-        Task Deletemedication(int medId);
+        Task DeleteMedication(int medId);
         Task<string?> GetHashedPassword(string username);
         Task EditPassword(int id, string password);
         Task EditDoctorId(int id, int newDoctorId);

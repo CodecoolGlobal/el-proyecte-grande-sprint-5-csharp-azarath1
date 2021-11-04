@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using SuperDuperMedAPP.Data.Repositories;
 using SuperDuperMedAPP.Models;
+using SuperDuperMedAPP.Models.DTO;
 
 namespace SuperDuperMedAPP.Data
 {
@@ -60,7 +61,7 @@ namespace SuperDuperMedAPP.Data
             await _doctorRepository.DeleteDoctor(id);
         }
 
-        public async Task Deletemedication(int medId)
+        public async Task DeleteMedication(int medId)
         {
             await _medicationRepository.DeleteMedication(medId);
         }
