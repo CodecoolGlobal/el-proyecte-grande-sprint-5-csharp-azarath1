@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using SuperDuperMedAPP.Models;
+using SuperDuperMedAPP.Models.DTO;
 
 namespace SuperDuperMedAPP.Data.Repositories
 {

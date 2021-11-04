@@ -1,4 +1,4 @@
-﻿namespace SuperDuperMedAPP.Models
+﻿namespace SuperDuperMedAPP.Models.DTO
 {
     public class UserContacts
     {
