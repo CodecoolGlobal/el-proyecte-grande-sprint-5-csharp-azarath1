@@ -1,6 +1,8 @@
 import { Modal, Button } from 'react-bootstrap';
 import React, { useState, useEffect } from 'react';
 import { Table } from 'react-bootstrap';
+import { DoctorsPatient } from './DoctorsPatient';
+import { NavLink } from 'react-router-dom';
 
 
 function DoctorsOwnPatientsPage() {
@@ -15,15 +17,18 @@ function DoctorsOwnPatientsPage() {
 
         async function getData() {
 
-            const response = await fetch(process.env.REACT_APP_BASE_URL_DOCTOR + id + '/all-patients');
+            const response = await fetch(process.env.REACT_APP_BASE_URL_DOCTOR + id + '/patients');
             const data = await response.json();
             setDetails(data);
         }
+
+        
+
     }, [key, id, patientdetails]);
     if (patientdetails) {
         return (
             <div>
-                <h1>All Patients</h1>
+                <h1>My Patients</h1>
                 <div className="patientdetails">
                     <div>
                         <Table className="mt-4" striped bordered hover size="sm">
@@ -31,6 +36,7 @@ function DoctorsOwnPatientsPage() {
                                 <tr>
                                     <th>Name</th>
                                     <th>Social Security Number</th>
+                                    <th>Options</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -38,6 +44,13 @@ function DoctorsOwnPatientsPage() {
                                     <tr key={patient.id}>
                                         <td>{patient.name}</td>
                                         <td>{patient.socialSecurityNumber}</td>
+                                        <td>
+                                            <Button className="mr-2" variant="info">
+                                                <NavLink to="/">
+                                                    Patient's page
+                                                </NavLink>
+                                            </Button>
+                                        </td>
                                     </tr>)}
                             </tbody>
                         </Table>
@@ -49,6 +62,7 @@ function DoctorsOwnPatientsPage() {
     else {
         return (<div></div>)
     }
+    
 
 
     
