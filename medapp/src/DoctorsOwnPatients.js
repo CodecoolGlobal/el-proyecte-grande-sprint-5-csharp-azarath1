@@ -1,7 +1,7 @@
-import { Modal, Button } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import React, { useState, useEffect } from 'react';
 import { Table } from 'react-bootstrap';
-import { DoctorsPatient } from './DoctorsPatient';
+
 import { NavLink } from 'react-router-dom';
 
 
@@ -17,7 +17,7 @@ function DoctorsOwnPatientsPage() {
 
         async function getData() {
 
-            const response = await fetch(process.env.REACT_APP_BASE_URL_DOCTOR + id + '/patients');
+            const response = await fetch(process.env.REACT_APP_BASE_URL_DOCTOR + id + '/patients',{credentials:'include'});
             const data = await response.json();
             setDetails(data);
         }
