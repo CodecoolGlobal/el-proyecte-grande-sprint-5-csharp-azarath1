@@ -3,7 +3,8 @@ import { Table, Button } from 'react-bootstrap';
 
 function AllPatientsPage() {
   const [patientdetails, setDetails] = useState(null);
-  const [userkey, type, id, _] = document.cookie.valueOf().split('=');
+  const [idcookie, userTypecookie] = document.cookie.valueOf().split(";");
+  const [key, id] = idcookie.split("=");
 
   useEffect(() => {
     getData();
@@ -14,7 +15,7 @@ function AllPatientsPage() {
       const data = await response.json();
       setDetails(data);
     }
-  }, [userkey, type, id, _, patientdetails]);
+  }, [key, userTypecookie, id, patientdetails]);
   if(patientdetails){
     return (
         <div>
@@ -53,6 +54,7 @@ function AllPatientsPage() {
   function putIntoPractice() {
     fetch(process.env.REACT_APP_BASE_URL_DOCTOR+id+'/register-patient',{
         method:'PUT',
+        credentials: 'include',
         headers:{
             'Accept':'application/json',
             'Content-Type':'application/json'
