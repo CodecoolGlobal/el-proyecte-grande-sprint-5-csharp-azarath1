@@ -130,9 +130,11 @@ namespace SuperDuperMedAPP.Data.Tests
         [Test]
         public async Task Should_UpdateEmail_When_MethodIsCalled()
         {
-            var contacts = new UserContacts();
-            contacts.Email = "I@am.awsome.com";
-            contacts.PhoneNumber = null;
+            var contacts = new UserContacts
+            {
+                Email = "I@am.awsome.com",
+                PhoneNumber = null
+            };
 
             await _pRepository.UpdatePatientContacts(contacts, 1);
             Assert.That(_patient.Email, Is.EqualTo("I@am.awsome.com"));
@@ -141,10 +143,11 @@ namespace SuperDuperMedAPP.Data.Tests
         [Test]
         public async Task Should_UpdatePhoneNumber_When_MethodIsCalled()
         {
-            var contacts = new UserContacts();
-            contacts.Email = null;
-            contacts.PhoneNumber = "06206669999";
-
+            var contacts = new UserContacts
+            {
+                Email = null,
+                PhoneNumber = "06206669999"
+            };
             await _pRepository.UpdatePatientContacts(contacts, 1);
             Assert.That(_patient.PhoneNumber, Is.EqualTo("06206669999"));
         }
@@ -152,10 +155,11 @@ namespace SuperDuperMedAPP.Data.Tests
         [Test]
         public async Task Should_UpdateContacts_When_MethodIsCalled()
         {
-            var contacts = new UserContacts();
-            contacts.Email = "I@am.awsome.com";
-            contacts.PhoneNumber = "06206669999";
-
+            var contacts = new UserContacts
+            {
+                Email = "I@am.awsome.com",
+                PhoneNumber = "06206669999"
+            };
             await _pRepository.UpdatePatientContacts(contacts, 1);
             Assert.That(_patient.Email, Is.EqualTo("I@am.awsome.com"));
             Assert.That(_patient.PhoneNumber, Is.EqualTo("06206669999"));

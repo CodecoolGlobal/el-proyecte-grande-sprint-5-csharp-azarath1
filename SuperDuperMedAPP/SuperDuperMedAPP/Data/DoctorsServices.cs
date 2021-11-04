@@ -8,10 +8,10 @@ namespace SuperDuperMedAPP.Data
 {
     public class DoctorsServices : IDoctorsServices
     {
-        private IDoctorRepository _doctorRepository;
-        private IPatientRepository _patientRepository;
-        private IMedicationRepository _medicationRepository;
-        private IMedicineRepository _medicineRepository;
+        private readonly IDoctorRepository _doctorRepository;
+        private readonly IPatientRepository _patientRepository;
+        private readonly IMedicationRepository _medicationRepository;
+        private readonly IMedicineRepository _medicineRepository;
 
         public DoctorsServices(IDoctorRepository doctorRepository, IPatientRepository patientRepository, IMedicationRepository medicationRepository, IMedicineRepository medicineRepository)
         {

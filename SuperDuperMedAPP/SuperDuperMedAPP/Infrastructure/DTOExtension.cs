@@ -8,7 +8,7 @@ namespace SuperDuperMedAPP.Infrastructure
 {
     public static class DTOExtension
     {
-        public static Medication ToMedication(AddMedicationDTO dto, Medicine medicine)
+        public static Medication ToMedication(this AddMedicationDTO dto, Medicine medicine)
         {
             return new Medication
             {
@@ -21,7 +21,7 @@ namespace SuperDuperMedAPP.Infrastructure
             };
         }
 
-        public static GetPatientsMedicationSingleDTO ToGetPatientsMedicationSingleDto(Medication medication)
+        public static GetPatientsMedicationSingleDTO ToGetPatientsMedicationSingleDto(this Medication medication)
         {
             return new GetPatientsMedicationSingleDTO
             {
@@ -33,7 +33,7 @@ namespace SuperDuperMedAPP.Infrastructure
             };
         }
 
-        public static List<GetPatientsMedicationAllDTO>? ToGetPatientsMedicationAllDTO(List<Medication>? medications)
+        public static List<GetPatientsMedicationAllDTO>? ToGetPatientsMedicationAllDTO(this List<Medication>? medications)
         {
             return medications?.Select(x => new GetPatientsMedicationAllDTO
             {
@@ -44,9 +44,9 @@ namespace SuperDuperMedAPP.Infrastructure
             }).ToList();
         }
 
-        public static List<GetDoctorsPatientsDTO> ToGetDoctorsPatientsDTOs(List<Patient>? patients)
+        public static List<GetDoctorsPatientsDTO> ToGetDoctorsPatientsDTOs(this List<Patient>? patients)
         {
-            return patients
+            return (patients ?? new List<Patient>())
                 .Select(x => new GetDoctorsPatientsDTO()
                 {
                     Name = x.Name,
@@ -57,9 +57,9 @@ namespace SuperDuperMedAPP.Infrastructure
                     ID = x.ID
                 }).ToList();
         }
-        public static List<GetAllPatientsDTO> ToGetAllPatientsDTOs(List<Patient>? patients)
+        public static List<GetAllPatientsDTO> ToGetAllPatientsDTOs(this List<Patient>? patients)
         {
-            return patients
+            return (patients ?? new List<Patient>())
                 .Select(x => new GetAllPatientsDTO()
                 {
                     Name = x.Name,
