@@ -24,6 +24,8 @@ function DoctorsOwnPatientsPage() {
 
         
 
+        
+
     }, [key, id, patientdetails]);
     if (patientdetails) {
         return (
@@ -46,8 +48,12 @@ function DoctorsOwnPatientsPage() {
                                         <td>{patient.socialSecurityNumber}</td>
                                         <td>
                                             <Button className="mr-2" variant="info">
-                                                <NavLink to="/">
-                                                    Patient's page
+                                                <NavLink to={{
+                                                    pathname: '/doctorspatient',
+                                                    state: {
+                                                        patientid: patient.id }
+                                                }}>
+                                                    View patient data
                                                 </NavLink>
                                             </Button>
                                         </td>

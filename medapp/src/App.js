@@ -21,6 +21,7 @@ function App() {
      <Navigation />
      <Switch>
        <Route path='/' component={Home} exact/>
+       <Route path='/signup' component={Signup}/>
        <Route path='/personal' component={PatientPage}/>
        <Route path='/patientRegistration' component={PatientRegistration}/>
        <Route path='/doctorRegistration' component={DoctorRegistration} />
@@ -29,6 +30,8 @@ function App() {
        <Route path='/patientLogin' component={PatientLogin} />
        <Route path='/allpatients' component={AllPatientsPage} />
        <Route path='/mypatients' component={DoctorsOwnPatientsPage} />
+       <Route path='/doctorspatient' component={DoctorsPatientDetails} />
+
      </Switch>
     </div>
     </BrowserRouter>

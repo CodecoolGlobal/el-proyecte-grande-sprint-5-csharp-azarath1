@@ -6,23 +6,21 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using SuperDuperMedAPP.Data.Repositories;
 using SuperDuperMedAPP.Models;
+using SuperDuperMedAPP.Models.DTO;
 
 namespace SuperDuperMedAPP.Controllers
 {
     [ApiController]
     public class PatientsController : ControllerBase
     {
-        private IPatientRepository _patientRepository;
-        private IMedicationRepository _medicationRepository;
-        private IMedicineRepository _medicineRepository;
+        private readonly IPatientRepository _patientRepository;
+        private readonly IMedicationRepository _medicationRepository;
         private const string SessionId = "_Id";
 
-        public PatientsController(IPatientRepository patientRepository, IMedicationRepository medicationRepository,
-            IMedicineRepository medicineRepository)
+        public PatientsController(IPatientRepository patientRepository, IMedicationRepository medicationRepository)
         {
             _patientRepository = patientRepository;
             _medicationRepository = medicationRepository;
-            _medicineRepository = medicineRepository;
         }
 
         [HttpPost]
@@ -41,9 +39,9 @@ namespace SuperDuperMedAPP.Controllers
             HttpContext.Session.SetInt32(SessionId, patient.ID);
 
             Response.Cookies.Append("ID", patient.ID.ToString());
+            Response.Cookies.Append("user", "patient");
 
-            //return Ok("Registration successful.");
-            return Ok(patient.ID);
+            return Ok("Registration successful.");
 
         }
 
@@ -58,16 +56,21 @@ namespace SuperDuperMedAPP.Controllers
 
             var all = await _patientRepository.GetAllPatients();
 
-            if (!all.Any(x => x.Username.Equals(data.Username)
-                              && x.HashPassword.Equals(data.HashPassword)))
+            if (all != null && !all.Any(x => x.Username.Equals(data.Username)
+                                             && x.HashPassword.Equals(data.HashPassword)))
             {
                 return Unauthorized("Password, or username doesn't match.");
             }
 
             var patient = await _patientRepository.GetPatientByUsername(data.Username);
+            if (patient == null)
+            {
+                return NotFound();
+            }
             HttpContext.Session.SetInt32(SessionId, patient.ID);
             Response.Cookies.Append("user", "patient");
             Response.Cookies.Append("ID", patient.ID.ToString());
+            Response.Cookies.Append("user", "patient");
             return Ok("Login successful.");
 
         }
@@ -75,17 +78,20 @@ namespace SuperDuperMedAPP.Controllers
         [Route("patient/{id}/logout")]
         public ActionResult Logout()
         {
-            HttpContext.Session.Remove(SessionId);
+            HttpContext.Session.Clear();
+            Response.Cookies.Delete("ID");
+            Response.Cookies.Delete("user");
             return Ok("Successfully logged out.");
         }
 
         [Route("patient/{id:int}/details")]
         public async Task<ActionResult> GetLoggedInPatientDetails([FromRoute] int id)
         {
-            //if (id != HttpContext.Session.GetInt32(SessionId))
-            //{
-            //    return Unauthorized();
-            //}
+            var sessionID = HttpContext.Session.GetInt32(SessionId);
+            if (id != sessionID)
+            {
+                return Unauthorized();
+            }
 
             var result = await _patientRepository.GetPatientById(id);
 
@@ -100,7 +106,8 @@ namespace SuperDuperMedAPP.Controllers
         [Route("patient/{id:int}/medication")]
         public async Task<ActionResult> GetPatientMedication([FromRoute] int id)
         {
-            if (id != HttpContext.Session.GetInt32(SessionId))
+            var sessionID = HttpContext.Session.GetInt32(SessionId);
+            if (id != sessionID)
             {
                 return Unauthorized();
             }
@@ -118,7 +125,8 @@ namespace SuperDuperMedAPP.Controllers
         [Route("patient/{id:int}/edit-contacts")]
         public async Task<ActionResult> Editcontacts(UserContacts userContact, [FromRoute] int id)
         {
-            if (id != HttpContext.Session.GetInt32(SessionId))
+            var sessionID = HttpContext.Session.GetInt32(SessionId);
+            if (id != sessionID)
             {
                 return Unauthorized();
             }
@@ -130,7 +138,8 @@ namespace SuperDuperMedAPP.Controllers
         [Route("patient/{id:int}/password")]
         public async Task<ActionResult> EditPassword([FromRoute] int id, string password)
         {
-            if (id != HttpContext.Session.GetInt32(SessionId))
+            var sessionID = HttpContext.Session.GetInt32(SessionId);
+            if (id != sessionID)
             {
                 return Unauthorized();
             }

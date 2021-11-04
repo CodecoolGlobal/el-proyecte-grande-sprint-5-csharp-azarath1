@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 using SuperDuperMedAPP.Data.Repositories;
 using SuperDuperMedAPP.Models;
+using SuperDuperMedAPP.Models.DTO;
 
 namespace SuperDuperMedAPP.Data.Tests
 {
@@ -28,7 +29,7 @@ namespace SuperDuperMedAPP.Data.Tests
             _patient = new Patient()
             {
                 DateOfBirth = DateTime.Parse("1991.01.01"),
-                SocialSecurityNumber = 204001301,
+                SocialSecurityNumber = "204-001-301",
                 Email = "valami@valami.hu",
                 HashPassword = "asdasd",
                 Name = "Mr.Nobody",
@@ -39,7 +40,7 @@ namespace SuperDuperMedAPP.Data.Tests
             var patient = new Patient()
             {
                 DateOfBirth = DateTime.Parse("1992.01.01"),
-                SocialSecurityNumber = 01010101,
+                SocialSecurityNumber = "010-101-101",
                 Email = "I@am.hu",
                 HashPassword = "asd",
                 Name = "Mr.Me",
@@ -58,7 +59,7 @@ namespace SuperDuperMedAPP.Data.Tests
             var patient = new Patient()
             {
                 DateOfBirth = DateTime.Parse("1991.01.01"),
-                SocialSecurityNumber = 204001301,
+                SocialSecurityNumber = "204-001-301",
                 Email = "valami@valami.hu",
                 HashPassword = "asdasd",
                 Name = "Mr.Nobody",
@@ -105,7 +106,7 @@ namespace SuperDuperMedAPP.Data.Tests
             var patient = new Patient()
             {
                 DateOfBirth = DateTime.Parse("1991.01.01"),
-                SocialSecurityNumber = 204001301,
+                SocialSecurityNumber = "204-001-301",
                 Email = "valami@valami.hu",
                 HashPassword = "asdasd",
                 Name = "Mr.Nobody",
@@ -117,7 +118,7 @@ namespace SuperDuperMedAPP.Data.Tests
             await _pRepository.UpdatePatient(patient);
 
             Assert.That(_patient.DateOfBirth.ToString(), Is.EqualTo("1991. 01. 01. 0:00:00"));
-            Assert.That(_patient.SocialSecurityNumber, Is.EqualTo(204001301));
+            Assert.That(_patient.SocialSecurityNumber, Is.EqualTo("204-001-301"));
             Assert.That(_patient.Email, Is.EqualTo("valami@valami.hu"));
             Assert.That(_patient.HashPassword, Is.EqualTo("asdasd"));
             Assert.That(_patient.Name, Is.EqualTo("Mr.Nobody"));
@@ -129,9 +130,11 @@ namespace SuperDuperMedAPP.Data.Tests
         [Test]
         public async Task Should_UpdateEmail_When_MethodIsCalled()
         {
-            var contacts = new UserContacts();
-            contacts.Email = "I@am.awsome.com";
-            contacts.PhoneNumber = null;
+            var contacts = new UserContacts
+            {
+                Email = "I@am.awsome.com",
+                PhoneNumber = null
+            };
 
             await _pRepository.UpdatePatientContacts(contacts, 1);
             Assert.That(_patient.Email, Is.EqualTo("I@am.awsome.com"));
@@ -140,10 +143,11 @@ namespace SuperDuperMedAPP.Data.Tests
         [Test]
         public async Task Should_UpdatePhoneNumber_When_MethodIsCalled()
         {
-            var contacts = new UserContacts();
-            contacts.Email = null;
-            contacts.PhoneNumber = "06206669999";
-
+            var contacts = new UserContacts
+            {
+                Email = null,
+                PhoneNumber = "06206669999"
+            };
             await _pRepository.UpdatePatientContacts(contacts, 1);
             Assert.That(_patient.PhoneNumber, Is.EqualTo("06206669999"));
         }
@@ -151,10 +155,11 @@ namespace SuperDuperMedAPP.Data.Tests
         [Test]
         public async Task Should_UpdateContacts_When_MethodIsCalled()
         {
-            var contacts = new UserContacts();
-            contacts.Email = "I@am.awsome.com";
-            contacts.PhoneNumber = "06206669999";
-
+            var contacts = new UserContacts
+            {
+                Email = "I@am.awsome.com",
+                PhoneNumber = "06206669999"
+            };
             await _pRepository.UpdatePatientContacts(contacts, 1);
             Assert.That(_patient.Email, Is.EqualTo("I@am.awsome.com"));
             Assert.That(_patient.PhoneNumber, Is.EqualTo("06206669999"));
