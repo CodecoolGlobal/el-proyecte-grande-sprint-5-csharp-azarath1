@@ -14,6 +14,7 @@ export class Navigation extends Component{
     render() {
         let SignUpModalClose = () => this.setState({ SignUpModalShow: false });
         let LoginModalClose = () => this.setState({ LoginModalShow: false });
+        
         return(
             <div>
                 <Navbar bg="dark" expand="lg">
@@ -23,16 +24,19 @@ export class Navigation extends Component{
                 <NavLink className="d-inline p-2 bg-dark text-white" to="/">
                     Home
                 </NavLink >
-                <Button className="d-inline p-2 bg-dark text-white" onClick={() => this.setState({ SignUpModalShow: true })}>
-                    Sign Up
-                </Button>
                 <NavLink  className="d-inline p-2 bg-dark text-white" to="/personal">
-                    Personal Details Page
+                    Patient Details Page
                 </NavLink>
                 <NavLink className="d-inline p-2 bg-dark text-white" to="/mypatients">
                     My Patients
                 </NavLink>
-                <Button className="d-inline p-2 bg-dark text-white" onClick={() => this.setState({ LoginModalShow: true })}>
+                <NavLink className="d-inline p-2 bg-dark text-white" to="/allpatients">
+                    All Patients
+                </NavLink>
+                <Button id="signup" className="d-inline p-2 bg-dark text-white" onClick={() => this.setState({ SignUpModalShow: true })}>
+                    Sign Up
+                </Button>
+                <Button id="login" className="d-inline p-2 bg-dark text-white" onClick={() => this.setState({ LoginModalShow: true })}>
                     Login
                 </Button>
                 </Nav>
