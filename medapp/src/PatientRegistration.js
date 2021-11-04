@@ -50,6 +50,7 @@ export class PatientRegistration extends Component {
         fetch(process.env.REACT_APP_BASE_URL_PATIENT+'register', {
 
             method: 'post',
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json'
             },
