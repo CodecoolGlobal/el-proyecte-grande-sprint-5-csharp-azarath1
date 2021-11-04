@@ -14,29 +14,38 @@ export class Navigation extends Component{
     render() {
         let SignUpModalClose = () => this.setState({ SignUpModalShow: false });
         let LoginModalClose = () => this.setState({ LoginModalShow: false });
+        
         return(
-            <Navbar bg="dark" expand="lg">
+            <div>
+                <Navbar bg="dark" expand="lg">
                 <Navbar.Toggle aria-controls="basic-navbar-nav"/>
                 <Navbar.Collapse id="basic-navbar-nav">
                 <Nav>
                 <NavLink className="d-inline p-2 bg-dark text-white" to="/">
                     Home
-                </NavLink>
-                <Button className="d-inline p-2 bg-dark text-white" onClick={() => this.setState({ SignUpModalShow: true })}>
-                    Sign Up
-                </Button><SignUpModal show={this.state.SignUpModalShow} onHide={SignUpModalClose} />
-                <NavLink className="d-inline p-2 bg-dark text-white" to="/personal">
-                    Personal Details Page
+                </NavLink >
+                <NavLink  className="d-inline p-2 bg-dark text-white" to="/personal">
+                    Patient Details Page
                 </NavLink>
                 <NavLink className="d-inline p-2 bg-dark text-white" to="/mypatients">
                     My Patients
                 </NavLink>
-                <Button className="d-inline p-2 bg-dark text-white" onClick={() => this.setState({ LoginModalShow: true })}>
+                <NavLink className="d-inline p-2 bg-dark text-white" to="/allpatients">
+                    All Patients
+                </NavLink>
+                <Button id="signup" className="d-inline p-2 bg-dark text-white" onClick={() => this.setState({ SignUpModalShow: true })}>
+                    Sign Up
+                </Button>
+                <Button id="login" className="d-inline p-2 bg-dark text-white" onClick={() => this.setState({ LoginModalShow: true })}>
                     Login
-                </Button><LoginModal show={this.state.LoginModalShow} onHide={LoginModalClose} />
+                </Button>
                 </Nav>
                 </Navbar.Collapse>
             </Navbar>
+            <LoginModal show={this.state.LoginModalShow} onHide={LoginModalClose}/>
+            <SignUpModal show={this.state.SignUpModalShow}onHide={SignUpModalClose}/>
+        </div>
+            
         )
     }
 }

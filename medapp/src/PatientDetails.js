@@ -1,23 +1,24 @@
 import { useState, useEffect, } from 'react';
-import { Modal, Button} from 'react-bootstrap';
+import { Modal, Button } from 'react-bootstrap';
 
 function PatientPage() {
   const [patientdetails, setDetails] = useState(null);
   const [show, setShow] = useState(false);
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
-  const [key, id] = document.cookie.valueOf().split('=');
+
+  const [userkey, type, id, _] = document.cookie.valueOf().split('=');
 
   useEffect(() => {
     getData();
 
     async function getData() {
 
-      const response = await fetch(process.env.REACT_APP_BASE_URL_PATIENT+id+"/details");
+      const response = await fetch(process.env.REACT_APP_BASE_URL_PATIENT+id+"/details", {credentials:'include'});
       const data = await response.json();
       setDetails(data);
     }
-  }, [id]);
+  }, [userkey, type, id, _]);
   if(patientdetails){
     return (
         <div>
@@ -35,14 +36,15 @@ function PatientPage() {
                    Change my details
                 </Button>
                 <Modal show={show}>
-                  <Modal.Header closeButton>
+                  <Modal.Header closeButton={true} onClick={handleClose}>
                     <Modal.Title>My Details</Modal.Title>
                   </Modal.Header>
                   <Modal.Body>
-                    <div><p>HEY! :) I'll be a feature in the next sprint</p></div>
+                    <p></p>
                   </Modal.Body>
                   <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>Close Modal</Button>
+                    <Button variant="secondary" onClick={handleClose}>Close</Button>
+                    <Button variant="success" type="submit" onClick={() => {saveEditedDetails(); handleClose();}}>Save Changes</Button>
                   </Modal.Footer>
                 </Modal>
             </div>
@@ -52,6 +54,11 @@ function PatientPage() {
   else{
     return (<div></div>)
   }
-  
+  function saveEditedDetails() {
+    console.log(_);
+  }  
 }
+
 export default PatientPage;
+
+

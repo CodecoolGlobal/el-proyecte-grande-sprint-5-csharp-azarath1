@@ -51,21 +51,22 @@ export class PatientLogin extends Component {
             <form onSubmit={this.handleSubmit}>
                 <label>
                     Username:
+                </label>
+                    <br />
                     <input
                         name="username"
                         type="textarea"
-                        value={this.state.userName}
+                        placeholder="eg. BelaLugosi11"
                         onChange={this.handleInputChange} />
-                </label>
                 <br />
                 <label>
                     Password:
+                </label>
+                <br />
                     <input
                         name="password"
-                        type="textarea"
-                        value={this.state.password}
+                        type="password"
                         onChange={this.handleInputChange} />
-                </label>
                 <br />
                 <input type="submit" value="Submit" />
             </form>

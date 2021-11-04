@@ -24,12 +24,8 @@ function DoctorsPatientDetails()  {
             console.log(data);
             setMedications(data);
         }
-
-
-
     }, [], [key, id, patientmedications]);
     if (patientmedications) {
-        console.log(patientmedications);
         return (
             <div>
                 <h1>Medications</h1>
