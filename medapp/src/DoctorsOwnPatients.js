@@ -1,7 +1,6 @@
 import { Button } from 'react-bootstrap';
 import React, { useState, useEffect } from 'react';
 import { Table } from 'react-bootstrap';
-
 import { NavLink } from 'react-router-dom';
 
 
@@ -10,7 +9,7 @@ function DoctorsOwnPatientsPage() {
     //   const [show, setShow] = useState(false);
     //   const handleShow = () => setShow(true);
     //   const handleClose = () => setShow(false);
-    const [key, id] = document.cookie.valueOf().split('=');
+    const [userkey, type, id, _] = document.cookie.valueOf().split('=');
 
     useEffect(() => {
         getData();
@@ -26,7 +25,7 @@ function DoctorsOwnPatientsPage() {
 
         
 
-    }, [key, id, patientdetails]);
+    }, [userkey, _, type, id, patientdetails]);
     if (patientdetails) {
         return (
             <div>

@@ -9,6 +9,7 @@ import { DoctorLogin } from './DoctorLogin';
 import { PatientLogin } from './PatientLogin';
 import PatientPage from './PatientDetails';
 import DoctorsOwnPatientsPage from './DoctorsOwnPatients';
+import DoctorsPatientDetails from './DoctorsPatientDetails';
 import AllPatientsPage from './AllPatientsPage';
   
 function App() {
@@ -21,7 +22,6 @@ function App() {
      <Navigation />
      <Switch>
        <Route path='/' component={Home} exact/>
-       <Route path='/signup' component={Signup}/>
        <Route path='/personal' component={PatientPage}/>
        <Route path='/patientRegistration' component={PatientRegistration}/>
        <Route path='/doctorRegistration' component={DoctorRegistration} />

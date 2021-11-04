@@ -17,7 +17,6 @@ function PatientPage() {
       const response = await fetch(process.env.REACT_APP_BASE_URL_PATIENT+id+"/details", {credentials:'include'});
       const data = await response.json();
       setDetails(data);
-      console.log(type.split(";")[0]);
     }
   }, [userkey, type, id, _]);
   if(patientdetails){
