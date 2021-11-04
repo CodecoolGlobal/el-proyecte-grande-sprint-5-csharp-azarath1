@@ -3,18 +3,18 @@ import { Table, Button } from 'react-bootstrap';
 
 function AllPatientsPage() {
   const [patientdetails, setDetails] = useState(null);
-  const [key, id] = document.cookie.valueOf().split('=');
+  const [userkey, type, id, _] = document.cookie.valueOf().split('=');
 
   useEffect(() => {
     getData();
 
     async function getData() {
 
-      const response = await fetch(process.env.REACT_APP_BASE_URL_DOCTOR+id+'/all-patients');
+      const response = await fetch(process.env.REACT_APP_BASE_URL_DOCTOR+id+'/all-patients', {credentials:'include'});
       const data = await response.json();
       setDetails(data);
     }
-  }, [key, id, patientdetails]);
+  }, [userkey, type, id, _, patientdetails]);
   if(patientdetails){
     return (
         <div>
