@@ -9,23 +9,18 @@ function DoctorsOwnPatientsPage() {
     //   const [show, setShow] = useState(false);
     //   const handleShow = () => setShow(true);
     //   const handleClose = () => setShow(false);
-    const [userkey, type, id, _] = document.cookie.valueOf().split('=');
+    const [idcookie, userTypecookie] = document.cookie.valueOf().split(";");
+    const [key, id] = idcookie.split("=");
 
     useEffect(() => {
         getData();
 
         async function getData() {
-
             const response = await fetch(process.env.REACT_APP_BASE_URL_DOCTOR + id + '/patients',{credentials:'include'});
             const data = await response.json();
             setDetails(data);
         }
-
-        
-
-        
-
-    }, [userkey, _, type, id, patientdetails]);
+    }, [], [key, id, patientdetails]);
     if (patientdetails) {
         return (
             <div>
