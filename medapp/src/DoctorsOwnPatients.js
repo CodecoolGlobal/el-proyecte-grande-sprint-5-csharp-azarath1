@@ -1,7 +1,6 @@
 import { Modal, Button } from 'react-bootstrap';
 import React, { useState, useEffect } from 'react';
 import { Table } from 'react-bootstrap';
-import { DoctorsPatient } from './DoctorsPatient';
 import { NavLink } from 'react-router-dom';
 
 
@@ -21,6 +20,8 @@ function DoctorsOwnPatientsPage() {
             const data = await response.json();
             setDetails(data);
         }
+
+        
 
         
 
@@ -46,8 +47,12 @@ function DoctorsOwnPatientsPage() {
                                         <td>{patient.socialSecurityNumber}</td>
                                         <td>
                                             <Button className="mr-2" variant="info">
-                                                <NavLink to="/">
-                                                    Patient's page
+                                                <NavLink to={{
+                                                    pathname: '/doctorspatient',
+                                                    state: {
+                                                        patientid: patient.id }
+                                                }}>
+                                                    View patient data
                                                 </NavLink>
                                             </Button>
                                         </td>
