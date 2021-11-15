@@ -33,12 +33,21 @@ namespace SuperDuperMedAPP.Data.Repositories
 
         public async Task<List<Patient>?> GetPatientsByDoctorId(int doctorId, int pageNumber)
         {
-            return await _db.Patients.Where(x => x.DoctorID.Equals(doctorId)).Skip(10*pageNumber).Take(10).ToListAsync();
+            return await _db.Patients
+                .Where(x => x.DoctorID.Equals(doctorId))
+                .Skip(10*pageNumber)
+                .Take(10)
+                .ToListAsync();
         }
 
         public async Task<List<Patient>?> GetAllPatients()
         {
             return await _db.Patients.ToListAsync();
+        }
+
+        public async Task<List<Patient>?> GetAllPatientsByPageNumber(int pageNumber)
+        {
+            return await _db.Patients.Skip(10 * pageNumber).Take(10).ToListAsync();
         }
 
         public async Task UpdatePatient(Patient patient)
@@ -86,9 +95,9 @@ namespace SuperDuperMedAPP.Data.Repositories
             await _db.SaveChangesAsync();
         }
 
-        public async Task EditDoctorId(int PatientId, int newDoctorId)
+        public async Task EditDoctorId(int patientId, int newDoctorId)
         {
-            var patient = await _db.Patients.SingleOrDefaultAsync(x => x.ID == PatientId);
+            var patient = await _db.Patients.SingleOrDefaultAsync(x => x.ID == patientId);
             patient.DoctorID = newDoctorId;
             _db.Entry(patient).Property("DoctorID").IsModified = true;
             await _db.SaveChangesAsync();
