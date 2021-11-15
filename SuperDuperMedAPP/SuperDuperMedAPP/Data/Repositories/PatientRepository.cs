@@ -62,15 +62,15 @@ namespace SuperDuperMedAPP.Data.Repositories
             if (contacts.Email != null)
             {
                 patient.Email = contacts.Email;
+                _db.Entry(patient).Property("Email").IsModified = true;
             }
 
             if (contacts.PhoneNumber != null)
             {
                 patient.PhoneNumber = contacts.PhoneNumber;
+                _db.Entry(patient).Property("PhoneNumber").IsModified = true;
             }
 
-            _db.Entry(patient).Property("Email").IsModified = true;
-            _db.Entry(patient).Property("PhoneNumber").IsModified = true;
             await _db.SaveChangesAsync();
         }
 
