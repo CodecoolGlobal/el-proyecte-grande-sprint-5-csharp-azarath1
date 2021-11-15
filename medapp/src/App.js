@@ -1,5 +1,5 @@
 import './App.css';
-import {Home} from './Home';
+import Home from './Home';
 import {Navigation} from './Navigation';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import { PatientRegistration } from './PatientRegistration';
