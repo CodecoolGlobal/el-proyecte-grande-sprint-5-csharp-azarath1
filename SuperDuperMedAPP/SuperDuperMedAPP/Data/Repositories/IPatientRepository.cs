@@ -11,7 +11,7 @@ namespace SuperDuperMedAPP.Data.Repositories
         Task<Patient?> GetPatientByUsername(string username);
 
         Task<Patient?> GetPatientById(int userid);
-        Task<List<Patient>?> GetPatientsByDoctorId(int doctorId);
+        Task<List<Patient>?> GetPatientsByDoctorId(int doctorId, int pageNumber);
         Task<List<Patient>?> GetAllPatients();
         Task UpdatePatient(Patient patient);
         Task UpdatePatientContacts(UserContacts contacts,int id);
