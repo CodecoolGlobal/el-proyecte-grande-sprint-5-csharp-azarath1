@@ -112,7 +112,7 @@ namespace SuperDuperMedAPP.Controllers
                 return Unauthorized();
             }
 
-            var userMedication = await _medicationRepository.GetAllMedication(id, pageNumber);
+            var userMedication = await _medicationRepository.GetMedicationByPageNumber(id, pageNumber);
             if (userMedication == null)
             {
                 return NoContent();

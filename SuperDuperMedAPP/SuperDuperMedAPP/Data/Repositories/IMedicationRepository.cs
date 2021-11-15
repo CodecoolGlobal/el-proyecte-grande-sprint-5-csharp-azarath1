@@ -7,7 +7,7 @@ namespace SuperDuperMedAPP.Data.Repositories
     public interface IMedicationRepository
     {
         Task AddMedication(Medication medication);
-        Task<List<Medication>?> GetAllMedication(int patientId);
+        Task<List<Medication>?> GetMedicationByPageNumber(int patientId, int pageNumber);
         Task<Medication?> GetMedicationById(int medicationId);
         Task UpdateMedication(Medication medication);
         Task DeleteMedication(int medicationId);

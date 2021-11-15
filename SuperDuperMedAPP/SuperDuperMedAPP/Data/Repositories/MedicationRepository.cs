@@ -20,9 +20,13 @@ namespace SuperDuperMedAPP.Data.Repositories
             await _db.SaveChangesAsync();
         }
 
-        public async Task<List<Medication>?> GetAllMedication(int patientId)
+        public async Task<List<Medication>?> GetMedicationByPageNumber(int patientId, int pageNumber)
         {
-            return await _db.Medications.Where(x => x.PatientID.Equals(patientId)).ToListAsync();
+            return await _db.Medications
+                .Where(x => x.PatientID.Equals(patientId))
+                .Skip(10*pageNumber)
+                .Take(10)
+                .ToListAsync();
         }
 
         public async Task<Medication?> GetMedicationById(int medicationId)
