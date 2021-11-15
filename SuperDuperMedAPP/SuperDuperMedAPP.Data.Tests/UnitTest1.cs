@@ -89,7 +89,7 @@ namespace SuperDuperMedAPP.Data.Tests
         [Test]
         public async Task Should_GetPatientByDoctorId_When_MethodIsCalled()
         {
-            var theOne = await _pRepository.GetPatientsByDoctorId(1);
+            var theOne = await _pRepository.GetPatientsByDoctorId(1, 1);
             Assert.That(theOne.First().Name, Is.EqualTo("Mr.Nobody"));
         }
 
