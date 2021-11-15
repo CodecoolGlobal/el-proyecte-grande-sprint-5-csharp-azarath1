@@ -110,14 +110,19 @@ namespace SuperDuperMedAPP.Data
             return await _patientRepository.GetAllPatients();
         }
 
+        public async Task<List<Patient>?> GetAllPatientsByPageNumber(int pageNumber)
+        {
+            return await _patientRepository.GetAllPatientsByPageNumber(pageNumber);
+        }
+
         public async Task<List<Patient>?> GetDoctorsPatients(int doctorId, int pageNumber)
         {
             return await _patientRepository.GetPatientsByDoctorId(doctorId, pageNumber);
         }
 
-        public async Task<List<Medication>?> GetAllMedicationByPatientId(int patientId)
+        public async Task<List<Medication>?> GetAllMedicationByPatientId(int patientId, int pageNumber)
         {
-            return await _medicationRepository.GetAllMedication(patientId);
+            return await _medicationRepository.GetMedicationByPageNumber(patientId, pageNumber);
         }
         public async Task<Medication?> GetMedicationById(int medicationId)
         {
