@@ -72,7 +72,22 @@ function Home() {
         }
         else{
           return (
-            <div></div>   
+            <div className="justify-content-center">
+            <h2 className="text-danger">Welcome to SuperduperMedapp!</h2>
+            <div className="card text-white bg-secondary mb-3">
+                <div className="card-header"><h4>Current Coronavirus Statistics</h4></div>
+                <div className="d-flex justify-content-center">
+                    <h1>
+                        <div className="spinner-border text-danger" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                        </div>
+                    </h1>
+                </div>
+            </div>
+            
+            <h4>Placeholder articles</h4>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras pulvinar urna nisi, non interdum ipsum pulvinar ullamcorper. Suspendisse eros lorem, mollis vel pellentesque molestie, dictum dictum lorem. Duis ipsum dui, accumsan at eleifend quis, sodales dignissim eros. Nunc at sollicitudin leo, vel sagittis ligula. Nullam massa velit, mattis eget dolor nec, posuere molestie ante. Maecenas in ipsum sit amet justo ultrices placerat dignissim ac nibh. Nunc a felis lacus.</p>
+            </div>   
           )
         }
       }
