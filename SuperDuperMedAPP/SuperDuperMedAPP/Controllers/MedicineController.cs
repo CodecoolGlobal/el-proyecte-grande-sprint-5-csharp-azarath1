@@ -19,21 +19,21 @@ namespace SuperDuperMedAPP.Controllers
             _medicineRepository = medicineRepository;
         }
 
-        [Route("patient/{id}/medicine/{medicineID}")]
-        [Route("doctor/{id}/medicine/{medicineID}")]
-        public async Task<ActionResult> GetPatientsMedicine(int medicineID, int id)
+        [Route("patient/{id:int}/medicine/{medicineId:int}")]
+        [Route("doctor/{id:int}/medicine/{medicineId:int}")]
+        public async Task<ActionResult> GetMedicine([FromRoute] int medicineId, [FromRoute] int id)
         {
             if (id != HttpContext.Session.GetInt32(SessionId))
             {
                 return Unauthorized();
             }
 
-            var medicine = await _medicineRepository.GetMedicineById(medicineID);
+            var medicine = await _medicineRepository.GetMedicineById(medicineId);
             return Ok(medicine);
         }
 
-        [Route("doctor/{id}/medicine")]
-        public async Task<ActionResult> GetAllMedicine(int id)
+        [Route("medicine/{id:int}")]
+        public async Task<ActionResult> GetAllMedicine([FromRoute] int id)
         {
             if (id != HttpContext.Session.GetInt32(SessionId))
             {
@@ -43,5 +43,36 @@ namespace SuperDuperMedAPP.Controllers
             var meds = await _medicineRepository.GetAllMedicine();
             return Ok(meds);
         }
+
+        [Route("doctor/{id:int}/medicine/{pageNumber:int}")]
+        public async Task<ActionResult> GetMedicineByPage([FromRoute] int id, [FromRoute] int pageNumber)
+        {
+            if (id != HttpContext.Session.GetInt32(SessionId))
+            {
+                return Unauthorized();
+            }
+
+            var meds = await _medicineRepository.GetMedicineByPageNumber(pageNumber);
+            return Ok(meds);
+        }
+
+        //[HttpPost]
+        //[Route("medicine/add")]
+        //public async Task<ActionResult> AddMedicine()
+        //{
+        //}
+
+        //[HttpDelete]
+        //[Route("medicine/delete")]
+        //public async Task<ActionResult> DeleteMedicine()
+        //{
+        //}
+
+        //[HttpPut]
+        //[Route("medicine/update")]
+        //public async Task<ActionResult> UpdateMedicine()
+        //{
+        //}
+
     }
 }
