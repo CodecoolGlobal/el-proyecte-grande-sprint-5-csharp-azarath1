@@ -8,6 +8,7 @@ function DoctorsPatientDetails()  {
     const [idcookie, userTypecookie] = document.cookie.valueOf().split(";");
     const [key, id] = idcookie.split("=");
     const [patientmedications, setMedications] = useState(null);
+    const [medicationDose, setMedicationDose] = useState(0);
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
@@ -31,12 +32,25 @@ function DoctorsPatientDetails()  {
 
     async function handleDoseUpdate(event) {
         event.preventDefault();
-        
+        console.log(medicationDose);
+        console.log(event.target.value);
+        await fetch(process.env.REACT_APP_BASE_URL_DOCTOR + id + '/medication/' + event.target.value + '/edit-dosage', {
+            method: 'put',
+            mode: 'cors',
+            credentials: 'include',
+            headers: {
+                'Access-Control-Allow-Credentials': 'true',
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(
+                medicationDose
+            ),
+        }).then(res => res.json())
+            .then(res => console.log(res));
     };
 
-    let medicationName;
-    let medicationDose;
-    let medicationNote;
+
     //   const [show, setShow] = useState(false);
     //   const handleShow = () => setShow(true);
     //   const handleClose = () => setShow(false);
@@ -98,16 +112,22 @@ function DoctorsPatientDetails()  {
                                                     </Button>
                                                 </Form.Group>
 
+                                            </Form>
+
+                                            <Form>
                                                 <Form.Group controlId="medicationdose">
                                                     <Form.Label>Dose</Form.Label>
                                                     <Form.Control type="text" name="dose"
                                                         defaultValue={medication.dose}
-                                                        placeholder="dose" />
-                                                    <Button variant="primary" value={ medication.medicationID} type="submit" onClick={ handleDoseUpdate }>
+                                                        placeholder="dose"
+                                                        onChange={(event) => setMedicationDose( event.target.value )} />
+                                                    <Button variant="primary" type="submit" value={ medication.medicationID} onClick={handleDoseUpdate}>
                                                         Update dose
                                                     </Button>
                                                 </Form.Group>
+                                            </Form>
 
+                                            <Form>
                                                 <Form.Group controlId="medicationnote">
                                                     <Form.Label>Doctor's note</Form.Label>
                                                     <Form.Control type="text" name="medicationnote"
@@ -118,9 +138,9 @@ function DoctorsPatientDetails()  {
                                                         Update note
                                                     </Button>
                                                 </Form.Group>
-
-                                                
                                             </Form>
+                                                
+                                            
                                             <Modal.Footer>
                                                 <Button variant="secondary" onClick={handleClose}>
                                                     Close
