@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
+import { BehaviorSubject } from 'rxjs';
+const currentUserSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('currentUser')));
 
 export class PatientLogin extends Component {
-
+    
+    
     constructor(props) {
         super(props);
         this.state = {
             userName: "Name",
             password: "Password"
         };
-
+        
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -24,7 +27,7 @@ export class PatientLogin extends Component {
 
     async handleSubmit(event) {
         event.preventDefault();
-        await fetch(process.env.REACT_APP_BASE_URL_PATIENT+'login', {
+        await fetch(process.env.REACT_APP_BASE_URL + 'login', {
             method: 'post',
             mode:'cors',
             credentials: 'include',
@@ -35,13 +38,14 @@ export class PatientLogin extends Component {
             },
             body: JSON.stringify({
                 "Username": this.state.userName.toString(),
-                "HashPassword": this.state.password.toString()
+                "Password": this.state.password.toString()
             }),
         })
             .then(res => res.json())
             .then((res) => {
-
-                alert("Patient "+res+" has signed in.");
+                localStorage.setItem('currentUser', JSON.stringify(res));
+                currentUserSubject.next(res);
+                alert("Sign in successful.");
 
             })
     }

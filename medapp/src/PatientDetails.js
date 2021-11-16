@@ -1,5 +1,7 @@
 import { useState, useEffect, } from 'react';
 import { Modal, Button } from 'react-bootstrap';
+import { BehaviorSubject } from 'rxjs';
+const currentUserSubject = JSON.parse(localStorage.getItem('currentUser'));
 
 function PatientPage() {
   const [patientdetails, setDetails] = useState(null);
@@ -11,16 +13,18 @@ function PatientPage() {
 
   const [userkey, type, id, _] = document.cookie.valueOf().split('=');
 
+
+
   useEffect(() => {
     getData();
 
     async function getData() {
-
-      const response = await fetch(process.env.REACT_APP_BASE_URL_PATIENT+id+"/details", {credentials:'include'});
+if(currentUserSubject != null){
+      const response = await fetch(process.env.REACT_APP_BASE_URL_PATIENT+currentUserSubject.id+"/details", {headers:{Authorization: `Bearer ${currentUserSubject.token}`}});
       const data = await response.json();
       setDetails(data);
       setMail(data.email);
-      setPhone(data.phoneNumber);
+      setPhone(data.phoneNumber);}
     }
   }, [userkey, type, id, _]);
   if(patientdetails){
