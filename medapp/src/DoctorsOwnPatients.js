@@ -16,11 +16,11 @@ function DoctorsOwnPatientsPage() {
         getData();
 
         async function getData() {
-            const response = await fetch(process.env.REACT_APP_BASE_URL_DOCTOR + id + '/patients',{credentials:'include'});
+            const response = await fetch(process.env.REACT_APP_BASE_URL_DOCTOR + id + '/patients/1',{credentials:'include'});
             const data = await response.json();
             setDetails(data);
         }
-    }, [id, userTypecookie], [key, id, patientdetails]);
+    }, [id, userTypecookie, key]);
     if (patientdetails) {
         return (
             <div>
