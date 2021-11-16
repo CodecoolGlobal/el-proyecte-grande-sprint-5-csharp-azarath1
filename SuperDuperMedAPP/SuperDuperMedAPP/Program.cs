@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using SuperDuperMedAPP.Infrastructure;
 
 namespace SuperDuperMedAPP
 {
@@ -29,7 +30,7 @@ namespace SuperDuperMedAPP
                 try
                 {
                     var context = services.GetRequiredService<AppDbContext>();
-                    DbInitializer.Initialize(context);
+                    DbInitializer.Initialize(context,services.GetRequiredService<IAuthService>());
                 }
                 catch (Exception ex)
                 {
