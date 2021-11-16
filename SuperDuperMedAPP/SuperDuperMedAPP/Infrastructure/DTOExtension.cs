@@ -62,6 +62,7 @@ namespace SuperDuperMedAPP.Infrastructure
             return (patients ?? new List<Patient>())
                 .Select(x => new GetAllPatientsDTO()
                 {
+                    ID = x.ID,
                     Name = x.Name,
                     DateOfBirth = x.DateOfBirth.ToShortDateString(),
                     SocialSecurityNumber = x.SocialSecurityNumber,
