@@ -1,8 +1,8 @@
 ﻿namespace SuperDuperMedAPP.Models.DTO
 {
-    public class SessionData
+    public class LoginData
     {
         public string Username { get; set; }
-        public string HashPassword { get; set; }
+        public string Password { get; set; }
     }
 }

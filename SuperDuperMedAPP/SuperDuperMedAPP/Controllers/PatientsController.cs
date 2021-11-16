@@ -47,9 +47,9 @@ namespace SuperDuperMedAPP.Controllers
 
         [HttpPost]
         [Route("patient/login")]
-        public async Task<ActionResult> Login([FromBody] SessionData data)
+        public async Task<ActionResult> Login([FromBody] LoginData data)
         {
-            if (data.HashPassword.Equals("") || data.Username.Equals(""))
+            if (data.Password.Equals("") || data.Username.Equals(""))
             {
                 return Unauthorized("Please fill both username/password");
             }
@@ -57,7 +57,7 @@ namespace SuperDuperMedAPP.Controllers
             var all = await _patientRepository.GetAllPatients();
 
             if (all != null && !all.Any(x => x.Username.Equals(data.Username)
-                                             && x.HashPassword.Equals(data.HashPassword)))
+                                             && x.HashPassword.Equals(data.Password)))
             {
                 return Unauthorized("Password, or username doesn't match.");
             }
