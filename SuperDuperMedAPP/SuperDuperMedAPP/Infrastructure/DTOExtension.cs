@@ -70,5 +70,15 @@ namespace SuperDuperMedAPP.Infrastructure
                     DoctorID = x.DoctorID
                 }).ToList();
         }
+
+        public static GetUserToAuthDTO TGetUserToAuthDto(this User user)
+        {
+            return new GetUserToAuthDTO
+            {
+                Id = user.ID,
+                HashPassword = user.HashPassword,
+                Role = user.Role
+            };
+        }
     }
 }
