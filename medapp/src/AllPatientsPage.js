@@ -3,19 +3,21 @@ import { Table, Button } from 'react-bootstrap';
 
 function AllPatientsPage() {
   const [patientdetails, setDetails] = useState(null);
+  const[patientId, setId] = useState(0);
   const [idcookie, userTypecookie] = document.cookie.valueOf().split(";");
-  const [key, id] = idcookie.split("=");
+  const [key, doctorId] = idcookie.split("=");
 
   useEffect(() => {
     getData();
 
     async function getData() {
 
-      const response = await fetch(process.env.REACT_APP_BASE_URL_DOCTOR+id+'/all-patients', {credentials:'include'});
+      const response = await fetch(process.env.REACT_APP_BASE_URL_DOCTOR+doctorId+'/all-patients', {credentials:'include'});
       const data = await response.json();
       setDetails(data);
+      setId(data);
     }
-  }, [key, userTypecookie, id, patientdetails]);
+  }, [key, userTypecookie, doctorId, patientdetails]);
   if(patientdetails){
     return (
         <div>
@@ -52,7 +54,8 @@ function AllPatientsPage() {
     return (<div></div>)
   }
   function putIntoPractice() {
-    fetch(process.env.REACT_APP_BASE_URL_DOCTOR+id+'/register-patient',{
+    console.log(patientId);
+    fetch(process.env.REACT_APP_BASE_URL_DOCTOR+doctorId+'/register-patient',{
         method:'PUT',
         credentials: 'include',
         headers:{
@@ -60,7 +63,7 @@ function AllPatientsPage() {
             'Content-Type':'application/json'
         },
         body:JSON.stringify({
-            doctorID: id
+            patientid: patientdetails.map(patient=>patient.id)
         })
     })
     .then(res=>res.json())
