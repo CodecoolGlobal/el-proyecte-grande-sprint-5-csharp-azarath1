@@ -1,6 +1,6 @@
 import { Button } from 'react-bootstrap';
 import React, { useState, useEffect } from 'react';
-import { Table } from 'react-bootstrap';
+import { Modal, Table } from 'react-bootstrap';
 import { NavLink, useLocation } from 'react-router-dom';
 
 function DoctorsPatientDetails()  {
@@ -8,6 +8,20 @@ function DoctorsPatientDetails()  {
     const [idcookie, userTypecookie] = document.cookie.valueOf().split(";");
     const [key, id] = idcookie.split("=");
     const [patientmedications, setMedications] = useState(null);
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    function handleClick(event) {
+        event.preventDefault();
+        handleShow();
+        console.log(event.target);
+    };
+
+    let medicationName;
+    let medicationDose;
+    let medicationNote;
     //   const [show, setShow] = useState(false);
     //   const handleShow = () => setShow(true);
     //   const handleClose = () => setShow(false);
@@ -17,13 +31,16 @@ function DoctorsPatientDetails()  {
 
 
         async function getPatientMedications() {
-            console.log("ez az" + location.state.patientid);
+
             
             const response = await fetch(process.env.REACT_APP_BASE_URL_DOCTOR + id + '/patients-medications/' + location.state.patientid, {credentials:'include'});
             const data = await response.json();
-            console.log(data);
+
             setMedications(data);
         }
+
+        
+
     }, [], [key, id, patientmedications]);
     if (patientmedications) {
         return (
@@ -46,17 +63,24 @@ function DoctorsPatientDetails()  {
                                         <td>{medication.dose}</td>
                                         <td>{medication.doctorNote}</td>
                                         <td>
-                                            <Button className="mr-2" variant="info">
-                                                <NavLink to={{
-                                                    pathname: '/doctorspatient',
-                                                    state: {
-                                                        patientid: medication.id
-                                                    }
-                                                }}>
-                                                    Edit Medication
-                                                </NavLink>
+                                            <Button medicationname={medication.name} medicationdose={medication.dose} doctornote={ medication.doctorNote} variant="primary" onClick={handleClick}>
+                                                Launch demo modal
                                             </Button>
                                         </td>
+                                        <Modal show={show} onHide={handleClose}>
+                                            <Modal.Header closeButton>
+                                                <Modal.Title>Modal heading</Modal.Title>
+                                            </Modal.Header>
+                                            <Modal.Body>{ medication.name }</Modal.Body>
+                                            <Modal.Footer>
+                                                <Button variant="secondary" onClick={handleClose}>
+                                                    Close
+                                                </Button>
+                                                <Button variant="primary" onClick={handleClose}>
+                                                    Save Changes
+                                                </Button>
+                                            </Modal.Footer>
+                                        </Modal>
                                     </tr>)}
                             </tbody>
                         </Table>
