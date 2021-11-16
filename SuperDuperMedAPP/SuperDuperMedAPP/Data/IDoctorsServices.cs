@@ -25,8 +25,9 @@ namespace SuperDuperMedAPP.Data
         Task EditMedicationNote(int medicationId, string newNote);
         Task<List<Medicine>?> GetAllMedicine();
         Task<List<Patient>?> GetAllPatients();
+        Task<List<Patient>?> GetAllPatientsByPageNumber(int pageNumber);
         Task<List<Patient>?> GetDoctorsPatients(int doctorId, int pageNumber);
-        Task<List<Medication>?> GetAllMedicationByPatientId(int patientId);
+        Task<List<Medication>?> GetAllMedicationByPatientId(int patientId, int pageNumber);
         Task<Medication?> GetMedicationById(int medicationId);
     }
 }

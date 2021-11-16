@@ -2,6 +2,7 @@
 {
     public class GetAllPatientsDTO
     {
+        public int ID { get; set; }
         public string Name { get; set; }
         public string DateOfBirth { get; set; }
         public string SocialSecurityNumber { get; set; }

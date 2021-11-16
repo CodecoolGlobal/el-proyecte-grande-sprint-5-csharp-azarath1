@@ -14,7 +14,7 @@ namespace SuperDuperMedAPP.Data.Repositories
 
         public MedicineRepository(AppDbContext dbContext) => _db = dbContext;
 
-        public async Task AddMedication(Medicine medicine)
+        public async Task AddMedicine(Medicine medicine)
         {
             _db.Medicine.Add(medicine);
             await _db.SaveChangesAsync();
@@ -23,6 +23,11 @@ namespace SuperDuperMedAPP.Data.Repositories
         public async Task<List<Medicine>?> GetAllMedicine()
         {
             return await _db.Medicine.ToListAsync();
+        }
+
+        public async Task<List<Medicine>?> GetMedicineByPageNumber(int pageNumber)
+        {
+            return await _db.Medicine.Skip(10*pageNumber).Take(10).ToListAsync();
         }
 
         public async Task<Medicine?>  GetMedicineById(int medicineId)

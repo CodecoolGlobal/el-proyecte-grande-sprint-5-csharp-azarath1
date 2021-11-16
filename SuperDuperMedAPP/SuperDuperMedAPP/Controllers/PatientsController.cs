@@ -103,8 +103,8 @@ namespace SuperDuperMedAPP.Controllers
             return Ok(result);
         }
 
-        [Route("patient/{id:int}/medication")]
-        public async Task<ActionResult> GetPatientMedication([FromRoute] int id)
+        [Route("patient/{id:int}/medication/{pageNumber:int}")]
+        public async Task<ActionResult> GetPatientMedication([FromRoute] int id,[FromRoute] int pageNumber)
         {
             var sessionID = HttpContext.Session.GetInt32(SessionId);
             if (id != sessionID)
@@ -112,7 +112,7 @@ namespace SuperDuperMedAPP.Controllers
                 return Unauthorized();
             }
 
-            var userMedication = await _medicationRepository.GetAllMedication(id);
+            var userMedication = await _medicationRepository.GetMedicationByPageNumber(id, pageNumber);
             if (userMedication == null)
             {
                 return NoContent();
