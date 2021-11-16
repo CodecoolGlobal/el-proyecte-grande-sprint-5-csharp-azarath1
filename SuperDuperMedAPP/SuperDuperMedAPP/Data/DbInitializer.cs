@@ -31,7 +31,7 @@ namespace SuperDuperMedAPP.Data
 
             var patients = new Patient[]
 {
-            new Patient{SocialSecurityNumber = "044-033-999", DoctorID = 1, Name="Mr. Instance Imre", DateOfBirth=DateTime.Parse("2005-09-01"),HashPassword = "Imre",Username = "Imre"},
+            new Patient{SocialSecurityNumber = "044-033-999", DoctorID = null, Name="Mr. Instance Imre", DateOfBirth=DateTime.Parse("2005-09-01"),HashPassword = "Imre",Username = "Imre"},
             new Patient{SocialSecurityNumber = "044-033-919", DoctorID = 1, Name="Miss Exampli Gratia", DateOfBirth=DateTime.Parse("2002-09-01"),HashPassword = "Gratia",Username = "Gratia"},
             new Patient{SocialSecurityNumber = "044-033-929", DoctorID = 1, Name="Mr. Standard Arturo", DateOfBirth=DateTime.Parse("2003-09-01"),HashPassword = "Arturo",Username = "Arturo"}
 };
