@@ -3,7 +3,6 @@ import { Table, Button } from 'react-bootstrap';
 
 function AllPatientsPage() {
   const [patientdetails, setDetails] = useState(null);
-  const[patientId, setId] = useState(0);
   const [idcookie, userTypecookie] = document.cookie.valueOf().split(";");
   const [key, doctorId] = idcookie.split("=");
 
@@ -11,13 +10,11 @@ function AllPatientsPage() {
     getData();
 
     async function getData() {
-
-      const response = await fetch(process.env.REACT_APP_BASE_URL_DOCTOR+doctorId+'/all-patients', {credentials:'include'});
+      const response = await fetch(process.env.REACT_APP_BASE_URL_DOCTOR+doctorId+'/all-patients/'+0, {credentials:'include'});
       const data = await response.json();
       setDetails(data);
-      setId(data);
     }
-  }, [key, userTypecookie, doctorId, patientdetails]);
+  }, [key, userTypecookie, doctorId]);
   if(patientdetails){
     return (
         <div>
@@ -38,7 +35,7 @@ function AllPatientsPage() {
                                 <td>{patient.name}</td>
                                 <td>{patient.socialSecurityNumber}</td>
                                 <td>
-                                    <Button className="mr-2" variant="info" onClick={putIntoPractice}>
+                                    <Button className="mr-2" value={patient.id} variant="info" onClick={putIntoPractice}>
                                         Put into practice
                                     </Button>
                                 </td>
@@ -53,25 +50,33 @@ function AllPatientsPage() {
   else{
     return (<div></div>)
   }
-  function putIntoPractice() {
-    console.log(patientId);
-    fetch(process.env.REACT_APP_BASE_URL_DOCTOR+doctorId+'/register-patient',{
-        method:'PUT',
-        credentials: 'include',
-        headers:{
-            'Accept':'application/json',
-            'Content-Type':'application/json'
-        },
-        body:JSON.stringify({
-            patientid: patientdetails.map(patient=>patient.id)
-        })
-    })
-    .then(res=>res.json())
-    .then((result)=>{
-    },
-    (message)=>{
-        alert('Saved Changes');
-    })
-  }  
+  
+  
+  
+  function putIntoPractice(event) {
+    event.preventDefault();
+    const requestOptions = {
+      method: 'PUT',
+      credentials: 'include',
+      mode: 'cors',
+      headers:{
+          'Access-Control-Allow-Credentials': 'true',
+          'Accept':'application/json',
+          'Content-Type':'application/json'
+      },
+      body: JSON.stringify(event.target.value),
+  };
+  fetch(process.env.REACT_APP_BASE_URL_DOCTOR+doctorId+'/register-patient', requestOptions)
+      .then(async response => {
+      const data = await response;
+        if (!response.ok) {
+          const error = (data && data.message) || response.status;
+          return Promise.reject(error);
+      }
+  })
+  .catch(error => {
+      console.error('There was an error!', error);
+  });  
+}
 }
 export default AllPatientsPage;
