@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -84,6 +85,7 @@ namespace SuperDuperMedAPP.Controllers
             return Ok("Successfully logged out.");
         }
 
+        [Authorize(Roles = "patient")]
         [Route("patient/{id:int}/details")]
         public async Task<ActionResult> GetLoggedInPatientDetails([FromRoute] int id)
         {
