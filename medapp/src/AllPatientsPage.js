@@ -66,9 +66,11 @@ function AllPatientsPage() {
       },
       body: JSON.stringify(event.target.value),
   };
+  if(window.confirm('Are you sure you want to add this patient?')){
   fetch(process.env.REACT_APP_BASE_URL_DOCTOR+doctorId+'/register-patient', requestOptions)
       .then(async response => {
       const data = await response;
+      alert("Sucessfuly added!")
         if (!response.ok) {
           const error = (data && data.message) || response.status;
           return Promise.reject(error);
@@ -77,6 +79,7 @@ function AllPatientsPage() {
   .catch(error => {
       console.error('There was an error!', error);
   });  
+}
 }
 }
 export default AllPatientsPage;
