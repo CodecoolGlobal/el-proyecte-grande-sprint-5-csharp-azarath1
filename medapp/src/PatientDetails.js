@@ -72,28 +72,30 @@ function PatientPage() {
   }
 
 
-  async function saveEditedDetails() {
-    try {
-      fetch(process.env.REACT_APP_BASE_URL_PATIENT+id+"/edit-contacts",{
+  function saveEditedDetails() {
+      const requestOptions = {
         method:'PUT',
         credentials: 'include',
         headers:{
             'Accept':'application/json',
             'Content-Type':'application/json'
         },
-        body:JSON.stringify({   
+        body:JSON.stringify({
           email: emailContact,
-          phonenumber: phoneContact
-        })
+          phonenumber: phoneContact})
+    };
+    fetch(process.env.REACT_APP_BASE_URL_PATIENT+id+"/edit-contacts", requestOptions)
+        .then(async response => {
+        const data = await response;
+          if (!response.ok) {
+            const error = (data && data.message) || response.status;
+            return Promise.reject(error);
+        }
     })
-    .then(res=>res.json())
-    .then(alert("Saved Changes!"))
-    } catch (error) {
-      console.log(error);
-    }  
-  }  
+    .catch(error => {
+        console.error('There was an error!', error);
+    });  
+  }
 }
 
 export default PatientPage;
-
-
