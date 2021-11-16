@@ -10,22 +10,23 @@ namespace SuperDuperMedAPP.Infrastructure
 {
     public class AuthService : IAuthService
     {
-        string _jwtSecret;
-        int _jwtLifespan;
+        readonly string _jwtSecret;
+        readonly int _jwtLifespan;
         public AuthService(string jwtSecret, int jwtLifespan)
         {
             this._jwtSecret = jwtSecret;
             this._jwtLifespan = jwtLifespan;
         }
-        public AuthData GetAuthData(string id)
+        public AuthData GetAuthData(int id,string role)
         {
-            var expirationTime = DateTime.UtcNow.AddSeconds(_jwtLifespan);
+            var expirationTime = DateTime.UtcNow.AddHours(_jwtLifespan);
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new[]
+                Subject = new ClaimsIdentity (new Claim[]
                 {
-                    new Claim(ClaimTypes.Name, id)
+                    new Claim(ClaimTypes.Name, id.ToString()),
+                    new Claim(ClaimTypes.Role, role)
                 }),
                 Expires = expirationTime,
                 // new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256Signature)
