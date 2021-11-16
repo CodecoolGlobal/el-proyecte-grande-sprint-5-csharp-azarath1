@@ -20,7 +20,7 @@ function DoctorsOwnPatientsPage() {
             const data = await response.json();
             setDetails(data);
         }
-    }, [], [key, id, patientdetails]);
+    }, [id, userTypecookie], [key, id, patientdetails]);
     if (patientdetails) {
         return (
             <div>

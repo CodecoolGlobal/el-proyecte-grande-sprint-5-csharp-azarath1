@@ -22,7 +22,7 @@ export class Navigation extends Component{
                 <Navbar.Collapse id="basic-navbar-nav">
                 <Nav>
                 <NavLink className="d-inline p-2 bg-dark text-white" to="/">
-                    Home
+                <h4><i className="fas fa-laptop-medical text-danger"></i></h4> 
                 </NavLink >
                 <NavLink  className="d-inline p-2 bg-dark text-white" to="/personal">
                     Patient Details Page
