@@ -1,6 +1,6 @@
 import { Button } from 'react-bootstrap';
 import React, { useState, useEffect } from 'react';
-import { Modal, Table } from 'react-bootstrap';
+import { Modal, Table, Form } from 'react-bootstrap';
 import { NavLink, useLocation } from 'react-router-dom';
 
 function DoctorsPatientDetails()  {
@@ -17,6 +17,21 @@ function DoctorsPatientDetails()  {
         event.preventDefault();
         handleShow();
         console.log(event.target);
+    };
+
+    function handleNoteUpdate(event) {
+        event.preventDefault();
+        
+    };
+
+    function handleNameUpdate(event) {
+        event.preventDefault();
+        
+    };
+
+    async function handleDoseUpdate(event) {
+        event.preventDefault();
+        
     };
 
     let medicationName;
@@ -64,20 +79,51 @@ function DoctorsPatientDetails()  {
                                         <td>{medication.doctorNote}</td>
                                         <td>
                                             <Button medicationname={medication.name} medicationdose={medication.dose} doctornote={ medication.doctorNote} variant="primary" onClick={handleClick}>
-                                                Launch demo modal
+                                                Update Medication
                                             </Button>
                                         </td>
                                         <Modal show={show} onHide={handleClose}>
                                             <Modal.Header closeButton>
-                                                <Modal.Title>Modal heading</Modal.Title>
+                                                <Modal.Title>Update Medication</Modal.Title>
                                             </Modal.Header>
-                                            <Modal.Body>{ medication.name }</Modal.Body>
+                                            <Form>
+
+                                                <Form.Group controlId="medicationname">
+                                                    <Form.Label>Name of Medication</Form.Label>
+                                                    <Form.Control type="text" name="name"
+                                                        defaultValue={medication.name}
+                                                        placeholder="name" />
+                                                    <Button variant="primary" type="submit" onClick={ handleNameUpdate }>
+                                                        Update Name
+                                                    </Button>
+                                                </Form.Group>
+
+                                                <Form.Group controlId="medicationdose">
+                                                    <Form.Label>Dose</Form.Label>
+                                                    <Form.Control type="text" name="dose"
+                                                        defaultValue={medication.dose}
+                                                        placeholder="dose" />
+                                                    <Button variant="primary" value={ medication.medicationID} type="submit" onClick={ handleDoseUpdate }>
+                                                        Update dose
+                                                    </Button>
+                                                </Form.Group>
+
+                                                <Form.Group controlId="medicationnote">
+                                                    <Form.Label>Doctor's note</Form.Label>
+                                                    <Form.Control type="text" name="medicationnote"
+                                                        defaultValue={medication.doctorNote}
+                                                        placeholder="medicationnote"
+                                                    />
+                                                    <Button variant="primary" type="submit" onClick={ handleNoteUpdate }>
+                                                        Update note
+                                                    </Button>
+                                                </Form.Group>
+
+                                                
+                                            </Form>
                                             <Modal.Footer>
                                                 <Button variant="secondary" onClick={handleClose}>
                                                     Close
-                                                </Button>
-                                                <Button variant="primary" onClick={handleClose}>
-                                                    Save Changes
                                                 </Button>
                                             </Modal.Footer>
                                         </Modal>
