@@ -9,6 +9,7 @@ function DoctorsPatientDetails()  {
     const [key, id] = idcookie.split("=");
     const [patientmedications, setMedications] = useState(null);
     const [medicationDose, setMedicationDose] = useState(0);
+    const [medicationNote, setMedicationNote] = useState("");
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
@@ -20,9 +21,22 @@ function DoctorsPatientDetails()  {
         console.log(event.target);
     };
 
-    function handleNoteUpdate(event) {
+    async function handleNoteUpdate(event) {
         event.preventDefault();
-        
+        await fetch(process.env.REACT_APP_BASE_URL_DOCTOR + id + '/medication/' + event.target.value + '/edit-note', {
+            method: 'put',
+            mode: 'cors',
+            credentials: 'include',
+            headers: {
+                'Access-Control-Allow-Credentials': 'true',
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(
+                medicationNote
+            ),
+        }).then(res => res.json())
+            .then(res => console.log(res));
     };
 
     function handleNameUpdate(event) {
@@ -32,8 +46,6 @@ function DoctorsPatientDetails()  {
 
     async function handleDoseUpdate(event) {
         event.preventDefault();
-        console.log(medicationDose);
-        console.log(event.target.value);
         await fetch(process.env.REACT_APP_BASE_URL_DOCTOR + id + '/medication/' + event.target.value + '/edit-dosage', {
             method: 'put',
             mode: 'cors',
@@ -133,8 +145,8 @@ function DoctorsPatientDetails()  {
                                                     <Form.Control type="text" name="medicationnote"
                                                         defaultValue={medication.doctorNote}
                                                         placeholder="medicationnote"
-                                                    />
-                                                    <Button variant="primary" type="submit" onClick={ handleNoteUpdate }>
+                                                        onChange={(event) => setMedicationNote(event.target.value)} />
+                                                    <Button variant="primary" type="submit" value={medication.medicationID} onClick={ handleNoteUpdate }>
                                                         Update note
                                                     </Button>
                                                 </Form.Group>
