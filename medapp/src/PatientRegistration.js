@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 // import { Form, Button } from 'react-bootstrap';
+import { BehaviorSubject } from 'rxjs';
+const currentUserSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('currentUser')));
 
 
 export class PatientRegistration extends Component {
@@ -47,7 +49,7 @@ export class PatientRegistration extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        fetch(process.env.REACT_APP_BASE_URL_PATIENT+'register', {
+        fetch(process.env.REACT_APP_BASE_URL+'register/patient', {
 
             method: 'post',
             credentials: 'include',
@@ -61,16 +63,18 @@ export class PatientRegistration extends Component {
                 "Email": this.state.email.toString(),
                 "PhoneNumber": this.state.phoneNumber.toString(),
                 "Username": this.state.userName.toString(),
-                "HashPassword": this.state.password.toString()
+                "HashPassword": this.state.password.toString(),
+                "Role": 'patient'
             }),
         })
             .then(res => res.json())
             .then((result) => {
-                console.log(result);
-                alert('Sucessfully Changed');
+                localStorage.setItem('currentUser', JSON.stringify(result));
+                currentUserSubject.next(result);
+                alert('Successfully registered');
             },
                 (error) => {
-                    alert('Succesful registration!');
+                    alert('Failed registration');
                 })
     }
 

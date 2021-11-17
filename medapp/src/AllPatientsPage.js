@@ -1,20 +1,22 @@
 import { useState, useEffect, } from 'react';
 import { Table, Button } from 'react-bootstrap';
+const currentUserSubject = JSON.parse(localStorage.getItem('currentUser'));
 
 function AllPatientsPage() {
   const [patientdetails, setDetails] = useState(null);
   const [idcookie, userTypecookie] = document.cookie.valueOf().split(";");
-  const [key, doctorId] = idcookie.split("=");
+  const [key, id] = idcookie.split("=");
 
   useEffect(() => {
     getData();
 
     async function getData() {
-      const response = await fetch(process.env.REACT_APP_BASE_URL_DOCTOR+doctorId+'/all-patients/'+0, {credentials:'include'});
+
+      const response = await fetch(process.env.REACT_APP_BASE_URL+'/all-patients/'+ 0, {headers:{Authorization: `Bearer ${currentUserSubject.token}`}});
       const data = await response.json();
       setDetails(data);
     }
-  }, [key, userTypecookie, doctorId]);
+  }, [key, userTypecookie, id, patientdetails]);
   if(patientdetails){
     return (
         <div>

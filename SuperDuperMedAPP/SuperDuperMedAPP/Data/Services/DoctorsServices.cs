@@ -4,7 +4,7 @@ using SuperDuperMedAPP.Data.Repositories;
 using SuperDuperMedAPP.Models;
 using SuperDuperMedAPP.Models.DTO;
 
-namespace SuperDuperMedAPP.Data
+namespace SuperDuperMedAPP.Data.Services
 {
     public class DoctorsServices : IDoctorsServices
     {
@@ -31,9 +31,9 @@ namespace SuperDuperMedAPP.Data
             await _medicationRepository.AddMedication(medication);
         }
 
-        public async Task<Patient?> GetPatientById(int PatientId)
+        public async Task<Patient?> GetPatientById(int patientId)
         {
-            return await _patientRepository.GetPatientById(PatientId);
+            return await _patientRepository.GetPatientById(patientId);
         }
 
         public async Task<Doctor?> GetDoctorByUsername(string username)

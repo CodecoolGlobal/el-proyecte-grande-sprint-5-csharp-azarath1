@@ -4,6 +4,10 @@ import {Button,Navbar,Nav} from 'react-bootstrap';
 import { SignUpModal } from './SignUpModal';
 import { LoginModal } from './LoginModal';
 
+// get role from this.
+const currentUserSubject = JSON.parse(localStorage.getItem('currentUser'));
+
+
 export class Navigation extends Component{
 
     constructor(props) {

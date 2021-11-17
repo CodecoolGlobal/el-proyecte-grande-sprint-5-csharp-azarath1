@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CryptoHelper;
 using Microsoft.EntityFrameworkCore;
 using SuperDuperMedAPP.Models;
 using SuperDuperMedAPP.Models.DTO;
@@ -90,7 +91,7 @@ namespace SuperDuperMedAPP.Data.Repositories
         public async Task EditPassword(int patientId, string password)
         {
             var patient = await _db.Patients.SingleOrDefaultAsync(x => x.ID == patientId);
-            patient.HashPassword = password;
+            patient.HashPassword = Crypto.HashPassword(password);
             _db.Entry(patient).Property("HashPassword").IsModified = true;
             await _db.SaveChangesAsync();
         }
