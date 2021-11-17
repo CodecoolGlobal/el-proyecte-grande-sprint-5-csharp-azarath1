@@ -18,7 +18,6 @@ function DoctorsPatientDetails()  {
     function handleClick(event) {
         event.preventDefault();
         handleShow();
-        console.log(event.target);
     };
 
     async function handleNoteUpdate(event) {
@@ -39,9 +38,24 @@ function DoctorsPatientDetails()  {
             .then(res => console.log(res));
     };
 
-    function handleNameUpdate(event) {
+    async function handleDelete(event) {
         event.preventDefault();
-        
+        await fetch(process.env.REACT_APP_BASE_URL_DOCTOR + id + '/medication/' + event.target.value + '/delete', {
+                method: 'delete',
+                mode: 'cors',
+                credentials: 'include',
+                headers: {
+                    'Access-Control-Allow-Credentials': 'true',
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+        })
+            .then(res => res.json())
+            .then(res => console.log(res));;
+    };
+
+    function handleNameUpdate(event) {
+
     };
 
     async function handleDoseUpdate(event) {
@@ -106,6 +120,9 @@ function DoctorsPatientDetails()  {
                                         <td>
                                             <Button medicationname={medication.name} medicationdose={medication.dose} doctornote={ medication.doctorNote} variant="primary" onClick={handleClick}>
                                                 Update Medication
+                                            </Button>
+                                            <Button value={ medication.medicationID } variant="primary" onClick={handleDelete}>
+                                                Delete Medication
                                             </Button>
                                         </td>
                                         <Modal show={show} onHide={handleClose}>
