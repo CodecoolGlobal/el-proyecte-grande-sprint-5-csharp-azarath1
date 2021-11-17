@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
 using SuperDuperMedAPP.Data;
+using SuperDuperMedAPP.Data.Services;
 using SuperDuperMedAPP.Infrastructure;
 using SuperDuperMedAPP.Models;
 using SuperDuperMedAPP.Models.DTO;
@@ -48,34 +49,7 @@ namespace SuperDuperMedAPP.Controllers
             return Ok();
         }
 
-        [Route("doctor/{id:int}/all-patients/{pageNumber:int}")]
-        public async Task<ActionResult> GetAllPatients([FromRoute] int id, [FromRoute] int pageNumber)
-        {
-            var allPatients = await _services.GetAllPatientsByPageNumber(pageNumber);
-
-            if (allPatients == null)
-            {
-                return NotFound();
-            }
-
-            var response = allPatients.ToGetAllPatientsDTOs();
-            return Ok(response);
-        }
-
-        [Route("doctor/{id:int}/patients/{pageNumber:int}")]
-        public async Task<ActionResult> GetDoctorsPatients([FromRoute] int id, [FromRoute] int pageNumber)
-        {
-            var allPatients = await _services.GetDoctorsPatients(id, pageNumber);
-
-            if (allPatients == null)
-            {
-                return NotFound();
-            }
-
-            var response = allPatients.ToGetDoctorsPatientsDTOs();
-            return Ok(response);
-        }
-
+        //To MedicationController
         [Route("doctor/{id:int}/patients-medications/{patientId:int}/{pageNumber:int}")]
         public async Task<ActionResult> GetPatientsMedicationAll([FromRoute] int id, [FromRoute] int patientId,
             [FromRoute] int pageNumber)
@@ -90,7 +64,7 @@ namespace SuperDuperMedAPP.Controllers
             var response = medications.ToGetPatientsMedicationAllDTO();
             return Ok(response);
         }
-
+        // To MedicationController
         [Route("doctor/{id:int}/patients-medication/{medicationId:int}")]
         public async Task<ActionResult> GetPatientsMedicationSingle([FromRoute] int id, [FromRoute] int medicationId)
         {
@@ -105,20 +79,7 @@ namespace SuperDuperMedAPP.Controllers
             return Ok(response);
         }
 
-        [HttpPut]
-        [Route("doctor/{id:int}/register-patient")]
-        public async Task<ActionResult> ModifyDoctorId([FromRoute] int id, [FromBody] int patientId)
-        {
-            var patient = await _services.GetPatientById(patientId);
-            if (patient == null)
-            {
-                return NotFound();
-            }
-
-            await _services.EditDoctorId(patientId, id);
-            return NoContent();
-        }
-
+        // To MedicationController
         [HttpPut]
         [Route("doctor/{id:int}/medication/{medicationId}/edit-dosage")]
         public async Task<ActionResult> ModifyMedicationDosage([FromRoute] int id, [FromRoute] int medicationId,
@@ -133,7 +94,7 @@ namespace SuperDuperMedAPP.Controllers
             await _services.EditMedicationDosage(medicationId, newDosage);
             return NoContent();
         }
-
+        // To MedicationController
         [HttpPut]
         [Route("doctor/{id:int}/medication/{medicationId}/edit-note")]
         public async Task<ActionResult> ModifyMedicationNote([FromRoute] int id, [FromRoute] int medicationId,
@@ -148,7 +109,7 @@ namespace SuperDuperMedAPP.Controllers
             await _services.EditMedicationNote(medicationId, newNote);
             return NoContent();
         }
-
+        // To MedicationController
         [HttpPost]
         [Route("doctor/{id:int}/medication/add")]
         public async Task<ActionResult> AddMedication([FromRoute] int id, [FromBody] AddMedicationDTO medicationDto)
@@ -163,7 +124,7 @@ namespace SuperDuperMedAPP.Controllers
             await _services.AddMedication(medication);
             return NoContent();
         }
-
+        // To MedicationController
         [HttpDelete]
         [Route("doctor/{id:int}/medication/{medId:int}/delete")]
         public async Task<ActionResult> DeleteMedication([FromRoute] int id, [FromRoute] int medId)
