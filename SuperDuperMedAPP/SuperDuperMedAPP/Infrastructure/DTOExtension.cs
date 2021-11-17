@@ -39,6 +39,7 @@ namespace SuperDuperMedAPP.Infrastructure
             {
                 Name = x.Name,
                 Date = x.Date.ToShortDateString(),
+                DoctorNote = x.DoctorNote,
                 Dose = x.Dose,
                 medicationID = x.MedicationID
             }).ToList();
