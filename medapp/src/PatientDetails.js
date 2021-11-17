@@ -8,21 +8,31 @@ function PatientPage() {
   const [show, setShow] = useState(false);
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
-
   const [userkey, type, id, _] = document.cookie.valueOf().split('=');
-
+  const user = type.split(';')[0];
+  console.log(type.split(';')[0]);
+  console.log(userkey, type, id, _)
   useEffect(() => {
     getData();
 
     async function getData() {
-
-      const response = await fetch(process.env.REACT_APP_BASE_URL_PATIENT+id+"/details", {credentials:'include'});
-      const data = await response.json();
-      setDetails(data);
-      setMail(data.email);
-      setPhone(data.phoneNumber);
+      if (user === "doctor"){
+        const response = await fetch(process.env.REACT_APP_BASE_URL_DOCTOR+id+"/details", {credentials:'include'});  
+        const data = await response.json();
+        setDetails(data);
+        setMail(data.email);
+        setPhone(data.phoneNumber);
+      }
+      else {
+        const response = await fetch(process.env.REACT_APP_BASE_URL_PATIENT+id+"/details", {credentials:'include'});
+        const data = await response.json();
+        setDetails(data);
+        setMail(data.email);
+        setPhone(data.phoneNumber);
+      }
+      
     }
-  }, [userkey, type, id, _]);
+  }, [userkey, type, id, _, user]);
   if(patientdetails){
     return (
         <div>
@@ -94,7 +104,7 @@ function PatientPage() {
     })
     .catch(error => {
         console.error('There was an error!', error);
-    });  
+  }); 
   }
 }
 
