@@ -4,8 +4,6 @@ const currentUserSubject = JSON.parse(localStorage.getItem('currentUser'));
 
 function AllPatientsPage() {
   const [patientdetails, setDetails] = useState(null);
-  const [idcookie, userTypecookie] = document.cookie.valueOf().split(";");
-  const [key, id] = idcookie.split("=");
 
   useEffect(() => {
     getData();
@@ -16,7 +14,7 @@ function AllPatientsPage() {
       const data = await response.json();
       setDetails(data);
     }
-  }, [key, userTypecookie, id, patientdetails]);
+  }, [patientdetails]);
   if(patientdetails){
     return (
         <div>
@@ -69,7 +67,7 @@ function AllPatientsPage() {
       body: JSON.stringify(event.target.value),
   };
   if(window.confirm('Are you sure you want to add this patient?')){
-  fetch(process.env.REACT_APP_BASE_URL_DOCTOR+doctorId+'/register-patient', requestOptions)
+  fetch(process.env.REACT_APP_BASE_URL_DOCTOR+currentUserSubject.id+'/register-patient', requestOptions)
       .then(async response => {
       const data = await response;
       alert("Sucessfuly added!")
