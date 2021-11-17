@@ -38,19 +38,6 @@ namespace SuperDuperMedAPP.Controllers
             return Ok(result);
         }
 
-        //to medication controller
-        [Route("patient/{id:int}/medication/{pageNumber:int}")]
-        public async Task<ActionResult> GetPatientMedication([FromRoute] int id, [FromRoute] int pageNumber)
-        {
-            var userMedication = await _medicationRepository.GetMedicationByPageNumber(id, pageNumber);
-            if (userMedication == null)
-            {
-                return NoContent();
-            }
-
-            return Ok(userMedication);
-        }
-
         [HttpPut]
         [Route("patient/{id:int}/edit-contacts")]
         public async Task<ActionResult> Editcontacts(UserContacts userContact, [FromRoute] int id)
@@ -66,7 +53,7 @@ namespace SuperDuperMedAPP.Controllers
             return Ok();
         }
 
-
+        //change in url
         [Route("all-patients/{pageNumber:int}")]
         public async Task<ActionResult> GetAllPatients([FromRoute] int pageNumber)
         {
@@ -81,11 +68,8 @@ namespace SuperDuperMedAPP.Controllers
             return Ok(response);
         }
 
-        // doctorId From Body
-        // from get to post method
-        [HttpPost]
-        [Route("doctors-patients/{pageNumber:int}")]
-        public async Task<ActionResult> GetDoctorsPatients([FromBody] int doctorsId, [FromRoute] int pageNumber)
+        [Route("doctor/{doctorsId:int}/patients/{pageNumber:int}")]
+        public async Task<ActionResult> GetDoctorsPatients([FromRoute] int doctorsId, [FromRoute] int pageNumber)
         {
             var allPatients = await _services.GetDoctorsPatients(doctorsId, pageNumber);
 
@@ -98,11 +82,9 @@ namespace SuperDuperMedAPP.Controllers
             return Ok(response);
         }
 
-        // doctorId From Body
-        // patientId From Route
         [HttpPut]
-        [Route("register-patient/{patientId:int}")]
-        public async Task<ActionResult> ModifyDoctorId([FromBody] int doctorId, [FromRoute] int patientId)
+        [Route("doctor/{doctorId:int}/register-patient/{patientId:int}")]
+        public async Task<ActionResult> ModifyDoctorId([FromRoute] int doctorId, [FromRoute] int patientId)
         {
             var patient = await _services.GetPatientById(patientId);
             if (patient == null)
