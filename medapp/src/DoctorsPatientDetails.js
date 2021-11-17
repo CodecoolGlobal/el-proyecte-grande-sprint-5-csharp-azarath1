@@ -24,11 +24,12 @@ function DoctorsPatientDetails()  {
 
     async function handleNoteUpdate(event) {
         event.preventDefault();
-        await fetch(process.env.REACT_APP_BASE_URL_DOCTOR + id + '/medication/' + event.target.value + '/edit-note', {
+        await fetch(process.env.REACT_APP_BASE_URL_DOCTOR + currentUserSubject.id + '/medication/' + event.target.value + '/edit-note', {
             method: 'put',
             mode: 'cors',
             credentials: 'include',
             headers: {
+                'Authorization': `Bearer ${currentUserSubject.token}`,
                 'Access-Control-Allow-Credentials': 'true',
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
@@ -42,11 +43,12 @@ function DoctorsPatientDetails()  {
 
     async function handleDelete(event) {
         event.preventDefault();
-        await fetch(process.env.REACT_APP_BASE_URL_DOCTOR + id + '/medication/' + event.target.value + '/delete', {
+        await fetch(process.env.REACT_APP_BASE_URL_DOCTOR + currentUserSubject.id + '/medication/' + event.target.value + '/delete', {
                 method: 'delete',
                 mode: 'cors',
                 credentials: 'include',
                 headers: {
+                    'Authorization': `Bearer ${currentUserSubject.token}`,
                     'Access-Control-Allow-Credentials': 'true',
                     'Content-Type': 'application/json',
                     'Accept': 'application/json'
@@ -62,11 +64,12 @@ function DoctorsPatientDetails()  {
 
     async function handleDoseUpdate(event) {
         event.preventDefault();
-        await fetch(process.env.REACT_APP_BASE_URL_DOCTOR + id + '/medication/' + event.target.value + '/edit-dosage', {
+        await fetch(process.env.REACT_APP_BASE_URL_DOCTOR + currentUserSubject.id + '/medication/' + event.target.value + '/edit-dosage', {
             method: 'put',
             mode: 'cors',
             credentials: 'include',
             headers: {
+                'Authorization': `Bearer ${currentUserSubject.token}`,
                 'Access-Control-Allow-Credentials': 'true',
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
