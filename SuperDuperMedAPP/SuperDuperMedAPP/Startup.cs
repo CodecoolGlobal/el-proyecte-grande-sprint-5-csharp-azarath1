@@ -17,6 +17,7 @@ using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 using SuperDuperMedAPP.Data.Repositories;
+using SuperDuperMedAPP.Data.Services;
 using SuperDuperMedAPP.Infrastructure;
 
 namespace SuperDuperMedAPP
@@ -63,6 +64,9 @@ namespace SuperDuperMedAPP
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddDbContext<AppDbContext>();
 
+
+            services.AddScoped<IMedicationService, MedicationServices>();
+            services.AddScoped<IPatientServices, PatientServices>();
             services.AddScoped<IDoctorsServices, DoctorsServices>();
             services.AddScoped<IDoctorRepository, DoctorRepository>();
             services.AddScoped<IPatientRepository, PatientRepository>();
