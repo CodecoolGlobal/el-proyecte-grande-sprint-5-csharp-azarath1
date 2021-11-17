@@ -1,7 +1,10 @@
-﻿using System.IO;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using Microsoft.EntityFrameworkCore;
 using SuperDuperMedAPP.Models;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 
 
 namespace SuperDuperMedAPP.Data
@@ -46,7 +49,10 @@ namespace SuperDuperMedAPP.Data
                     .SetBasePath(Directory.GetCurrentDirectory())
                     .AddJsonFile("appsettings.json")
                     .Build();
-                optionsBuilder.UseSqlServer(config.GetConnectionString("DefaultConnection"));
+                optionsBuilder.UseSqlServer(config.GetConnectionString("DefaultConnection"))
+                    .LogTo(Console.WriteLine
+                        ,new []{DbLoggerCategory.Database.Command.Name}
+                        ,Microsoft.Extensions.Logging.LogLevel.Information);
             }
         }
     }

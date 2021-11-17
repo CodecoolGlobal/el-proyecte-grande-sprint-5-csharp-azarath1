@@ -1,5 +1,5 @@
 import './App.css';
-import {Home} from './Home';
+import Home from './Home';
 import {Navigation} from './Navigation';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import { PatientRegistration } from './PatientRegistration';
@@ -16,9 +16,6 @@ function App() {
   return (
     <BrowserRouter>
     <div className="container">
-     <h3 className="m-3 d-flex justify-content-center">
-       MedApp
-     </h3>
      <Navigation />
      <Switch>
        <Route path='/' component={Home} exact/>

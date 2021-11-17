@@ -38,10 +38,7 @@ function DoctorsPatientDetails()  {
 
             setMedications(data);
         }
-
-        
-
-    }, [], [key, id, patientmedications]);
+    }, [key, id, patientmedications, userTypecookie, location.state.patientid], [key, id, patientmedications, userTypecookie]);
     if (patientmedications) {
         return (
             <div>
