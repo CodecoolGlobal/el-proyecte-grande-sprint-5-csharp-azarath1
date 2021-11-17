@@ -69,11 +69,12 @@ namespace SuperDuperMedAPP.Controllers
             var usernameUniq = users != null && IsUsernameUniq(model.Username, users.Select(x => x.Username));
             if (!usernameUniq) return BadRequest(new {username = "user with this email already exists"});
 
+            await _patientRepository.AddPatient(model);
 
             return _authService.GetAuthData(model.ID, model.Role);
         }
         [HttpPost("register/patient")]
-        public async Task<ActionResult<AuthData>> RegisterDoctor([FromBody] Patient model)
+        public async Task<ActionResult<AuthData>> RegisterDoctor([FromBody] Doctor model)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
@@ -85,6 +86,7 @@ namespace SuperDuperMedAPP.Controllers
             var usernameUniq = users != null && IsUsernameUniq(model.Username, users.Select(x => x.Username));
             if (!usernameUniq) return BadRequest(new {username = "user with this email already exists"});
 
+            await _doctorRepository.AddDoctor(model);
 
             return _authService.GetAuthData(model.ID, model.Role);
         }
