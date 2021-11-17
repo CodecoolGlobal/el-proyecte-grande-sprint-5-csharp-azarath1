@@ -6,7 +6,7 @@ using CryptoHelper;
 using Microsoft.IdentityModel.Tokens;
 using SuperDuperMedAPP.Models.DTO;
 
-namespace SuperDuperMedAPP.Infrastructure
+namespace SuperDuperMedAPP.Data.Services
 {
     public class AuthService : IAuthService
     {

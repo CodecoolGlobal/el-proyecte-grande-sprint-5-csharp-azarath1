@@ -1,6 +1,6 @@
 ﻿using SuperDuperMedAPP.Models.DTO;
 
-namespace SuperDuperMedAPP.Infrastructure
+namespace SuperDuperMedAPP.Data.Services
 {
     public interface IAuthService
     {
