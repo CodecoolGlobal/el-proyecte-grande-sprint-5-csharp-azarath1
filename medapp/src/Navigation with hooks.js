@@ -21,19 +21,19 @@ function Navigation() {
                 <Navbar.Toggle aria-controls="basic-navbar-nav"/>
                 <Navbar.Collapse id="basic-navbar-nav">
                 <Nav>
-                <NavLink className="d-inline p-2 bg-dark text-white" to="/">
-                <h4><i className="fas fa-laptop-medical text-danger"></i></h4> 
+                <NavLink className="d-inline p-2 bg-dark text-danger" to="/">
+                <h4><i className="fas fa-laptop-medical text-danger "></i>SuperDuperMedapp</h4>
                 </NavLink >
                 <Button id="signup" className="d-inline p-2 bg-dark text-white" onClick={() => handleSignupShow}>
-                <i class="fas fa-user-plus"></i>Register
+                <i class="fas fa-user-plus"></i> Register
                 </Button>
-                <Button id="login" className="d-inline p-2 bg-dark text-white" onClick={handleShow}>
-                <i class="fas fa-sign-in-alt"></i>Login
+                <Button id="login" className="d-inline p-2 bg-dark text-white" onClick={handleShow()}>
+                <i class="fas fa-sign-in-alt"></i> Login
                 </Button>
                 </Nav>
                 </Navbar.Collapse>
             </Navbar>
-            <LoginModal onHide={handleClose}/>
+            <LoginModal show={handleShow} onHide={handleClose}/>
             <SignUpModal onHide={handleSignupClose}/>
         </div>
         )}
@@ -77,10 +77,10 @@ function Navigation() {
                 <h4><i className="fas fa-laptop-medical text-danger"></i></h4> 
                 </NavLink >
                 <NavLink  className="d-inline p-2 bg-dark text-white" to="/personal">
-                <i class="fas fa-user-injured"></i>My Details
+                <i className="fas fa-user-injured"></i>My Details
                 </NavLink>
                 <Button id="logout" className="d-inline p-2 bg-dark text-white" onClick={console.log("")}>
-                <i class="fas fa-sign-out-alt"></i>Logout
+                <i className="fas fa-sign-out-alt"></i>Logout
                 </Button>
                 </Nav>
                 </Navbar.Collapse>
