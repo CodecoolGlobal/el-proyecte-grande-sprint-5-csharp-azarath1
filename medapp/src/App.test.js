@@ -1,26 +1,17 @@
 import { render, screen } from '@testing-library/react';
 import App from './App.js';
 
-test('renders navbar', () => {
+test('renders index page', () => {
   render(<App />);
-  const linkElement = screen.getByText(/Login/i);
-  expect(linkElement).toBeInTheDocument();
-});
+  const registerElement = screen.getByText(/Sign Up/i);
+  const loginElement = screen.getByText(/Login/i);
+  const coronaElement = screen.getByText(/Coronavirus/i);
+  const placeholderTitleElement = screen.getByText(/Placeholder/i);
+  const articlePhraseElement = screen.getByText(/Lorem/i);
 
-test('renders corona statistics tab', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/Coronavirus/i);
-  expect(linkElement).toBeInTheDocument();
-});
-
-test('renders Placeholder title', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/Placeholder/i);
-  expect(linkElement).toBeInTheDocument();
-});
-
-test('renders Placeholder body', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/Lorem/i);
-  expect(linkElement).toBeInTheDocument();
+  expect(registerElement).toBeInTheDocument();
+  expect(loginElement).toBeInTheDocument();
+  expect(coronaElement).toBeInTheDocument();
+  expect(placeholderTitleElement).toBeInTheDocument();
+  expect(articlePhraseElement).toBeInTheDocument();
 });
