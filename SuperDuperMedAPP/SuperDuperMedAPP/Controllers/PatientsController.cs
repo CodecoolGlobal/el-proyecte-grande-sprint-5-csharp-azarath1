@@ -82,6 +82,8 @@ namespace SuperDuperMedAPP.Controllers
         }
 
         // doctorId From Body
+        // from get to post method
+        [HttpPost]
         [Route("doctors-patients/{pageNumber:int}")]
         public async Task<ActionResult> GetDoctorsPatients([FromBody] int doctorsId, [FromRoute] int pageNumber)
         {
