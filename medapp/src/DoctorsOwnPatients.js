@@ -2,6 +2,7 @@ import { Button } from 'react-bootstrap';
 import React, { useState, useEffect } from 'react';
 import { Table } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
+const currentUserSubject = JSON.parse(localStorage.getItem('currentUser'));
 
 
 function DoctorsOwnPatientsPage() {
@@ -16,7 +17,7 @@ function DoctorsOwnPatientsPage() {
         getData();
 
         async function getData() {
-            const response = await fetch(process.env.REACT_APP_BASE_URL_DOCTOR + id + '/patients/0',{credentials:'include'});
+            const response = await fetch(process.env.REACT_APP_BASE_URL_DOCTOR + currentUserSubject.id + '/patients/'+0,{headers:{Authorization: `Bearer ${currentUserSubject.token}`}});
             const data = await response.json();
             setDetails(data);
         }

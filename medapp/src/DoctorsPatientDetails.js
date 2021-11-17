@@ -2,6 +2,8 @@ import { Button } from 'react-bootstrap';
 import React, { useState, useEffect } from 'react';
 import { Modal, Table, Form } from 'react-bootstrap';
 import { NavLink, useLocation } from 'react-router-dom';
+const currentUserSubject = JSON.parse(localStorage.getItem('currentUser'));
+
 
 function DoctorsPatientDetails()  {
     let location = useLocation();
@@ -22,11 +24,12 @@ function DoctorsPatientDetails()  {
 
     async function handleNoteUpdate(event) {
         event.preventDefault();
-        await fetch(process.env.REACT_APP_BASE_URL_DOCTOR + id + '/medication/' + event.target.value + '/edit-note', {
+        await fetch(process.env.REACT_APP_BASE_URL_DOCTOR + currentUserSubject.id + '/medication/' + event.target.value + '/edit-note', {
             method: 'put',
             mode: 'cors',
             credentials: 'include',
             headers: {
+                'Authorization': `Bearer ${currentUserSubject.token}`,
                 'Access-Control-Allow-Credentials': 'true',
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
@@ -40,11 +43,12 @@ function DoctorsPatientDetails()  {
 
     async function handleDelete(event) {
         event.preventDefault();
-        await fetch(process.env.REACT_APP_BASE_URL_DOCTOR + id + '/medication/' + event.target.value + '/delete', {
+        await fetch(process.env.REACT_APP_BASE_URL_DOCTOR + currentUserSubject.id + '/medication/' + event.target.value + '/delete', {
                 method: 'delete',
                 mode: 'cors',
                 credentials: 'include',
                 headers: {
+                    'Authorization': `Bearer ${currentUserSubject.token}`,
                     'Access-Control-Allow-Credentials': 'true',
                     'Content-Type': 'application/json',
                     'Accept': 'application/json'
@@ -60,11 +64,12 @@ function DoctorsPatientDetails()  {
 
     async function handleDoseUpdate(event) {
         event.preventDefault();
-        await fetch(process.env.REACT_APP_BASE_URL_DOCTOR + id + '/medication/' + event.target.value + '/edit-dosage', {
+        await fetch(process.env.REACT_APP_BASE_URL_DOCTOR + currentUserSubject.id + '/medication/' + event.target.value + '/edit-dosage', {
             method: 'put',
             mode: 'cors',
             credentials: 'include',
             headers: {
+                'Authorization': `Bearer ${currentUserSubject.token}`,
                 'Access-Control-Allow-Credentials': 'true',
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
@@ -88,7 +93,7 @@ function DoctorsPatientDetails()  {
         async function getPatientMedications() {
 
             
-            const response = await fetch(process.env.REACT_APP_BASE_URL_DOCTOR + id + '/patients-medications/' + location.state.patientid, {credentials:'include'});
+            const response = await fetch(process.env.REACT_APP_BASE_URL_DOCTOR + currentUserSubject.id + '/patients-medications/' + location.state.patientid+0, {headers:{Authorization: `Bearer ${currentUserSubject.token}`}});
             const data = await response.json();
 
             setMedications(data);
