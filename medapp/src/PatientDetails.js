@@ -9,23 +9,20 @@ function PatientPage() {
   const [show, setShow] = useState(false);
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
-  const [userkey, type, id, _] = document.cookie.valueOf().split('=');
-
-
-
+console.log(currentUserSubject.userRole);
   useEffect(() => {
     getData();
 
     async function getData() {
-      if (user === "doctor"){
-        const response = await fetch(process.env.REACT_APP_BASE_URL_DOCTOR+id+"/details", {credentials:'include'});  
+      if (currentUserSubject.userRole === "doctor"){
+        const response = await fetch(process.env.REACT_APP_BASE_URL_DOCTOR+currentUserSubject.id+"/details", {headers:{Authorization: `Bearer ${currentUserSubject.token}`}});  
         const data = await response.json();
         setDetails(data);
         setMail(data.email);
         setPhone(data.phoneNumber);
       }
       else {
-        const response = await fetch(process.env.REACT_APP_BASE_URL_PATIENT+id+"/details", {credentials:'include'});
+        const response = await fetch(process.env.REACT_APP_BASE_URL_PATIENT+currentUserSubject.id+"/details", {headers:{Authorization: `Bearer ${currentUserSubject.token}`}});
         const data = await response.json();
         setDetails(data);
         setMail(data.email);
@@ -33,15 +30,7 @@ function PatientPage() {
       }
       
     }
-  }, [userkey, type, id, _, user]);
-if(currentUserSubject != null){
-      const response = await fetch(process.env.REACT_APP_BASE_URL_PATIENT+currentUserSubject.id+"/details", {headers:{Authorization: `Bearer ${currentUserSubject.token}`}});
-      const data = await response.json();
-      setDetails(data);
-      setMail(data.email);
-      setPhone(data.phoneNumber);}
-    }
-  }, [userkey, type, id, _]);
+  }, []);
   if(patientdetails){
     return (
         <div>
@@ -103,7 +92,7 @@ if(currentUserSubject != null){
           email: emailContact,
           phonenumber: phoneContact})
     };
-    fetch(process.env.REACT_APP_BASE_URL_PATIENT+id+"/edit-contacts", requestOptions)
+    fetch(process.env.REACT_APP_BASE_URL_PATIENT+currentUserSubject.id+"/edit-contacts", requestOptions)
         .then(async response => {
         const data = await response;
           if (!response.ok) {
