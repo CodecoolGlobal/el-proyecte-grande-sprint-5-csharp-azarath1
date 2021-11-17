@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using SuperDuperMedAPP.Data;
 using SuperDuperMedAPP.Data.Services;
 using SuperDuperMedAPP.Infrastructure;
@@ -21,6 +22,7 @@ namespace SuperDuperMedAPP.Controllers
             _services = services;
         }
 
+        [Authorize(Roles = "doctor")]
         [Route("doctor/{id:int}/details")]
         public async Task<ActionResult> GetLoggedInDoctorDetails([FromRoute] int id)
         {
@@ -33,7 +35,7 @@ namespace SuperDuperMedAPP.Controllers
 
             return Ok(result);
         }
-
+        [Authorize(Roles = "doctor")]
         [HttpPut]
         [Route("doctor/{id:int}/edit-contacts")]
         public async Task<ActionResult> EditContacts(UserContacts userContact, [FromRoute] int id)
@@ -41,7 +43,7 @@ namespace SuperDuperMedAPP.Controllers
             await _services.UpdateDoctorContacts(userContact, id);
             return Ok();
         }
-
+        [Authorize(Roles = "doctor")]
         [Route("doctor/{id:int}/password")]
         public async Task<ActionResult> EditPassword([FromRoute] int id, string password)
         {

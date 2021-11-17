@@ -39,6 +39,7 @@ namespace SuperDuperMedAPP.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "patient")]
         [Route("patient/{id:int}/edit-contacts")]
         public async Task<ActionResult> EditContacts(UserContacts userContact, [FromRoute] int id)
         {
@@ -46,6 +47,7 @@ namespace SuperDuperMedAPP.Controllers
             return Ok();
         }
 
+        [Authorize(Roles = "patient")]
         [Route("patient/{id:int}/password")]
         public async Task<ActionResult> EditPassword([FromRoute] int id, string password)
         {
@@ -54,6 +56,7 @@ namespace SuperDuperMedAPP.Controllers
         }
 
         //change in url
+        [Authorize(Roles = "doctor")]
         [Route("all-patients/{pageNumber:int}")]
         public async Task<ActionResult> GetAllPatients([FromRoute] int pageNumber)
         {
@@ -68,6 +71,7 @@ namespace SuperDuperMedAPP.Controllers
             return Ok(response);
         }
 
+        [Authorize(Roles = "doctor")]
         [Route("doctor/{doctorsId:int}/patients/{pageNumber:int}")]
         public async Task<ActionResult> GetDoctorsPatients([FromRoute] int doctorsId, [FromRoute] int pageNumber)
         {
@@ -83,6 +87,7 @@ namespace SuperDuperMedAPP.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "doctor")]
         [Route("doctor/{doctorId:int}/register-patient/{patientId:int}")]
         public async Task<ActionResult> ModifyDoctorId([FromRoute] int doctorId, [FromRoute] int patientId)
         {

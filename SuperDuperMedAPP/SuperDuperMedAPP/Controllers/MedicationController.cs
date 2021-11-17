@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using SuperDuperMedAPP.Data.Services;
 using SuperDuperMedAPP.Infrastructure;
 using SuperDuperMedAPP.Models.DTO;
@@ -20,7 +21,7 @@ namespace SuperDuperMedAPP.Controllers
             _services = services;
         }
 
-
+        [Authorize(Roles = "doctor")]
         [HttpPost]
         [Route("doctor/{id:int}/medication/add")]
         public async Task<ActionResult> AddMedication([FromBody] AddMedicationDTO medicationDto)
@@ -37,6 +38,7 @@ namespace SuperDuperMedAPP.Controllers
         }
 
         //change url?
+        [Authorize(Roles = "doctor")]
         [HttpPut]
         [Route("doctor/{id:int}/medication/{medicationId}/edit-dosage")]
         public async Task<ActionResult> ModifyMedicationDosage([FromRoute] int medicationId,
@@ -53,6 +55,7 @@ namespace SuperDuperMedAPP.Controllers
         }
 
         //change url?
+        [Authorize(Roles = "doctor")]
         [HttpPut]
         [Route("doctor/{id:int}/medication/{medicationId}/edit-note")]
         public async Task<ActionResult> ModifyMedicationNote([FromRoute] int id, [FromRoute] int medicationId,
@@ -69,6 +72,7 @@ namespace SuperDuperMedAPP.Controllers
         }
 
         //change url?
+        [Authorize(Roles = "doctor")]
         [HttpDelete]
         [Route("doctor/{id:int}/medication/{medId:int}/delete")]
         public async Task<ActionResult> DeleteMedication([FromRoute] int id, [FromRoute] int medId)
@@ -84,6 +88,7 @@ namespace SuperDuperMedAPP.Controllers
         }
 
         //change url?
+        [Authorize(Roles = "doctor")]
         [Route("doctor/{id:int}/patients-medication/{medicationId:int}")]
         public async Task<ActionResult> GetPatientsMedicationSingle([FromRoute] int id, [FromRoute] int medicationId)
         {
@@ -99,6 +104,7 @@ namespace SuperDuperMedAPP.Controllers
         }
 
         //change url?
+        [Authorize(Roles = "doctor")]
         [Route("doctor/{id:int}/patients-medications/{patientId:int}/{pageNumber:int}")]
         public async Task<ActionResult> GetPatientsMedicationAll([FromRoute] int id, [FromRoute] int patientId,
             [FromRoute] int pageNumber)
@@ -114,7 +120,7 @@ namespace SuperDuperMedAPP.Controllers
             return Ok(response);
         }
 
-        //to medication controller
+        [Authorize(Roles = "patient")]
         [Route("patient/{patientId:int}/medication/{pageNumber:int}")]
         public async Task<ActionResult> GetPatientsMedication([FromRoute] int patientId, [FromRoute] int pageNumber)
         {
