@@ -40,7 +40,7 @@ namespace SuperDuperMedAPP.Controllers
 
         [HttpPut]
         [Route("patient/{id:int}/edit-contacts")]
-        public async Task<ActionResult> Editcontacts(UserContacts userContact, [FromRoute] int id)
+        public async Task<ActionResult> EditContacts(UserContacts userContact, [FromRoute] int id)
         {
             await _services.UpdatePatientsContacts(userContact, id);
             return Ok();
