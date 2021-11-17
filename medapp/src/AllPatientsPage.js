@@ -1,5 +1,6 @@
 import { useState, useEffect, } from 'react';
 import { Table, Button } from 'react-bootstrap';
+const currentUserSubject = JSON.parse(localStorage.getItem('currentUser'));
 
 function AllPatientsPage() {
   const [patientdetails, setDetails] = useState(null);
@@ -11,7 +12,7 @@ function AllPatientsPage() {
 
     async function getData() {
 
-      const response = await fetch(process.env.REACT_APP_BASE_URL_DOCTOR+id+'/all-patients', {credentials:'include'});
+      const response = await fetch(process.env.REACT_APP_BASE_URL+'/all-patients/'+ 0, {headers:{Authorization: `Bearer ${currentUserSubject.token}`}});
       const data = await response.json();
       setDetails(data);
     }

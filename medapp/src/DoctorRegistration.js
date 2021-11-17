@@ -1,6 +1,7 @@
 //import React, { useState } from 'react';
 import React, { Component } from 'react';
-
+import { BehaviorSubject } from 'rxjs';
+const currentUserSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('currentUser')));
 
 
 export class DoctorRegistration extends Component {
@@ -68,8 +69,9 @@ export class DoctorRegistration extends Component {
         })
             .then(res => res.json())
             .then((result) => {
-                console.log(result);
-                alert('Sucessfully Changed');
+                localStorage.setItem('currentUser', JSON.stringify(result));
+                currentUserSubject.next(result);
+                alert('Successfully registered');
             },
                 (error) => {
                     console.log(error);

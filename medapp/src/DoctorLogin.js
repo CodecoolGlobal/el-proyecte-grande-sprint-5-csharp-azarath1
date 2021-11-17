@@ -43,7 +43,8 @@ export class DoctorLogin extends Component {
         })
             .then(res => res.json())
             .then((res) => {
-                currentUserSubject.setItem('currentUser', JSON.stringify(res));
+                localStorage.setItem('currentUser', JSON.stringify(res));
+                currentUserSubject.next(res);
                 alert("Sign in successful.");
 
 

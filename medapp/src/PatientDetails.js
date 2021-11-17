@@ -1,6 +1,5 @@
 import { useState, useEffect, } from 'react';
 import { Modal, Button } from 'react-bootstrap';
-import { BehaviorSubject } from 'rxjs';
 const currentUserSubject = JSON.parse(localStorage.getItem('currentUser'));
 
 function PatientPage() {
