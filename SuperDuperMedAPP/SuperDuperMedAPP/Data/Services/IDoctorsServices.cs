@@ -3,13 +3,13 @@ using System.Threading.Tasks;
 using SuperDuperMedAPP.Models;
 using SuperDuperMedAPP.Models.DTO;
 
-namespace SuperDuperMedAPP.Data
+namespace SuperDuperMedAPP.Data.Services
 {
     public interface IDoctorsServices
     {
         Task AddDoctor(Doctor doctor);
         Task AddMedication(Medication medication);
-        Task<Patient?> GetPatientById(int PatientId);
+        Task<Patient?> GetPatientById(int patientId);
         Task<Doctor?> GetDoctorByUsername(string username);
         Task<Medicine?> GetMedicineById(int medId);
         Task<Doctor?> GetDoctorById(int id);
