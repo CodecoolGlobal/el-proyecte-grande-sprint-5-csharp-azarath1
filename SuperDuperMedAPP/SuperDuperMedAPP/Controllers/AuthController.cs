@@ -27,8 +27,8 @@ namespace SuperDuperMedAPP.Controllers
             _doctorRepository = doctorRepository;
         }
 
-        [Route("/login")]
         [HttpPost]
+        [Route("/login")]
         public async Task<ActionResult<AuthData>> Login([FromBody] LoginData model)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
@@ -57,34 +57,37 @@ namespace SuperDuperMedAPP.Controllers
         }
 
 
-        [HttpPost("register/patient")]
+        [HttpPost]
+        [Route("register/patient")]
         public async Task<ActionResult<AuthData>> RegisterPatient([FromBody] Patient model)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
             var users = await _patientRepository.GetAllPatients();
 
-            var emailUniq = users != null && IsEmailUniq(model.Email, users.Select(x => x.Email));
+            var emailUniq = users != null && IsEmailUniq(model.Email, users.Select(x => x.Email).ToList());
             if (!emailUniq) return BadRequest(new {email = "user with this email already exists"});
 
-            var usernameUniq = users != null && IsUsernameUniq(model.Username, users.Select(x => x.Username));
+            var usernameUniq = users != null && IsUsernameUniq(model.Username, users.Select(x => x.Username).ToList());
             if (!usernameUniq) return BadRequest(new {username = "user with this email already exists"});
 
             await _patientRepository.AddPatient(model);
 
             return _authService.GetAuthData(model.ID, model.Role);
         }
-        [HttpPost("register/patient")]
+
+        [HttpPost]
+        [Route("register/doctor")]
         public async Task<ActionResult<AuthData>> RegisterDoctor([FromBody] Doctor model)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
             var users = await _doctorRepository.GetAllDoctors();
 
-            var emailUniq = users != null && IsEmailUniq(model.Email, users.Select(x => x.Email));
+            var emailUniq = users != null && IsEmailUniq(model.Email, users.Select(x => x.Email).ToList());
             if (!emailUniq) return BadRequest(new {email = "user with this email already exists"});
 
-            var usernameUniq = users != null && IsUsernameUniq(model.Username, users.Select(x => x.Username));
+            var usernameUniq = users != null && IsUsernameUniq(model.Username, users.Select(x => x.Username).ToList());
             if (!usernameUniq) return BadRequest(new {username = "user with this email already exists"});
 
             await _doctorRepository.AddDoctor(model);
@@ -92,14 +95,14 @@ namespace SuperDuperMedAPP.Controllers
             return _authService.GetAuthData(model.ID, model.Role);
         }
 
-        private bool IsUsernameUniq(string modelUsername, IEnumerable<string> usernames)
+        private bool IsUsernameUniq(string modelUsername, List<string> usernames)
         {
-            return usernames.Any(x => x.Equals(modelUsername));
+            return !usernames.Contains(modelUsername);
         }
 
-        private bool IsEmailUniq(string? modelEmail, IEnumerable<string?> emails)
+        private bool IsEmailUniq(string? modelEmail, List<string?> emails)
         {
-            return emails.Any(x => x != null && x.Equals(modelEmail));
+            return !emails.Contains(modelEmail);
         }
     }
 }
