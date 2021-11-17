@@ -1,24 +1,43 @@
-import React,{Component} from 'react';
+import React from 'react';
+import { useState } from 'react';
 import {NavLink} from 'react-router-dom';
 import {Button,Navbar,Nav} from 'react-bootstrap';
 import { SignUpModal } from './SignUpModal';
 import { LoginModal } from './LoginModal';
-
-// get role from this.
 const currentUserSubject = JSON.parse(localStorage.getItem('currentUser'));
 
-
-export class Navigation extends Component{
-
-    constructor(props) {
-        super(props);
-        this.state = { SignUpModalShow: false, LoginModalShow: false }
-    }
-
-    render() {
-        let SignUpModalClose = () => this.setState({ SignUpModalShow: false });
-        let LoginModalClose = () => this.setState({ LoginModalShow: false });
-        
+function Navigation() {
+    const [showSignupModal, setShowSignup] = useState(false);
+    const handleSignupShow = () => setShowSignup(true);
+    const handleSignupClose = () => setShowSignup(false);
+    const [show, setShow] = useState(false);
+    const handleShow = () => setShow(true);
+    const handleClose = () => setShow(false);
+    
+    if (!currentUserSubject || currentUserSubject === null){
+        return(
+            <div>
+                <Navbar bg="dark" expand="lg">
+                <Navbar.Toggle aria-controls="basic-navbar-nav"/>
+                <Navbar.Collapse id="basic-navbar-nav">
+                <Nav>
+                <NavLink className="d-inline p-2 bg-dark text-danger" to="/">
+                <h4><i className="fas fa-laptop-medical text-danger "></i>SuperDuperMedapp</h4>
+                </NavLink >
+                <Button id="signup" className="d-inline p-2 bg-dark text-white" onClick={() => handleSignupShow}>
+                <i class="fas fa-user-plus"></i> Register
+                </Button>
+                <Button id="login" className="d-inline p-2 bg-dark text-white" onClick={handleShow}>
+                <i class="fas fa-sign-in-alt"></i> Login
+                </Button>
+                </Nav>
+                </Navbar.Collapse>
+            </Navbar>
+            <LoginModal onHide={handleClose}/>
+            <SignUpModal onHide={handleSignupClose}/>
+        </div>
+        )}
+    else if (currentUserSubject.userRole==="doctor") {
         return(
             <div>
                 <Navbar bg="dark" expand="lg">
@@ -29,27 +48,48 @@ export class Navigation extends Component{
                 <h4><i className="fas fa-laptop-medical text-danger"></i></h4> 
                 </NavLink >
                 <NavLink  className="d-inline p-2 bg-dark text-white" to="/personal">
-                    Patient Details Page
+                <i class="fas fa-user-md"></i>My Details
                 </NavLink>
                 <NavLink className="d-inline p-2 bg-dark text-white" to="/mypatients">
-                    My Patients
+                <i class="fas fa-clinic-medical"></i>My Patients
                 </NavLink>
                 <NavLink className="d-inline p-2 bg-dark text-white" to="/allpatients">
-                    All Patients
+                <i class="fas fa-book-medical"></i>Patient list
                 </NavLink>
-                <Button id="signup" className="d-inline p-2 bg-dark text-white" onClick={() => this.setState({ SignUpModalShow: true })}>
-                    Sign Up
-                </Button>
-                <Button id="login" className="d-inline p-2 bg-dark text-white" onClick={() => this.setState({ LoginModalShow: true })}>
-                    Login
+                <Button id="logout" className="d-inline p-2 bg-dark text-white" onClick={console.log("")}>
+                <i class="fas fa-sign-out-alt"></i>Logout
                 </Button>
                 </Nav>
                 </Navbar.Collapse>
             </Navbar>
-            <LoginModal show={this.state.LoginModalShow} onHide={LoginModalClose}/>
-            <SignUpModal show={this.state.SignUpModalShow}onHide={SignUpModalClose}/>
         </div>
-            
+        )
+
+    }
+    else if (currentUserSubject.userRole==="patient") {
+        return(
+            <div>
+                <Navbar bg="dark" expand="lg">
+                <Navbar.Toggle aria-controls="basic-navbar-nav"/>
+                <Navbar.Collapse id="basic-navbar-nav">
+                <Nav>
+                <NavLink className="d-inline p-2 bg-dark text-white" to="/">
+                <h4><i className="fas fa-laptop-medical text-danger"></i></h4> 
+                </NavLink >
+                <NavLink  className="d-inline p-2 bg-dark text-white" to="/personal">
+                <i class="fas fa-user-injured"></i>My Details
+                </NavLink>
+                <Button id="logout" className="d-inline p-2 bg-dark text-white" onClick={console.log("")}>
+                <i class="fas fa-sign-out-alt"></i>Logout
+                </Button>
+                </Nav>
+                </Navbar.Collapse>
+            </Navbar>
+        </div>
         )
     }
+    else { return "WOW! it's an error happening... marvelous!"} 
+
 }
+
+export default Navigation;
