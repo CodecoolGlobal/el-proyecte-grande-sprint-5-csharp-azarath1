@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using SuperDuperMedAPP.Data.Repositories;
+﻿using SuperDuperMedAPP.Data.Repositories;
 using SuperDuperMedAPP.Models;
 using SuperDuperMedAPP.Models.DTO;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace SuperDuperMedAPP.Data.Services
 {
-    public class PatientServices: IPatientServices
+    public class PatientServices : IPatientServices
     {
         private readonly IPatientRepository _repository;
 
@@ -23,11 +23,6 @@ namespace SuperDuperMedAPP.Data.Services
         public async Task EditDoctorId(int patientId, int newDoctorId)
         {
             await _repository.EditDoctorId(patientId, newDoctorId);
-        }
-
-        public async Task<List<Patient>?> GetAllPatients()
-        {
-            return await _repository.GetAllPatients();
         }
 
         public async Task<List<Patient>?> GetAllPatientsByPageNumber(int pageNumber)

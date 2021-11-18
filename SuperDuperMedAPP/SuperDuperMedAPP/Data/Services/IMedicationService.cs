@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using SuperDuperMedAPP.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using SuperDuperMedAPP.Models;
 
 namespace SuperDuperMedAPP.Data.Services
 {

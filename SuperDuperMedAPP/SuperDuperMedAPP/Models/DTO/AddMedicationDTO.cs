@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace SuperDuperMedAPP.Models.DTO
+﻿namespace SuperDuperMedAPP.Models.DTO
 {
     public class AddMedicationDTO
     {

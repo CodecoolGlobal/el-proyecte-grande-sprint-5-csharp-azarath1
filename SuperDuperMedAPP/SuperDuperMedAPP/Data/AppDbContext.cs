@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using Microsoft.EntityFrameworkCore;
-using SuperDuperMedAPP.Models;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
+using SuperDuperMedAPP.Models;
+using System;
+using System.IO;
 
 
 namespace SuperDuperMedAPP.Data
@@ -51,8 +49,8 @@ namespace SuperDuperMedAPP.Data
                     .Build();
                 optionsBuilder.UseSqlServer(config.GetConnectionString("DefaultConnection"))
                     .LogTo(Console.WriteLine
-                        ,new []{DbLoggerCategory.Database.Command.Name}
-                        ,Microsoft.Extensions.Logging.LogLevel.Information);
+                        , new[] { DbLoggerCategory.Database.Command.Name }
+                        , Microsoft.Extensions.Logging.LogLevel.Information);
             }
         }
     }
