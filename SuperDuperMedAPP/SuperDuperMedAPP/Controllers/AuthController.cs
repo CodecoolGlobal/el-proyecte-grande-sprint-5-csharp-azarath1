@@ -16,13 +16,15 @@ namespace SuperDuperMedAPP.Controllers
         private IAuthService _authService;
         private IPatientRepository _patientRepository;
         private IDoctorRepository _doctorRepository;
+        private IRegistrationNumberRepository _registrationNumberRepository;
 
         public AuthController(IAuthService authService, IPatientRepository patientRepository,
-            IDoctorRepository doctorRepository)
+            IDoctorRepository doctorRepository, IRegistrationNumberRepository registrationNumberRepository)
         {
             _authService = authService;
             _patientRepository = patientRepository;
             _doctorRepository = doctorRepository;
+            _registrationNumberRepository = registrationNumberRepository;
         }
 
         [HttpPost]
@@ -87,6 +89,9 @@ namespace SuperDuperMedAPP.Controllers
 
             var usernameUniq = users != null && IsUsernameUniq(model.Username, users.Select(x => x.Username).ToList());
             if (!usernameUniq) return BadRequest(new { username = "user with this email already exists" });
+
+            var regNumberUniq = await _registrationNumberRepository.IsRegNumberValid(model.RegistrationNumber);
+            if (!regNumberUniq) return BadRequest(new { username = "user with this registration number already exists" });
 
             await _doctorRepository.AddDoctor(model.HashDoctorPassword());
 
