@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using SuperDuperMedAPP.Data.Repositories;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 
 namespace SuperDuperMedAPP.Controllers
 {
@@ -16,9 +15,9 @@ namespace SuperDuperMedAPP.Controllers
             _medicineRepository = medicineRepository;
         }
 
+        //Url simplified
         [Authorize(Roles = "doctor,patient")]
-        [Route("patient/{id:int}/medicine/{medicineId:int}")]
-        [Route("doctor/{id:int}/medicine/{medicineId:int}")]
+        [Route("medicine/{medicineId:int}")]
         public async Task<ActionResult> GetMedicine([FromRoute] int medicineId, [FromRoute] int id)
         {
             var medicine = await _medicineRepository.GetMedicineById(medicineId);
@@ -30,15 +29,6 @@ namespace SuperDuperMedAPP.Controllers
         public async Task<ActionResult> GetAllMedicine([FromRoute] int id)
         {
             var meds = await _medicineRepository.GetAllMedicine();
-            return Ok(meds);
-        }
-
-
-        [Authorize(Roles = "doctor")]
-        [Route("doctor/{id:int}/medicine/{pageNumber:int}")]
-        public async Task<ActionResult> GetMedicineByPage([FromRoute] int id, [FromRoute] int pageNumber)
-        {
-            var meds = await _medicineRepository.GetMedicineByPageNumber(pageNumber);
             return Ok(meds);
         }
 
