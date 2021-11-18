@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using SuperDuperMedAPP.Data.Repositories;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SuperDuperMedAPP.Controllers
 {
@@ -32,17 +33,14 @@ namespace SuperDuperMedAPP.Controllers
             return Ok(medicine);
         }
 
+        [Authorize(Roles = "doctor")]
         [Route("medicine/{id:int}")]
         public async Task<ActionResult> GetAllMedicine([FromRoute] int id)
         {
-            if (id != HttpContext.Session.GetInt32(SessionId))
-            {
-                return Unauthorized();
-            }
-
             var meds = await _medicineRepository.GetAllMedicine();
             return Ok(meds);
         }
+
 
         [Route("doctor/{id:int}/medicine/{pageNumber:int}")]
         public async Task<ActionResult> GetMedicineByPage([FromRoute] int id, [FromRoute] int pageNumber)
