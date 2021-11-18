@@ -169,9 +169,9 @@ function DoctorsPatientDetails()  {
                                         <td>{medication.dose}</td>
                                         <td>{medication.doctorNote}</td>
                                         <td>
-                                            <Button medicationname={medication.name} medicationdose={medication.dose} doctornote={ medication.doctorNote} variant="primary" onClick={handleClickEditModal}>
+                                            <Button style={{ margin: '10px' }} medicationname={medication.name} medicationdose={medication.dose} doctornote={ medication.doctorNote} variant="primary" onClick={handleClickEditModal}>
                                                 Update Medication
-                                            </Button>
+                                            </Button>                                            
                                             <Button value={ medication.medicationID } variant="primary" onClick={handleDelete}>
                                                 Delete Medication
                                             </Button>
@@ -187,7 +187,7 @@ function DoctorsPatientDetails()  {
                                                     <Form.Control type="text" name="name"
                                                         defaultValue={medication.name}
                                                         placeholder="name" />
-                                                    <Button variant="primary" type="submit" onClick={ handleNameUpdate }>
+                                                    <Button style={{ marginTop: '10px' }} variant="primary" type="submit" onClick={ handleNameUpdate }>
                                                         Update Name
                                                     </Button>
                                                 </Form.Group>
@@ -201,7 +201,7 @@ function DoctorsPatientDetails()  {
                                                         defaultValue={medication.dose}
                                                         placeholder="dose"
                                                         onChange={(event) => setMedicationDose( event.target.value )} />
-                                                    <Button variant="primary" type="submit" value={ medication.medicationID} onClick={handleDoseUpdate}>
+                                                    <Button style={{ marginTop: '10px' }} variant="primary" type="submit" value={ medication.medicationID} onClick={handleDoseUpdate}>
                                                         Update dose
                                                     </Button>
                                                 </Form.Group>
@@ -214,7 +214,7 @@ function DoctorsPatientDetails()  {
                                                         defaultValue={medication.doctorNote}
                                                         placeholder="medicationnote"
                                                         onChange={(event) => setMedicationNote(event.target.value)} />
-                                                    <Button variant="primary" type="submit" value={medication.medicationID} onClick={ handleNoteUpdate }>
+                                                    <Button style={{ marginTop: '10px' }} variant="primary" type="submit" value={medication.medicationID} onClick={ handleNoteUpdate }>
                                                         Update note
                                                     </Button>
                                                 </Form.Group>
