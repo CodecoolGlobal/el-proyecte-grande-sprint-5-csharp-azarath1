@@ -133,7 +133,7 @@ function DoctorsPatientDetails()  {
 
             
 
-            const response = await fetch(process.env.REACT_APP_BASE_URL_DOCTOR + currentUserSubject.id + '/patients-medications/' + location.state.patientid+"/"+0, {headers:{Authorization: `Bearer ${currentUserSubject.token}`}});
+            const response = await fetch(process.env.REACT_APP_BASE_URL_DOCTOR + currentUserSubject.id + '/patients-medications/' + location.state.patientid + "/" + 0, {headers:{Authorization: `Bearer ${currentUserSubject.token}`}});
 
             const data = await response.json();
 
@@ -143,13 +143,22 @@ function DoctorsPatientDetails()  {
         async function getMedicines() {
 
 
-            const response = await fetch(process.env.REACT_APP_BASE_URL + 'medicine/' + currentUserSubject.id, { headers: { Authorization: `Bearer ${currentUserSubject.token}` } });
+            const response = await fetch(process.env.REACT_APP_BASE_URL + 'medicine/' + currentUserSubject.id, {
+                mode: 'cors',
+                credentials: 'include',
+                method: 'GET',
+                headers: {
+                    Authorization: `Bearer ${currentUserSubject.token}`
+                }
+            
+            });
+
             const data = await response.json();
 
             setMedicines(data);
         }
 
-    },[], [key, id, patientmedications, userTypecookie, location.state.patientid], [key, id, patientmedications, userTypecookie]);
+    }, [key, id, patientmedications, userTypecookie, location.state.patientid], [key, id, patientmedications, userTypecookie]);
     if (patientmedications, medicines) {
         return (
             <div>

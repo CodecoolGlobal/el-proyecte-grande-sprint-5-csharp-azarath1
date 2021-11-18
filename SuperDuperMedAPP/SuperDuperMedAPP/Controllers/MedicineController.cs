@@ -24,6 +24,7 @@ namespace SuperDuperMedAPP.Controllers
             return Ok(medicine);
         }
 
+        [HttpGet]
         [Authorize(Roles = "doctor")]
         [Route("medicine/{id:int}")]
         public async Task<ActionResult> GetAllMedicine([FromRoute] int id)
