@@ -51,12 +51,6 @@ namespace SuperDuperMedAPP.Data.Repositories
             return await _db.Patients.Skip(10 * pageNumber).Take(10).ToListAsync();
         }
 
-        public async Task UpdatePatient(Patient patient)
-        {
-            _db.Update(patient);
-            await _db.SaveChangesAsync();
-        }
-
         public async Task UpdatePatientContacts(UserContacts contacts, int id)
         {
             var patient = await _db.Patients.FirstOrDefaultAsync(x => x.ID == id);
@@ -80,12 +74,6 @@ namespace SuperDuperMedAPP.Data.Repositories
             var patientToDelete = _db.Patients.First(x => x.ID == id);
             _db.Patients.Remove(patientToDelete);
             await _db.SaveChangesAsync();
-        }
-
-        public async Task<string?> GetHashedPassword(int id)
-        {
-            return await _db.Patients.Where(x => x.ID.Equals(id)).Select(x => x.HashPassword)
-                .FirstOrDefaultAsync();
         }
 
         public async Task EditPassword(int patientId, string password)

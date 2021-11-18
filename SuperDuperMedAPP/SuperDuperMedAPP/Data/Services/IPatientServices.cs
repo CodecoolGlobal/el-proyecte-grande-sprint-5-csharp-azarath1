@@ -9,8 +9,6 @@ namespace SuperDuperMedAPP.Data.Services
     {
         Task<Patient?> GetPatientById(int patientId);
         Task EditDoctorId(int patientId, int newDoctorId);
-        Task<List<Patient>?> GetAllPatients();
-
         Task<List<Patient>?> GetAllPatientsByPageNumber(int pageNumber);
         Task<List<Patient>?> GetDoctorsPatients(int doctorId, int pageNumber);
         Task UpdatePatientsContacts(UserContacts contacts, int id);

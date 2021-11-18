@@ -34,12 +34,6 @@ namespace SuperDuperMedAPP.Data.Repositories
             return await _db.Medications.FirstOrDefaultAsync(x => x.MedicationID.Equals(medicationId));
         }
 
-        public async Task UpdateMedication(Medication medication)
-        {
-            _db.Medications.Update(medication);
-            await _db.SaveChangesAsync();
-        }
-
         public async Task DeleteMedication(int medicationId)
         {
             var medicationToDelete = await _db.Medications.FirstOrDefaultAsync(x => x.MedicationID == medicationId);

@@ -111,7 +111,6 @@ namespace SuperDuperMedAPP
             app.UseRouting();
             //app.UseCors();
 
-            app.UseSession();
             app.UseCors(
                 x => x
                     .AllowAnyHeader()

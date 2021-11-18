@@ -25,11 +25,6 @@ namespace SuperDuperMedAPP.Data.Services
             await _repository.EditDoctorId(patientId, newDoctorId);
         }
 
-        public async Task<List<Patient>?> GetAllPatients()
-        {
-            return await _repository.GetAllPatients();
-        }
-
         public async Task<List<Patient>?> GetAllPatientsByPageNumber(int pageNumber)
         {
             return await _repository.GetAllPatientsByPageNumber(pageNumber);
