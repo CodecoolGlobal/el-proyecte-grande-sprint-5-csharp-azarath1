@@ -8,7 +8,7 @@ namespace SuperDuperMedAPP.Data.Repositories
     {
         Task AddMedicine(Medicine medicine);
         Task<List<Medicine>?> GetAllMedicine();
-        Task<List<Medicine>?> GetMedicineByPageNumber(int pageNumber);
+        Task<List<Medicine>?> GetAllMedicineByPageNumber(int pageNumber);
         Task<Medicine?> GetMedicineById(int medicineId);
         Task UpdateMedicine(Medicine medication);
         Task DeleteMedicine(int medicineId);

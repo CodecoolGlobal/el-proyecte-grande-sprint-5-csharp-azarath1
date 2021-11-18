@@ -25,7 +25,7 @@ namespace SuperDuperMedAPP.Data.Repositories
             return await _db.Medicine.ToListAsync();
         }
 
-        public async Task<List<Medicine>?> GetMedicineByPageNumber(int pageNumber)
+        public async Task<List<Medicine>?> GetAllMedicineByPageNumber(int pageNumber)
         {
             return await _db.Medicine.Skip(10 * pageNumber).Take(10).ToListAsync();
         }
