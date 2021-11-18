@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using SuperDuperMedAPP.Data.Repositories;
+﻿using SuperDuperMedAPP.Data.Repositories;
 using SuperDuperMedAPP.Models;
 using SuperDuperMedAPP.Models.DTO;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace SuperDuperMedAPP.Data.Services
 {
@@ -43,7 +43,7 @@ namespace SuperDuperMedAPP.Data.Services
 
         public async Task<Medicine?> GetMedicineById(int medId)
         {
-           return await _medicineRepository.GetMedicineById(medId);
+            return await _medicineRepository.GetMedicineById(medId);
         }
 
         public async Task<Doctor?> GetDoctorById(int id)

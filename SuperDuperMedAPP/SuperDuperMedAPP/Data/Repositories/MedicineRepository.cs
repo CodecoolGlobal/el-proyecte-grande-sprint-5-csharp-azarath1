@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore;
+using SuperDuperMedAPP.Models;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using SuperDuperMedAPP.Models;
 
 namespace SuperDuperMedAPP.Data.Repositories
 {
@@ -27,10 +27,10 @@ namespace SuperDuperMedAPP.Data.Repositories
 
         public async Task<List<Medicine>?> GetMedicineByPageNumber(int pageNumber)
         {
-            return await _db.Medicine.Skip(10*pageNumber).Take(10).ToListAsync();
+            return await _db.Medicine.Skip(10 * pageNumber).Take(10).ToListAsync();
         }
 
-        public async Task<Medicine?>  GetMedicineById(int medicineId)
+        public async Task<Medicine?> GetMedicineById(int medicineId)
         {
             return await _db.Medicine.FirstOrDefaultAsync(x => x.MedicineID.Equals(medicineId));
         }
@@ -45,7 +45,7 @@ namespace SuperDuperMedAPP.Data.Repositories
         {
             var medicineToDelete = await _db.Medicine.FirstOrDefaultAsync(x => x.MedicineID == medicineId);
             _db.Medicine.Remove(medicineToDelete);
-           await _db.SaveChangesAsync();
+            await _db.SaveChangesAsync();
         }
     }
 }

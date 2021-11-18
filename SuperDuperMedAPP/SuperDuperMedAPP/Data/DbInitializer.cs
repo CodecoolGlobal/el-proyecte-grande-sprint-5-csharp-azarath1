@@ -1,8 +1,7 @@
-﻿using SuperDuperMedAPP.Models;
+﻿using SuperDuperMedAPP.Data.Services;
+using SuperDuperMedAPP.Models;
 using System;
 using System.Linq;
-using SuperDuperMedAPP.Data.Services;
-using SuperDuperMedAPP.Infrastructure;
 
 
 namespace SuperDuperMedAPP.Data

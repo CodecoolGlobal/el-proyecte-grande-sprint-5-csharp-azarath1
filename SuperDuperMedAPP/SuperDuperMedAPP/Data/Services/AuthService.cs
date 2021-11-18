@@ -1,10 +1,10 @@
-﻿using System;
+﻿using CryptoHelper;
+using Microsoft.IdentityModel.Tokens;
+using SuperDuperMedAPP.Models.DTO;
+using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using CryptoHelper;
-using Microsoft.IdentityModel.Tokens;
-using SuperDuperMedAPP.Models.DTO;
 
 namespace SuperDuperMedAPP.Data.Services
 {
@@ -17,13 +17,13 @@ namespace SuperDuperMedAPP.Data.Services
             this._jwtSecret = jwtSecret;
             this._jwtLifespan = jwtLifespan;
         }
-        public AuthData GetAuthData(int id,string role)
+        public AuthData GetAuthData(int id, string role)
         {
             var expirationTime = DateTime.UtcNow.AddMinutes(_jwtLifespan);
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity (new Claim[]
+                Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim(ClaimTypes.Name, id.ToString()),
                     new Claim(ClaimTypes.Role, role)

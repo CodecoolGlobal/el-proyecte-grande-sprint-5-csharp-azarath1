@@ -1,8 +1,8 @@
-﻿using System;
+﻿using SuperDuperMedAPP.Models;
+using SuperDuperMedAPP.Models.DTO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using SuperDuperMedAPP.Models;
-using SuperDuperMedAPP.Models.DTO;
 
 namespace SuperDuperMedAPP.Infrastructure
 {

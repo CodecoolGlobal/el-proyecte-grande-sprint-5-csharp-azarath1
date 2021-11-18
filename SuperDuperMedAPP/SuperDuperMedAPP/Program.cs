@@ -1,15 +1,10 @@
-using SuperDuperMedAPP.Data;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using SuperDuperMedAPP.Data;
 using SuperDuperMedAPP.Data.Services;
-using SuperDuperMedAPP.Infrastructure;
+using System;
 
 namespace SuperDuperMedAPP
 {
@@ -31,7 +26,7 @@ namespace SuperDuperMedAPP
                 try
                 {
                     var context = services.GetRequiredService<AppDbContext>();
-                    DbInitializer.Initialize(context,services.GetRequiredService<IAuthService>());
+                    DbInitializer.Initialize(context, services.GetRequiredService<IAuthService>());
                 }
                 catch (Exception ex)
                 {

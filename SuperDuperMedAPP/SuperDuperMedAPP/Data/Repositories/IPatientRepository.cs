@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using SuperDuperMedAPP.Models;
+﻿using SuperDuperMedAPP.Models;
 using SuperDuperMedAPP.Models.DTO;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace SuperDuperMedAPP.Data.Repositories
 {
@@ -15,9 +15,9 @@ namespace SuperDuperMedAPP.Data.Repositories
         Task<List<Patient>?> GetAllPatients();
         Task<List<Patient>?> GetAllPatientsByPageNumber(int pageNumber);
         Task UpdatePatient(Patient patient);
-        Task UpdatePatientContacts(UserContacts contacts,int id);
+        Task UpdatePatientContacts(UserContacts contacts, int id);
         Task DeletePatient(int id);
-        Task<string?>  GetHashedPassword(int id);
+        Task<string?> GetHashedPassword(int id);
         Task EditPassword(int patientId, string password);
         Task EditDoctorId(int patientId, int newDoctorId);
     }

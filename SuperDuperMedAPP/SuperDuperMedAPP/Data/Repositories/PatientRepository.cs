@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using CryptoHelper;
+﻿using CryptoHelper;
 using Microsoft.EntityFrameworkCore;
 using SuperDuperMedAPP.Models;
 using SuperDuperMedAPP.Models.DTO;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace SuperDuperMedAPP.Data.Repositories
 {
@@ -36,7 +36,7 @@ namespace SuperDuperMedAPP.Data.Repositories
         {
             return await _db.Patients
                 .Where(x => x.DoctorID.Equals(doctorId))
-                .Skip(10*pageNumber)
+                .Skip(10 * pageNumber)
                 .Take(10)
                 .ToListAsync();
         }
