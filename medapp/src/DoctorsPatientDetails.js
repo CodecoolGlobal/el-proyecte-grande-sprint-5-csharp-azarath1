@@ -175,10 +175,10 @@ function DoctorsPatientDetails()  {
                                         <td>{medication.doctorNote}</td>
                                         <td>
                                             <Button style={{ margin: '10px' }} medicationname={medication.name} medicationdose={medication.dose} doctornote={ medication.doctorNote} variant="primary" onClick={handleClickEditModal}>
-                                                Update Medication
+                                            <i class="fas fa-edit"></i> Edit
                                             </Button>                                            
                                             <Button value={ medication.medicationID } variant="danger" onClick={handleDelete}>
-                                                Delete Medication
+                                            <i class="fas fa-trash-alt"></i> Delete
                                             </Button>
                                         </td>
                                         <Modal show={showEditModal} onHide={handleCloseEditModal}>
@@ -276,7 +276,7 @@ function DoctorsPatientDetails()  {
 
                                 <Modal.Footer>
                                     <Button variant="success" onClick={handleAddMedication}>
-                                        Add Medication
+                                    <i class="fas fa-hand-holding-medical"></i> Add Medication
                                     </Button>
                                 </Modal.Footer>
 
@@ -288,7 +288,7 @@ function DoctorsPatientDetails()  {
                             </Modal>
                         
                         <Button variant="success" onClick={handleClickAddMedication}>
-                            Add Medication
+                        <i class="fas fa-hand-holding-medical"></i> Add Medication
                         </Button>
                     </div>
                 </div>
