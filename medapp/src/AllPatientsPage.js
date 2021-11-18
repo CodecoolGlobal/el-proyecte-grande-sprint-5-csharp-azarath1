@@ -60,6 +60,7 @@ function AllPatientsPage() {
       credentials: 'include',
       mode: 'cors',
       headers:{
+          'Authorization': `Bearer ${currentUserSubject.token}`,
           'Access-Control-Allow-Credentials': 'true',
           'Accept':'application/json',
           'Content-Type':'application/json'
@@ -67,7 +68,7 @@ function AllPatientsPage() {
       body: JSON.stringify(event.target.value),
   };
   if(window.confirm('Are you sure you want to add this patient?')){
-  fetch(process.env.REACT_APP_BASE_URL_DOCTOR+currentUserSubject.id+'/register-patient', requestOptions)
+  fetch(process.env.REACT_APP_BASE_URL_DOCTOR+currentUserSubject.id+'/register-patient/'+event.target.value, requestOptions)
       .then(async response => {
       const data = await response;
       alert("Sucessfuly added!")
