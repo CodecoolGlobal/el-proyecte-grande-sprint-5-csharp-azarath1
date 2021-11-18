@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SuperDuperMedAPP.Data.Repositories;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SuperDuperMedAPP.Controllers
 {
@@ -31,6 +32,7 @@ namespace SuperDuperMedAPP.Controllers
             var meds = await _medicineRepository.GetAllMedicine();
             return Ok(meds);
         }
+
 
         [Authorize(Roles = "doctor")]
         [Route("doctor/{id:int}/medicine/{pageNumber:int}")]
