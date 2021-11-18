@@ -33,10 +33,10 @@ function Home() {
             return (
                     <div className="justify-content-center">
                         <h2 className="text-danger">Welcome to SuperduperMedapp!</h2>
-                        <div className="card text-white bg-secondary mb-3">
+                        <div className="card text-dark mb-3">
                             <div className="card-header"><h4>Current Coronavirus Statistics</h4></div>
-                                <div className="card-body">
-                                    <Table className="mt-4" striped bordered hover size="sm">
+                                <div className="card-body bg-secondary">
+                                    <Table className="mt-4 table-secondary table-striped table-hover size-sm">
                                         <thead>
                                             <tr>
                                                 <th>Confirmed Globally</th>

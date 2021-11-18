@@ -63,6 +63,14 @@ input[type=submit]:hover {
 
 div {
   border-radius: 5px;
-  background-color: #f2f2f2;
+  /* background-color: #f2f2f2; */
   padding: 10px;
 }
+
+.navcontainer {
+  padding: auto;
+}
+.modalcontainer {
+  display: none;
+}
+

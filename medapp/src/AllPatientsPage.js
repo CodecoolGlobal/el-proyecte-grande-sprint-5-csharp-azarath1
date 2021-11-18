@@ -4,19 +4,17 @@ const currentUserSubject = JSON.parse(localStorage.getItem('currentUser'));
 
 function AllPatientsPage() {
   const [patientdetails, setDetails] = useState(null);
-  const [idcookie, userTypecookie] = document.cookie.valueOf().split(";");
-  const [key, id] = idcookie.split("=");
 
   useEffect(() => {
     getData();
 
     async function getData() {
 
-      const response = await fetch(process.env.REACT_APP_BASE_URL+'/all-patients/'+ 0, {headers:{Authorization: `Bearer ${currentUserSubject.token}`}});
+      const response = await fetch(process.env.REACT_APP_BASE_URL+'all-patients/'+ 0, {headers:{Authorization: `Bearer ${currentUserSubject.token}`}});
       const data = await response.json();
       setDetails(data);
     }
-  }, [key, userTypecookie, id, patientdetails]);
+  }, [patientdetails]);
   if(patientdetails){
     return (
         <div>
@@ -37,7 +35,7 @@ function AllPatientsPage() {
                                 <td>{patient.name}</td>
                                 <td>{patient.socialSecurityNumber}</td>
                                 <td>
-                                    <Button className="mr-2" variant="info" onClick={putIntoPractice}>
+                                    <Button className="mr-2" value={patient.id} variant="info" onClick={putIntoPractice}>
                                         Put into practice
                                     </Button>
                                 </td>
@@ -52,24 +50,36 @@ function AllPatientsPage() {
   else{
     return (<div></div>)
   }
-  function putIntoPractice() {
-    fetch(process.env.REACT_APP_BASE_URL_DOCTOR+id+'/register-patient',{
-        method:'PUT',
-        credentials: 'include',
-        headers:{
-            'Accept':'application/json',
-            'Content-Type':'application/json'
-        },
-        body:JSON.stringify({
-            doctorID: id
-        })
-    })
-    .then(res=>res.json())
-    .then((result)=>{
-    },
-    (message)=>{
-        alert('Saved Changes');
-    })
-  }  
+  
+  
+  
+  function putIntoPractice(event) {
+    event.preventDefault();
+    const requestOptions = {
+      method: 'PUT',
+      credentials: 'include',
+      mode: 'cors',
+      headers:{
+          'Access-Control-Allow-Credentials': 'true',
+          'Accept':'application/json',
+          'Content-Type':'application/json'
+      },
+      body: JSON.stringify(event.target.value),
+  };
+  if(window.confirm('Are you sure you want to add this patient?')){
+  fetch(process.env.REACT_APP_BASE_URL_DOCTOR+currentUserSubject.id+'/register-patient', requestOptions)
+      .then(async response => {
+      const data = await response;
+      alert("Sucessfuly added!")
+        if (!response.ok) {
+          const error = (data && data.message) || response.status;
+          return Promise.reject(error);
+      }
+  })
+  .catch(error => {
+      console.error('There was an error!', error);
+  });  
+}
+}
 }
 export default AllPatientsPage;

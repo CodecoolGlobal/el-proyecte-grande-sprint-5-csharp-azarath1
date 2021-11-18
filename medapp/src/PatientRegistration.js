@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 // import { Form, Button } from 'react-bootstrap';
-import { BehaviorSubject } from 'rxjs';
-const currentUserSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('currentUser')));
+// import { BehaviorSubject } from 'rxjs';
+// const currentUserSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('currentUser')));
 
 
 export class PatientRegistration extends Component {
@@ -70,7 +70,7 @@ export class PatientRegistration extends Component {
             .then(res => res.json())
             .then((result) => {
                 localStorage.setItem('currentUser', JSON.stringify(result));
-                currentUserSubject.next(result);
+                // currentUserSubject.next(result);
                 alert('Successfully registered');
             },
                 (error) => {
