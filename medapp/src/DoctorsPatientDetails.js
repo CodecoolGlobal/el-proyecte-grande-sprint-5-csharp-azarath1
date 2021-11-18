@@ -93,7 +93,7 @@ function DoctorsPatientDetails()  {
         async function getPatientMedications() {
 
             
-            const response = await fetch(process.env.REACT_APP_BASE_URL_DOCTOR + currentUserSubject.id + '/patients-medications/' + location.state.patientid+0, {headers:{Authorization: `Bearer ${currentUserSubject.token}`}});
+            const response = await fetch(process.env.REACT_APP_BASE_URL_DOCTOR + currentUserSubject.id + '/patients-medications/' + location.state.patientid+"/"+0, {headers:{Authorization: `Bearer ${currentUserSubject.token}`}});
             const data = await response.json();
 
             setMedications(data);
