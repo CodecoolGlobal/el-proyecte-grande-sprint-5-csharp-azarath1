@@ -33,7 +33,7 @@ namespace SuperDuperMedAPP.Controllers
             return NoContent();
         }
 
-        //change url?
+        
         [Authorize(Roles = "doctor")]
         [HttpPut]
         [Route("doctor/{id:int}/medication/{medicationId}/edit-dosage")]
@@ -49,8 +49,8 @@ namespace SuperDuperMedAPP.Controllers
             await _services.EditMedicationDosage(medicationId, newDosage);
             return NoContent();
         }
+        
 
-        //change url?
         [Authorize(Roles = "doctor")]
         [HttpPut]
         [Route("doctor/{id:int}/medication/{medicationId}/edit-note")]
@@ -67,7 +67,7 @@ namespace SuperDuperMedAPP.Controllers
             return NoContent();
         }
 
-        //change url?
+        
         [Authorize(Roles = "doctor")]
         [HttpDelete]
         [Route("doctor/{id:int}/medication/{medId:int}/delete")]
@@ -83,7 +83,7 @@ namespace SuperDuperMedAPP.Controllers
             return NotFound();
         }
 
-        //change url?
+        //need?
         [Authorize(Roles = "doctor")]
         [Route("doctor/{id:int}/patients-medication/{medicationId:int}")]
         public async Task<ActionResult> GetPatientsMedicationSingle([FromRoute] int id, [FromRoute] int medicationId)
@@ -99,7 +99,6 @@ namespace SuperDuperMedAPP.Controllers
             return Ok(response);
         }
 
-        //change url?
         [Authorize(Roles = "doctor")]
         [Route("doctor/{id:int}/patients-medications/{patientId:int}/{pageNumber:int}")]
         public async Task<ActionResult> GetPatientsMedicationAll([FromRoute] int id, [FromRoute] int patientId,
