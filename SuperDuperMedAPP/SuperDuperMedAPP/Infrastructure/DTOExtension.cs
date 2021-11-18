@@ -39,6 +39,7 @@ namespace SuperDuperMedAPP.Infrastructure
             {
                 Name = x.Name,
                 Date = x.Date.ToShortDateString(),
+                DoctorNote = x.DoctorNote,
                 Dose = x.Dose,
                 medicationID = x.MedicationID
             }).ToList();
@@ -70,6 +71,16 @@ namespace SuperDuperMedAPP.Infrastructure
                     PhoneNumber = x.PhoneNumber,
                     DoctorID = x.DoctorID
                 }).ToList();
+        }
+
+        public static GetUserToAuthDTO TGetUserToAuthDto(this User user)
+        {
+            return new GetUserToAuthDTO
+            {
+                Id = user.ID,
+                HashPassword = user.HashPassword,
+                Role = user.Role
+            };
         }
     }
 }
