@@ -7,8 +7,6 @@ const currentUserSubject = JSON.parse(localStorage.getItem('currentUser'));
 
 function DoctorsPatientDetails()  {
     let location = useLocation();
-    const [idcookie, userTypecookie] = document.cookie.valueOf().split(";");
-    const [key, id] = idcookie.split("=");
     const [patientmedications, setMedications] = useState(null);
     const [medicines, setMedicines] = useState(null);
     const [medicineID, setMedicineID] = useState(1);
@@ -121,10 +119,6 @@ function DoctorsPatientDetails()  {
     };
 
 
-    //   const [show, setShow] = useState(false);
-    //   const handleShow = () => setShow(true);
-    //   const handleClose = () => setShow(false);
-
     useEffect(() => {
         getPatientMedications();
         getMedicines();
@@ -158,8 +152,8 @@ function DoctorsPatientDetails()  {
             setMedicines(data);
         }
 
-    }, [key, id, patientmedications, userTypecookie, location.state.patientid], [key, id, patientmedications, userTypecookie]);
-    if (patientmedications, medicines) {
+    }, [location.state.patientid]);
+    if (patientmedications && medicines) {
         return (
             <div>
                 <h1>Medications</h1>
@@ -183,7 +177,7 @@ function DoctorsPatientDetails()  {
                                             <Button style={{ margin: '10px' }} medicationname={medication.name} medicationdose={medication.dose} doctornote={ medication.doctorNote} variant="primary" onClick={handleClickEditModal}>
                                                 Update Medication
                                             </Button>                                            
-                                            <Button value={ medication.medicationID } variant="primary" onClick={handleDelete}>
+                                            <Button value={ medication.medicationID } variant="danger" onClick={handleDelete}>
                                                 Delete Medication
                                             </Button>
                                         </td>
@@ -281,7 +275,7 @@ function DoctorsPatientDetails()  {
                                 </Form>
 
                                 <Modal.Footer>
-                                    <Button variant="primary" onClick={handleAddMedication}>
+                                    <Button variant="success" onClick={handleAddMedication}>
                                         Add Medication
                                     </Button>
                                 </Modal.Footer>
@@ -293,7 +287,7 @@ function DoctorsPatientDetails()  {
                                 </Modal.Footer>
                             </Modal>
                         
-                        <Button variant="primary" onClick={handleClickAddMedication}>
+                        <Button variant="success" onClick={handleClickAddMedication}>
                             Add Medication
                         </Button>
                     </div>
