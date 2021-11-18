@@ -35,8 +35,8 @@ function AllPatientsPage() {
                                 <td>{patient.name}</td>
                                 <td>{patient.socialSecurityNumber}</td>
                                 <td>
-                                    <Button className="mr-2" value={patient.id} variant="info" onClick={putIntoPractice}>
-                                        Put into practice
+                                    <Button className="mr-2" value={patient.id} variant="success" onClick={putIntoPractice}>
+                                    <i class="fas fa-user-plus"></i> Add to practice
                                     </Button>
                                 </td>
                             </tr>)}
