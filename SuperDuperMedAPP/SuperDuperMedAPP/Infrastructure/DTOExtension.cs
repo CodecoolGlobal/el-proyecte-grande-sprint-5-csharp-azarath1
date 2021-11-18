@@ -3,6 +3,7 @@ using SuperDuperMedAPP.Models.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using CryptoHelper;
 
 namespace SuperDuperMedAPP.Infrastructure
 {
@@ -82,5 +83,34 @@ namespace SuperDuperMedAPP.Infrastructure
                 Role = user.Role
             };
         }
+
+        public static Doctor HashDoctorPassword(this Doctor unhashedDoctor)
+        {
+            return new Doctor
+            {
+                Name = unhashedDoctor.Name,
+                DateOfBirth = unhashedDoctor.DateOfBirth,
+                Email = unhashedDoctor.Email,
+                PhoneNumber = unhashedDoctor.PhoneNumber,
+                Username = unhashedDoctor.Username,
+                HashPassword = Crypto.HashPassword(unhashedDoctor.HashPassword),
+                Role = unhashedDoctor.Role,
+                RegistrationNumber = unhashedDoctor.RegistrationNumber
+            };
+        }
+        public static Patient HashPatientPassword(this Patient unhashedPatient)
+        {
+            return new Patient
+            {
+                Name = unhashedPatient.Name,
+                DateOfBirth = unhashedPatient.DateOfBirth,
+                Email = unhashedPatient.Email,
+                PhoneNumber = unhashedPatient.PhoneNumber,
+                Username = unhashedPatient.Username,
+                HashPassword = Crypto.HashPassword(unhashedPatient.HashPassword),
+                Role = unhashedPatient.Role,
+                SocialSecurityNumber = unhashedPatient.SocialSecurityNumber
+            };
+}
     }
 }
