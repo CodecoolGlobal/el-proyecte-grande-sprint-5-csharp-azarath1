@@ -1,40 +1,25 @@
-import React,{Component} from 'react';
+import { useState, useEffect, } from 'react';
 import {Table} from 'react-bootstrap';
+const currentUserSubject = JSON.parse(localStorage.getItem('currentUser'));
 
-export class PatientMedications extends Component{
 
-    constructor(props){
-        super(props);
-        this.state={meddata:[]}
-    }
+function PatientMedications() {
+    const [meddata, setMeds] = useState(null);
 
-    refreshList(){
-         fetch(process.env.REACT_APP_BASE+'patient/'+2+'/medication',
-                { method: 'GET',
-                headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-                }})
-            .then(response=>response.json())
-            .then(data=>{
-            this.setState({meddata:data});
-            console.log(data);
-        });
-    }
+    useEffect(() => {
+        getData();
 
-    componentDidMount(){
-        this.refreshList();
-    }
+    async function getData() {
+       
+          const response = await fetch(process.env.REACT_APP_BASE_URL_PATIENT+currentUserSubject.id+'/medication/'+0, {headers:{Authorization: `Bearer ${currentUserSubject.token}`}});  
+          const data = await response.json();
+          setMeds(data);
+        }
 
-    // componentDidUpdate(){
-    //     this.refreshList();
-    // }
-
-    render(){
-        // const {meddata, patientid}=this.state;
+    }, []);
+    if (meddata) {
         return(
             <div >
-                <h2>Welcome!</h2>
                 <h4>Current medications:</h4>
                 <Table className="mt-4" striped bordered hover size="sm">
                     <thead>
@@ -46,16 +31,26 @@ export class PatientMedications extends Component{
                         </tr>
                     </thead>
                     <tbody>
-                        {/* {meddata.map(dat=>
+                        {meddata.map(dat=>
                             <tr key={dat.date}>
                                 <td>{dat.date}</td>
                                 <td>{dat.name}</td>
-                                <td>{dat.dosage}</td>
-                                <td>{dat.doctorNotes}</td>
-                            </tr>)} */}
+                                <td>{dat.dose}</td>
+                                <td>{dat.doctorNote}</td>
+                            </tr>)}
                     </tbody>
                 </Table>
             </div>
         )
     }
+    else {return (
+        <div><h1>
+        <div className="spinner-border text-danger" role="status">
+        <span className="visually-hidden">Loading...</span>
+        </div>
+        </h1></div>
+    )}
+    
 }
+
+export default PatientMedications;
