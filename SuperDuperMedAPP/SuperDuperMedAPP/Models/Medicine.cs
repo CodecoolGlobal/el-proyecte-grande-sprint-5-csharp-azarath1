@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace SuperDuperMedAPP.Models
+﻿namespace SuperDuperMedAPP.Models
 {
     public class Medicine
     {
@@ -11,6 +6,6 @@ namespace SuperDuperMedAPP.Models
         public string Name { get; set; }
         public string Manufacturer { get; set; }
         public string DescriptionLink { get; set; }
-       
+
     }
 }

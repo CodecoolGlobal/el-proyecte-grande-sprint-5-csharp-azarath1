@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using SuperDuperMedAPP.Data.Repositories;
+﻿using SuperDuperMedAPP.Data.Repositories;
 using SuperDuperMedAPP.Models;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace SuperDuperMedAPP.Data.Services
 {
-    public class MedicationServices:IMedicationService
+    public class MedicationServices : IMedicationService
     {
         private IMedicationRepository _medicationRepository;
         private IMedicineRepository _medicineRepository;
