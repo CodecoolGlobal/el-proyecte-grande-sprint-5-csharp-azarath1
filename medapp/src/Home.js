@@ -39,7 +39,7 @@ function Home() {
                                     <Table className="mt-4 table-secondary table-striped table-hover size-sm">
                                         <thead>
                                             <tr>
-                                                <th>Confirmed Globally</th>
+                                                <th>Confirmed Cases Globally</th>
                                                 <th>Deaths</th>
                                             </tr>
                                         </thead>
@@ -51,7 +51,7 @@ function Home() {
                                         </tbody>
                                         <thead>
                                             <tr>
-                                                <th>Confirmed in Hungary</th>
+                                                <th>Confirmed Cases in Hungary</th>
                                                 <th>Deaths in Hungary</th>
                                             </tr>
                                         </thead>
