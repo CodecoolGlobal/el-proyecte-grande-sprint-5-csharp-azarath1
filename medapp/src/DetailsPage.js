@@ -2,8 +2,9 @@ import { useState, useEffect, } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 const currentUserSubject = JSON.parse(localStorage.getItem('currentUser'));
 
-function PatientPage() {
+function PersonalDetails() {
   const [patientdetails, setDetails] = useState(null);
+  const [doctordetails, setDoctorDetails] = useState(null);
   const [emailContact, setMail] = useState('');
   const [phoneContact, setPhone] = useState('');
   const [show, setShow] = useState(false);
@@ -17,7 +18,7 @@ console.log(currentUserSubject.userRole);
       if (currentUserSubject.userRole === "doctor"){
         const response = await fetch(process.env.REACT_APP_BASE_URL_DOCTOR+currentUserSubject.id+"/details", {headers:{Authorization: `Bearer ${currentUserSubject.token}`}});  
         const data = await response.json();
-        setDetails(data);
+        setDoctorDetails(data);
         setMail(data.email);
         setPhone(data.phoneNumber);
       }
@@ -71,6 +72,46 @@ console.log(currentUserSubject.userRole);
         </div>
       )
   }
+  if(doctordetails){
+    return (
+        <div>
+          <h1>My Profile Details</h1>
+            <div className="doctordetails">
+                <div>
+                  <h5>{doctordetails.name}</h5>
+                  <p><strong>Registration Number: </strong>{doctordetails.registrationNumber}</p>
+                  <p><strong>Date of Birth: </strong>{doctordetails.dateOfBirth}</p>
+                  <p><strong>E-mail address: </strong>{emailContact}</p>
+                  <p><strong>Phone Number: </strong>{phoneContact}</p>
+                  <p><strong>Username: </strong>{doctordetails.username}</p>
+                </div>
+                <Button variant="primary" onClick={handleShow}>
+                   Change my contact info
+                </Button>
+                <Modal show={show}>
+                  <Modal.Header closeButton={true} onClick={handleClose}>
+                    <Modal.Title>Contact Info</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                  <form action="submit">
+                    <label htmlFor="email">Email:</label>
+                    <br />
+                    <input type="text" name="email" onChange={event => setMail(event.target.value)} placeholder={doctordetails.email}></input>
+                    <br />
+                    <label htmlFor="phoneNumber">Phone number:</label>
+                    <br />
+                    <input type="text" name="phone" onChange={event => setPhone(event.target.value)} placeholder={doctordetails.phoneNumber}></input>
+                  </form>
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>Close</Button>
+                    <Button variant="success" type="submit" onClick={() => {saveEditedDetails(); handleClose();}}>Save Changes</Button>
+                  </Modal.Footer>
+                </Modal>
+            </div>
+        </div>
+      )
+  }
   else{
     return (<div><h1>
       <div className="spinner-border text-danger" role="status">
@@ -85,6 +126,7 @@ console.log(currentUserSubject.userRole);
         method:'PUT',
         credentials: 'include',
         headers:{
+            'Authorization': `Bearer ${currentUserSubject.token}`,
             'Accept':'application/json',
             'Content-Type':'application/json'
         },
@@ -92,7 +134,8 @@ console.log(currentUserSubject.userRole);
           email: emailContact,
           phonenumber: phoneContact})
     };
-    fetch(process.env.REACT_APP_BASE_URL_PATIENT+currentUserSubject.id+"/edit-contacts", requestOptions)
+    if (currentUserSubject.userRole === "patient") {
+      fetch(process.env.REACT_APP_BASE_URL_PATIENT+currentUserSubject.id+"/edit-contacts", requestOptions)
         .then(async response => {
         const data = await response;
           if (!response.ok) {
@@ -102,8 +145,23 @@ console.log(currentUserSubject.userRole);
     })
     .catch(error => {
         console.error('There was an error!', error);
-  }); 
+      });
+    }
+    else {
+      fetch(process.env.REACT_APP_BASE_URL_DOCTOR+currentUserSubject.id+"/edit-contacts", requestOptions)
+        .then(async response => {
+        const data = await response;
+          if (!response.ok) {
+            const error = (data && data.message) || response.status;
+            return Promise.reject(error);
+        }
+    })
+    .catch(error => {
+        console.error('There was an error!', error);
+    });
+    }
+    
   }
 }
 
-export default PatientPage;
+export default PersonalDetails;
