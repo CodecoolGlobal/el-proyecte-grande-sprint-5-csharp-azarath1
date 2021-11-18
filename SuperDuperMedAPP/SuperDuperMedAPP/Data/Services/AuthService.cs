@@ -19,7 +19,7 @@ namespace SuperDuperMedAPP.Data.Services
         }
         public AuthData GetAuthData(int id,string role)
         {
-            var expirationTime = DateTime.UtcNow.AddHours(_jwtLifespan);
+            var expirationTime = DateTime.UtcNow.AddMinutes(_jwtLifespan);
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {

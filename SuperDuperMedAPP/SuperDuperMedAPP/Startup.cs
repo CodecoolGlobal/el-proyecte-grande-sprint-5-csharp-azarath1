@@ -53,12 +53,7 @@ namespace SuperDuperMedAPP
                 });
 
             services.AddDistributedMemoryCache();
-
-            services.AddSession(options =>
-            {
-                //options.IdleTimeout = TimeSpan.FromSeconds(700);
-                options.Cookie.IsEssential = true;
-            });
+            
             services.AddMemoryCache();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
