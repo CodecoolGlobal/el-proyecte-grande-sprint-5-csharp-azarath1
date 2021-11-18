@@ -494,3 +494,4 @@ Desktop.ini
 /SuperDuperMedAPP/SuperDuperMedAPP/Migrations
 /SuperDuperMedAPP/SuperDuperMedAPP/Views/Patient/Index.cshtml
 /medapp/.env
+.vscode/
