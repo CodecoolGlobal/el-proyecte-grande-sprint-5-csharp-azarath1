@@ -92,7 +92,7 @@ namespace SuperDuperMedAPP.Controllers
 
             var regNumberValid = await _registrationNumberRepository.RegNumberValid(model.RegistrationNumber);
             var isRegNumberInUse = await _doctorRepository.RegNumberInUse(model.RegistrationNumber);
-            if (!regNumberValid  || !regNumberValid && isRegNumberInUse) return BadRequest(new { registrationNumber = "user with this registration number already exists" });
+            if (!regNumberValid  || (regNumberValid && isRegNumberInUse)) return BadRequest(new { registrationNumber = "user with this registration number already exists" });
 
             await _doctorRepository.AddDoctor(model.HashDoctorPassword());
 
