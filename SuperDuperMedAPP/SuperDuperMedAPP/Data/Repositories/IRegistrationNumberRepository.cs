@@ -4,6 +4,6 @@ namespace SuperDuperMedAPP.Data.Repositories
 {
     public interface IRegistrationNumberRepository
     {
-        Task<bool> IsRegNumberValid(string regNumber);
+        Task<bool> RegNumberValid(string regNumber);
     }
 }
