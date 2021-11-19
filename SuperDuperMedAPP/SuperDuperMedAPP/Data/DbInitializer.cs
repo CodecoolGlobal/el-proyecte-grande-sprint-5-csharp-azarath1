@@ -1,6 +1,7 @@
 ﻿using SuperDuperMedAPP.Data.Services;
 using SuperDuperMedAPP.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 
@@ -17,10 +18,24 @@ namespace SuperDuperMedAPP.Data
             {
                 return;   // DB has been seeded
             }
+            var regNumbers = Enumerable
+                .Range(0, 10)
+                .Select(x => new RegistrationNumber
+                {
+                    RegNumber = new Random()
+                        .Next(100000000, 999999999)
+                        .ToString()
+                })
+                .ToList();
+            foreach (var registrationNumber in regNumbers)
+            {
+                context.RegistrationNumbers.Add(registrationNumber);
+            }
+            context.SaveChanges();
 
             var doctors = new Doctor[]
             {
-            new Doctor{RegistrationNumber= "122312"
+            new Doctor{RegistrationNumber= regNumbers[0].RegNumber
                 ,Name="Dr. Bubo"
                 ,DateOfBirth=DateTime.Parse("2078-09-01")
                 ,Email = "Dr@bubo@mail.hu"
@@ -80,6 +95,7 @@ namespace SuperDuperMedAPP.Data
             }
             context.SaveChanges();
 
+            
         }
     }
 }

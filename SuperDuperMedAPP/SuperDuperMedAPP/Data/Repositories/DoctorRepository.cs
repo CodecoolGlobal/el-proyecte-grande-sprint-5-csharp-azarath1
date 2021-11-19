@@ -32,6 +32,11 @@ namespace SuperDuperMedAPP.Data.Repositories
             return await _db.Doctors.FirstOrDefaultAsync(x => x.ID.Equals(userid));
         }
 
+        public async Task<bool> RegNumberInUse(string regNumber)
+        {
+            return await _db.Doctors.AnyAsync(x => x.RegistrationNumber.Equals(regNumber));
+        }
+
         public async Task<List<Doctor>?> GetAllDoctors()
         {
             return await _db.Doctors.ToListAsync();

@@ -56,6 +56,7 @@ namespace SuperDuperMedAPP
             services.AddScoped<IMedicationService, MedicationServices>();
             services.AddScoped<IPatientServices, PatientServices>();
             services.AddScoped<IDoctorsServices, DoctorsServices>();
+            services.AddScoped<IRegistrationNumberRepository, RegistrationNumberRepository>();
             services.AddScoped<IDoctorRepository, DoctorRepository>();
             services.AddScoped<IPatientRepository, PatientRepository>();
             services.AddScoped<IMedicationRepository, MedicationRepository>();
