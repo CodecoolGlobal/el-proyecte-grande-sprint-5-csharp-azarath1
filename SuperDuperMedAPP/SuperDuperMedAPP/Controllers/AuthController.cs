@@ -91,7 +91,7 @@ namespace SuperDuperMedAPP.Controllers
             if (!usernameUniq) return BadRequest(new { username = "user with this email already exists" });
 
             var regNumberUniq = await _registrationNumberRepository.IsRegNumberValid(model.RegistrationNumber);
-            if (!regNumberUniq) return BadRequest(new { username = "user with this registration number already exists" });
+            if (!regNumberUniq) return BadRequest(new { registrationNumber = "user with this registration number already exists" });
 
             await _doctorRepository.AddDoctor(model.HashDoctorPassword());
 
