@@ -21,7 +21,7 @@ namespace SuperDuperMedAPP.Data
 
             var doctors = new Doctor[]
             {
-            new Doctor{RegistrationNumber= "122312"
+            new Doctor{RegistrationNumber= "588433085"
                 ,Name="Dr. Bubo"
                 ,DateOfBirth=DateTime.Parse("2078-09-01")
                 ,Email = "Dr@bubo@mail.hu"
