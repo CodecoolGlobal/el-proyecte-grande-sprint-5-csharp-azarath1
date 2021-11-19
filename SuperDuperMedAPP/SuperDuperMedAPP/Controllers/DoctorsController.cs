@@ -19,6 +19,7 @@ namespace SuperDuperMedAPP.Controllers
 
         [Authorize(Roles = "doctor")]
         [Route("doctor/{id:int}/details")]
+        [HttpGet]
         public async Task<ActionResult> GetLoggedInDoctorDetails([FromRoute] int id)
         {
             var result = await _services.GetDoctorById(id);
@@ -31,15 +32,17 @@ namespace SuperDuperMedAPP.Controllers
             return Ok(result);
         }
         [Authorize(Roles = "doctor")]
-        [HttpPut]
         [Route("doctor/{id:int}/edit-contacts")]
+        [HttpPut]
         public async Task<ActionResult> EditContacts(UserContacts userContact, [FromRoute] int id)
         {
             await _services.UpdateDoctorContacts(userContact, id);
             return Ok();
         }
+
         [Authorize(Roles = "doctor")]
         [Route("doctor/{id:int}/password")]
+        [HttpGet]
         public async Task<ActionResult> EditPassword([FromRoute] int id, string password)
         {
             await _services.EditPassword(id, password);
