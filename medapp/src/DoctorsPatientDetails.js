@@ -7,8 +7,6 @@ const currentUserSubject = JSON.parse(localStorage.getItem('currentUser'));
 
 function DoctorsPatientDetails()  {
     let location = useLocation();
-    const [idcookie, userTypecookie] = document.cookie.valueOf().split(";");
-    const [key, id] = idcookie.split("=");
     const [patientmedications, setMedications] = useState(null);
     const [medicines, setMedicines] = useState(null);
     const [medicineID, setMedicineID] = useState(1);
@@ -121,10 +119,6 @@ function DoctorsPatientDetails()  {
     };
 
 
-    //   const [show, setShow] = useState(false);
-    //   const handleShow = () => setShow(true);
-    //   const handleClose = () => setShow(false);
-
     useEffect(() => {
         getPatientMedications();
         getMedicines();
@@ -133,7 +127,7 @@ function DoctorsPatientDetails()  {
 
             
 
-            const response = await fetch(process.env.REACT_APP_BASE_URL_DOCTOR + currentUserSubject.id + '/patients-medications/' + location.state.patientid+"/"+0, {headers:{Authorization: `Bearer ${currentUserSubject.token}`}});
+            const response = await fetch(process.env.REACT_APP_BASE_URL_DOCTOR + currentUserSubject.id + '/patients-medications/' + location.state.patientid + "/" + 0, {headers:{Authorization: `Bearer ${currentUserSubject.token}`}});
 
             const data = await response.json();
 
@@ -143,14 +137,23 @@ function DoctorsPatientDetails()  {
         async function getMedicines() {
 
 
-            const response = await fetch(process.env.REACT_APP_BASE_URL + 'medicine/' + currentUserSubject.id, { headers: { Authorization: `Bearer ${currentUserSubject.token}` } });
+            const response = await fetch(process.env.REACT_APP_BASE_URL + 'medicine/' + currentUserSubject.id, {
+                mode: 'cors',
+                credentials: 'include',
+                method: 'GET',
+                headers: {
+                    Authorization: `Bearer ${currentUserSubject.token}`
+                }
+            
+            });
+
             const data = await response.json();
 
             setMedicines(data);
         }
 
-    },[], [key, id, patientmedications, userTypecookie, location.state.patientid], [key, id, patientmedications, userTypecookie]);
-    if (patientmedications, medicines) {
+    }, [location.state.patientid]);
+    if (patientmedications && medicines) {
         return (
             <div>
                 <h1>Medications</h1>
@@ -172,10 +175,10 @@ function DoctorsPatientDetails()  {
                                         <td>{medication.doctorNote}</td>
                                         <td>
                                             <Button style={{ margin: '10px' }} medicationname={medication.name} medicationdose={medication.dose} doctornote={ medication.doctorNote} variant="primary" onClick={handleClickEditModal}>
-                                                Update Medication
+                                            <i class="fas fa-edit"></i> Edit
                                             </Button>                                            
-                                            <Button value={ medication.medicationID } variant="primary" onClick={handleDelete}>
-                                                Delete Medication
+                                            <Button value={ medication.medicationID } variant="danger" onClick={handleDelete}>
+                                            <i class="fas fa-trash-alt"></i> Delete
                                             </Button>
                                         </td>
                                         <Modal show={showEditModal} onHide={handleCloseEditModal}>
@@ -272,8 +275,8 @@ function DoctorsPatientDetails()  {
                                 </Form>
 
                                 <Modal.Footer>
-                                    <Button variant="primary" onClick={handleAddMedication}>
-                                        Add Medication
+                                    <Button variant="success" onClick={handleAddMedication}>
+                                    <i class="fas fa-hand-holding-medical"></i> Add Medication
                                     </Button>
                                 </Modal.Footer>
 
@@ -284,8 +287,8 @@ function DoctorsPatientDetails()  {
                                 </Modal.Footer>
                             </Modal>
                         
-                        <Button variant="primary" onClick={handleClickAddMedication}>
-                            Add Medication
+                        <Button variant="success" onClick={handleClickAddMedication}>
+                        <i class="fas fa-hand-holding-medical"></i> Add Medication
                         </Button>
                     </div>
                 </div>

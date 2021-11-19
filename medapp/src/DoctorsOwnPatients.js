@@ -7,11 +7,7 @@ const currentUserSubject = JSON.parse(localStorage.getItem('currentUser'));
 
 function DoctorsOwnPatientsPage() {
     const [patientdetails, setDetails] = useState(null);
-    //   const [show, setShow] = useState(false);
-    //   const handleShow = () => setShow(true);
-    //   const handleClose = () => setShow(false);
-    const [idcookie, userTypecookie] = document.cookie.valueOf().split(";");
-    const [key, id] = idcookie.split("=");
+
 
     useEffect(() => {
         getData();
@@ -21,7 +17,7 @@ function DoctorsOwnPatientsPage() {
             const data = await response.json();
             setDetails(data);
         }
-    }, [id, userTypecookie, key]);
+    }, []);
     if (patientdetails) {
         return (
             <div>
@@ -48,7 +44,7 @@ function DoctorsOwnPatientsPage() {
                                                     state: {
                                                         patientid: patient.id }
                                                 }}>
-                                                    View patient data
+                                                    <i class="fas fa-search-plus"></i> View
                                                 </NavLink>
                                             </Button>
                                         </td>

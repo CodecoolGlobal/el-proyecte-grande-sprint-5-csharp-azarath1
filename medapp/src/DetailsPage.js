@@ -10,7 +10,7 @@ function PersonalDetails() {
   const [show, setShow] = useState(false);
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
-console.log(currentUserSubject.userRole);
+
   useEffect(() => {
     getData();
 
