@@ -38,7 +38,7 @@ function Navigation() {
                 <LoginModal show={show} onHide={handleClose}/>
                 <SignUpModal show={showSignupModal} onHide={handleSignupClose}/>
                 </div>
-                <Navbar className="bg-dark" expand="lg">
+                <Navbar className="navbar-dark bg-dark" expand="lg">
                 <Navbar.Toggle aria-controls="basic-navbar-nav"/>
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav>
@@ -59,7 +59,7 @@ function Navigation() {
     else if (currentUserSubject.userRole==="doctor") {
         return(
             <div className="navcontainer">
-                <Navbar bg="dark" expand="lg">
+                <Navbar className="navbar-dark bg-dark" expand="lg">
                 <Navbar.Toggle aria-controls="basic-navbar-nav"/>
                 <Navbar.Collapse id="basic-navbar-nav">
                 <Nav>
@@ -67,16 +67,16 @@ function Navigation() {
                 <h4><i className="fas fa-laptop-medical text-danger"></i></h4> 
                 </NavLink >
                 <NavLink  className="d-inline p-2 bg-dark text-white" to="/personal">
-                <i className="fas fa-user-md"></i>My Details
+                <i className="fas fa-user-md"></i> My Details
                 </NavLink>
                 <NavLink className="d-inline p-2 bg-dark text-white" to="/mypatients">
-                <i className="fas fa-clinic-medical"></i>My Patients
+                <i className="fas fa-clinic-medical"></i> My Patients
                 </NavLink>
                 <NavLink className="d-inline p-2 bg-dark text-white" to="/allpatients">
-                <i className="fas fa-book-medical"></i>Patient list
+                <i className="fas fa-book-medical"></i> Patient list
                 </NavLink>
                 <NavLink className="d-inline p-2 bg-dark text-white" to="/" onClick={Logout}>
-                <i className="fas fa-sign-out-alt"></i>Logout
+                <i className="fas fa-sign-out-alt"></i> Logout
                 </NavLink>
                 </Nav>
                 </Navbar.Collapse>
@@ -88,7 +88,7 @@ function Navigation() {
     else if (currentUserSubject.userRole==="patient") {
         return(
             <div className="navcontainer">
-                <Navbar bg="dark" expand="lg">
+                <Navbar className="navbar-dark bg-dark" expand="lg">
                 <Navbar.Toggle aria-controls="basic-navbar-nav"/>
                 <Navbar.Collapse id="basic-navbar-nav">
                 <Nav>
@@ -96,13 +96,13 @@ function Navigation() {
                 <h4><i className="fas fa-laptop-medical text-danger"></i></h4> 
                 </NavLink >
                 <NavLink  className="d-inline p-2 bg-dark text-white" to="/personal">
-                <i className="fas fa-user-injured"></i>My Details
+                <i className="fas fa-user-injured"></i> My Details
                 </NavLink>
                 <NavLink  className="d-inline p-2 bg-dark text-white" to="/mymedications">
-                <i className="fas fa-tablets"></i>My Medications
+                <i className="fas fa-tablets"></i> My Medications
                 </NavLink>
                 <NavLink className="d-inline p-2 bg-dark text-white" to="/" onClick={Logout}>
-                <i className="fas fa-sign-out-alt"></i>Logout
+                <i className="fas fa-sign-out-alt"></i> Logout
                 </NavLink>
                 </Nav>
                 </Navbar.Collapse>

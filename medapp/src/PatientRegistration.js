@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 // import { Form, Button } from 'react-bootstrap';
 // import { BehaviorSubject } from 'rxjs';
 // const currentUserSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('currentUser')));
-
+import { Redirect } from 'react-router';
 
 export class PatientRegistration extends Component {
 
@@ -72,6 +72,11 @@ export class PatientRegistration extends Component {
                 localStorage.setItem('currentUser', JSON.stringify(result));
                 // currentUserSubject.next(result);
                 alert('Successfully registered');
+                <Redirect to="/"/>
+                setTimeout(() => {
+                    window.location.reload();    
+                  }, 1000);
+                
             },
                 (error) => {
                     alert('Failed registration');

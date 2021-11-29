@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 // import { BehaviorSubject } from 'rxjs';
 // const currentUserSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('currentUser')));
+import { Redirect } from 'react-router';
 
 
 export class DoctorRegistration extends Component {
@@ -15,7 +16,8 @@ export class DoctorRegistration extends Component {
             email: "youremail@email.com",
             phoneNumber: "999999999",
             userName: "Username",
-            password: "Password"
+            password: "Password",
+            role: "doctor"
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -49,13 +51,12 @@ export class DoctorRegistration extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        fetch('https://localhost:44314/doctor/register', {
+        fetch(process.env.REACT_APP_BASE_URL+'register/doctor', {
 
             method: 'post',
             credentials: 'include',
             headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify({
                 "RegistrationNumber": this.state.registrationNumber,
@@ -64,7 +65,8 @@ export class DoctorRegistration extends Component {
                 "Email": this.state.email,
                 "PhoneNumber": this.state.phoneNumber,
                 "Username": this.state.userName,
-                "HashPassword": this.state.password
+                "HashPassword": this.state.password,
+                "Role": 'doctor'
             }),
         })
             .then(res => res.json())
@@ -72,6 +74,10 @@ export class DoctorRegistration extends Component {
                 localStorage.setItem('currentUser', JSON.stringify(result));
                 // currentUserSubject.next(result);
                 alert('Successfully registered');
+                <Redirect to="/"/>
+                setTimeout(() => {
+                    window.location.reload();    
+                  }, 1000);
             },
                 (error) => {
                     console.log(error);

@@ -1,24 +1,17 @@
-using SuperDuperMedAPP.Data;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
+using SuperDuperMedAPP.Data;
 using SuperDuperMedAPP.Data.Repositories;
 using SuperDuperMedAPP.Data.Services;
-using SuperDuperMedAPP.Infrastructure;
+using System.Text;
 
 namespace SuperDuperMedAPP
 {
@@ -54,11 +47,6 @@ namespace SuperDuperMedAPP
 
             services.AddDistributedMemoryCache();
 
-            services.AddSession(options =>
-            {
-                //options.IdleTimeout = TimeSpan.FromSeconds(700);
-                options.Cookie.IsEssential = true;
-            });
             services.AddMemoryCache();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -68,6 +56,7 @@ namespace SuperDuperMedAPP
             services.AddScoped<IMedicationService, MedicationServices>();
             services.AddScoped<IPatientServices, PatientServices>();
             services.AddScoped<IDoctorsServices, DoctorsServices>();
+            services.AddScoped<IRegistrationNumberRepository, RegistrationNumberRepository>();
             services.AddScoped<IDoctorRepository, DoctorRepository>();
             services.AddScoped<IPatientRepository, PatientRepository>();
             services.AddScoped<IMedicationRepository, MedicationRepository>();
@@ -123,7 +112,6 @@ namespace SuperDuperMedAPP
             app.UseRouting();
             //app.UseCors();
 
-            app.UseSession();
             app.UseCors(
                 x => x
                     .AllowAnyHeader()

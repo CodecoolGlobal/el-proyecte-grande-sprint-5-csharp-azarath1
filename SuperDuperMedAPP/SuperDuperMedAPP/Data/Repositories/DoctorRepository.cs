@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using CryptoHelper;
+﻿using CryptoHelper;
 using Microsoft.EntityFrameworkCore;
 using SuperDuperMedAPP.Models;
 using SuperDuperMedAPP.Models.DTO;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace SuperDuperMedAPP.Data.Repositories
 {
@@ -30,6 +30,11 @@ namespace SuperDuperMedAPP.Data.Repositories
         public async Task<Doctor?> GetDoctorById(int userid)
         {
             return await _db.Doctors.FirstOrDefaultAsync(x => x.ID.Equals(userid));
+        }
+
+        public async Task<bool> RegNumberInUse(string regNumber)
+        {
+            return await _db.Doctors.AnyAsync(x => x.RegistrationNumber.Equals(regNumber));
         }
 
         public async Task<List<Doctor>?> GetAllDoctors()

@@ -1,14 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Mvc;
 using SuperDuperMedAPP.Data.Repositories;
 using SuperDuperMedAPP.Data.Services;
 using SuperDuperMedAPP.Infrastructure;
 using SuperDuperMedAPP.Models;
 using SuperDuperMedAPP.Models.DTO;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace SuperDuperMedAPP.Controllers
 {
@@ -18,13 +16,15 @@ namespace SuperDuperMedAPP.Controllers
         private IAuthService _authService;
         private IPatientRepository _patientRepository;
         private IDoctorRepository _doctorRepository;
+        private IRegistrationNumberRepository _registrationNumberRepository;
 
         public AuthController(IAuthService authService, IPatientRepository patientRepository,
-            IDoctorRepository doctorRepository)
+            IDoctorRepository doctorRepository, IRegistrationNumberRepository registrationNumberRepository)
         {
             _authService = authService;
             _patientRepository = patientRepository;
             _doctorRepository = doctorRepository;
+            _registrationNumberRepository = registrationNumberRepository;
         }
 
         [HttpPost]
@@ -37,13 +37,13 @@ namespace SuperDuperMedAPP.Controllers
 
             if (user == null)
             {
-                return BadRequest(new {email = "no user with this email"});
+                return BadRequest(new { email = "no user with this email" });
             }
 
             var passwordValid = _authService.VerifyPassword(model.Password, user.HashPassword);
             if (!passwordValid)
             {
-                return BadRequest(new {password = "invalid password"});
+                return BadRequest(new { password = "invalid password" });
             }
 
             return _authService.GetAuthData(user.Id, user.Role);
@@ -66,12 +66,12 @@ namespace SuperDuperMedAPP.Controllers
             var users = await _patientRepository.GetAllPatients();
 
             var emailUniq = users != null && IsEmailUniq(model.Email, users.Select(x => x.Email).ToList());
-            if (!emailUniq) return BadRequest(new {email = "user with this email already exists"});
+            if (!emailUniq) return BadRequest(new { email = "user with this email already exists" });
 
             var usernameUniq = users != null && IsUsernameUniq(model.Username, users.Select(x => x.Username).ToList());
-            if (!usernameUniq) return BadRequest(new {username = "user with this email already exists"});
+            if (!usernameUniq) return BadRequest(new { username = "user with this email already exists" });
 
-            await _patientRepository.AddPatient(model);
+            await _patientRepository.AddPatient(model.HashPatientPassword());
 
             return _authService.GetAuthData(model.ID, model.Role);
         }
@@ -85,12 +85,16 @@ namespace SuperDuperMedAPP.Controllers
             var users = await _doctorRepository.GetAllDoctors();
 
             var emailUniq = users != null && IsEmailUniq(model.Email, users.Select(x => x.Email).ToList());
-            if (!emailUniq) return BadRequest(new {email = "user with this email already exists"});
+            if (!emailUniq) return BadRequest(new { email = "user with this email already exists" });
 
             var usernameUniq = users != null && IsUsernameUniq(model.Username, users.Select(x => x.Username).ToList());
-            if (!usernameUniq) return BadRequest(new {username = "user with this email already exists"});
+            if (!usernameUniq) return BadRequest(new { username = "user with this email already exists" });
 
-            await _doctorRepository.AddDoctor(model);
+            var regNumberValid = await _registrationNumberRepository.RegNumberValid(model.RegistrationNumber);
+            var isRegNumberInUse = await _doctorRepository.RegNumberInUse(model.RegistrationNumber);
+            if (!regNumberValid  || (regNumberValid && isRegNumberInUse)) return BadRequest(new { registrationNumber = "user with this registration number already exists" });
+
+            await _doctorRepository.AddDoctor(model.HashDoctorPassword());
 
             return _authService.GetAuthData(model.ID, model.Role);
         }
