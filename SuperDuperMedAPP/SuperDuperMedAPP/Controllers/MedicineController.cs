@@ -26,9 +26,9 @@ namespace SuperDuperMedAPP.Controllers
 
         
         [Authorize(Roles = "doctor")]
-        [Route("medicine/{id:int}")]
+        [Route("medicine")]
         [HttpGet]
-        public async Task<ActionResult> GetAllMedicine([FromRoute] int id)
+        public async Task<ActionResult> GetAllMedicine()
         {
             var meds = await _medicineRepository.GetAllMedicine();
             return Ok(meds);
