@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 // import { BehaviorSubject } from 'rxjs';
 // const currentUserSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('currentUser')));
 import { Redirect } from 'react-router';
+import{setWithExpiry} from './LocalStorageTTLUtils.js';
+
 
 
 export class DoctorRegistration extends Component {
@@ -71,8 +73,7 @@ export class DoctorRegistration extends Component {
         })
             .then(res => res.json())
             .then((result) => {
-                localStorage.setItem('currentUser', JSON.stringify(result));
-                // currentUserSubject.next(result);
+                setWithExpiry(result);
                 alert('Successfully registered');
                 <Redirect to="/"/>
                 setTimeout(() => {

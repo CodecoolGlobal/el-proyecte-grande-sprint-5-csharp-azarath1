@@ -2,23 +2,29 @@ import { Button } from 'react-bootstrap';
 import React, { useState, useEffect } from 'react';
 import { Table } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
-const currentUserSubject = JSON.parse(localStorage.getItem('currentUser'));
+import { getWithExpiry } from './LocalStorageTTLUtils';
+const currentUserSubject = getWithExpiry(); 
 
 
 function DoctorsOwnPatientsPage() {
-    const [patientdetails, setDetails] = useState(null);
+    const [loginData] = useState(getWithExpiry())
+    const [patientDetails, setDetails] = useState(null);
 
 
     useEffect(() => {
         getData();
 
         async function getData() {
+if(!loginData){
+  setDetails(null)
+}else{
             const response = await fetch(process.env.REACT_APP_BASE_URL_DOCTOR + currentUserSubject.id + '/patients/'+0,{headers:{Authorization: `Bearer ${currentUserSubject.token}`}});
             const data = await response.json();
             setDetails(data);
+}
         }
-    }, []);
-    if (patientdetails) {
+    }, [loginData]);
+    if (patientDetails) {
         return (
             <div>
                 <h1>My Patients</h1>
@@ -33,7 +39,7 @@ function DoctorsOwnPatientsPage() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {patientdetails.map(patient =>
+                                {patientDetails.map(patient =>
                                     <tr key={patient.id}>
                                         <td>{patient.name}</td>
                                         <td>{patient.socialSecurityNumber}</td>
