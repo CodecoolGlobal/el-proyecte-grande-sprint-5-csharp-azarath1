@@ -2,7 +2,8 @@ import { Button } from 'react-bootstrap';
 import React, { useState, useEffect } from 'react';
 import { Modal, Table, Form } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
-const currentUserSubject = JSON.parse(localStorage.getItem('currentUser'));
+import { getWithExpiry } from './LocalStorageTTLUtils';
+const currentUserSubject = getWithExpiry();
 
 
 function DoctorsPatientDetails()  {

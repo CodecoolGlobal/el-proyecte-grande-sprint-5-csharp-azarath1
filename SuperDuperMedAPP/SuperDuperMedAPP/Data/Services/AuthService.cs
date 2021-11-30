@@ -41,7 +41,7 @@ namespace SuperDuperMedAPP.Data.Services
             return new AuthData
             {
                 Token = token,
-                TokenExpirationTime = ((DateTimeOffset)expirationTime).ToUnixTimeSeconds(),
+                TokenExpirationTime = ((DateTimeOffset)expirationTime).ToUnixTimeMilliseconds(),
                 Id = id,
                 UserRole = role
             };

@@ -1,10 +1,16 @@
 import { useState, useEffect, } from 'react';
+
 import {Button, Modal, Table} from 'react-bootstrap';
 const currentUserSubject = JSON.parse(localStorage.getItem('currentUser'));
+
+import {Table} from 'react-bootstrap';
+import { getWithExpiry } from './LocalStorageTTLUtils';
+
 
 
 function PatientMedications() {
     const [meddata, setMeds] = useState(null);
+
     const [showNoteModal, setShowNoteModal] = useState(false);
 
     const handleCloseNoteModal = () => setShowNoteModal(false);
@@ -15,18 +21,21 @@ function PatientMedications() {
         handleShowNoteModal();
     };
 
+    const [loginData] = useState(getWithExpiry())
+
+
     useEffect(() => {
         getData();
 
     async function getData() {
        
-          const response = await fetch(process.env.REACT_APP_BASE_URL_PATIENT+currentUserSubject.id+'/medication/'+0, {headers:{Authorization: `Bearer ${currentUserSubject.token}`}});  
+          const response = await fetch(process.env.REACT_APP_BASE_URL_PATIENT+loginData.id+'/medication/'+0, {headers:{Authorization: `Bearer ${loginData.token}`}});  
           const data = await response.json();
           console.log(data);
           setMeds(data);
         }
 
-    }, []);
+    }, [loginData]);
     if (meddata) {
         return(
             <div >
