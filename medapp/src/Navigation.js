@@ -4,7 +4,6 @@ import { useHistory } from "react-router-dom";
 import {NavLink} from 'react-router-dom';
 import {Navbar,Nav} from 'react-bootstrap';
 import { SignUpModal } from './SignUpModal';
-import { LoginModal } from './LoginModal';
 import{getWithExpiry} from './LocalStorageTTLUtils.js';
 
 function Navigation() {
