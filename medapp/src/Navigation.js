@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import {NavLink} from 'react-router-dom';
 import {Navbar,Nav} from 'react-bootstrap';
 import { SignUpModal } from './SignUpModal';
-import{getWithExpiry} from './LocalStorageTTLUtils.js';
+import{getWithExpiry, Timer} from './LocalStorageTTLUtils.js';
 
 function Navigation() {
     const currentUserSubject = getWithExpiry();
@@ -71,6 +71,9 @@ function Navigation() {
                 <NavLink className="d-inline p-2 bg-dark text-white" to="/" onClick={Logout}>
                 <i className="fas fa-sign-out-alt"></i> Logout
                 </NavLink>
+                <div id='session-timer'>
+                    <Timer LT={currentUserSubject.expiry}/>
+                </div>
                 </Nav>
                 </Navbar.Collapse>
             </Navbar>
@@ -97,6 +100,9 @@ function Navigation() {
                 <NavLink className="d-inline p-2 bg-dark text-white" to="/" onClick={Logout}>
                 <i className="fas fa-sign-out-alt"></i> Logout
                 </NavLink>
+                <div id='session-timer'>
+                    <Timer LT={currentUserSubject.expiry}/>
+                </div>
                 </Nav>
                 </Navbar.Collapse>
             </Navbar>

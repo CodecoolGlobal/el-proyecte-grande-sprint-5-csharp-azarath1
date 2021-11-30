@@ -1,4 +1,5 @@
-// import { Redirect } from "react-router";
+import React from 'react';
+import Countdown from 'react-countdown';
 
 export const  setWithExpiry= (userData) => {
 	if(userData.error){
@@ -42,3 +43,26 @@ export const getWithExpiry=()=> {
 	}
 	return item
 }
+
+export const Timer = ({LT})=>{
+	return(
+			  <Countdown
+				date={LT}
+				renderer={Renderer}
+			  />	
+	)
+}
+
+// Renderer callback with condition 
+const Renderer = ({ hours, minutes, seconds, completed }) => {
+	if (completed) {
+		localStorage.removeItem("currentUser")
+		window.location.href = "/Login";
+                setTimeout(() => {
+                    window.location.reload();    
+                  }, 1000);
+	  } else {
+		// Render a countdown
+		return <span style={{color:'red'}}>{hours}:{minutes}:{seconds}</span>;
+	  }
+	};
