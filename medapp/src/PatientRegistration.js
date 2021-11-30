@@ -1,11 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
-// import { Form, Button } from 'react-bootstrap';
-// import { BehaviorSubject } from 'rxjs';
-// const currentUserSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('currentUser')));
 import { useHistory } from "react-router-dom";
-import{setWithExpiry} from './LocalStorageTTLUtils.js';
-
+import { setWithExpiry } from './LocalStorageTTLUtils.js';
 
 function PatientRegistration() {
     const history = useHistory();
@@ -17,10 +13,9 @@ function PatientRegistration() {
     const [userName, setUserName] = useState("Username");
     const [password, setPassword] = useState("Password");
 
-
     function handleSubmit(event) {
         event.preventDefault();
-        fetch(process.env.REACT_APP_BASE_URL+'register/patient', {
+        fetch(process.env.REACT_APP_BASE_URL + 'register/patient', {
 
             method: 'post',
             credentials: 'include',
@@ -40,7 +35,7 @@ function PatientRegistration() {
         })
             .then(res => res.json())
             .then((result) => {
-                if(result.error){
+                if (result.error) {
                     alert(result.error)
                     window.location.reload();
                     return;
@@ -49,9 +44,9 @@ function PatientRegistration() {
                 alert('Successfully registered');
                 history.push("/");
                 setTimeout(() => {
-                    window.location.reload();    
+                    window.location.reload();
                 }, 1000);
-                
+
             },
                 (error) => {
                     alert('Failed registration');
@@ -61,22 +56,22 @@ function PatientRegistration() {
     return (
         <form action="submit">
             <div>
-            <label>
-                Social Security Number:
-            </label>
-            <br/>
+                <label>
+                    Social Security Number:
+                </label>
+                <br />
                 <input
                     name="socialSecurityNumber"
                     type="number"
                     placeholder="000999000"
                     onChange={event => setSecurityNumber(event.target.value)}
-                     />
+                />
             </div>
             <div>
-            <label>
-                Name:
-            </label>
-            <br/>
+                <label>
+                    Name:
+                </label>
+                <br />
                 <input
                     name="name"
                     type="textarea"
@@ -84,10 +79,10 @@ function PatientRegistration() {
                     onChange={event => setName(event.target.value)} />
             </div>
             <div>
-            <label>
-                Date of Birth:
-            </label>
-            <br/>
+                <label>
+                    Date of Birth:
+                </label>
+                <br />
                 <input
                     name="dateOfBirth"
                     type="date"
@@ -95,10 +90,10 @@ function PatientRegistration() {
                     onChange={event => setBirthDate(event.target.value)} />
             </div>
             <div>
-            <label>
-                Email:
-            </label>
-            <br/>
+                <label>
+                    Email:
+                </label>
+                <br />
                 <input
                     name="email"
                     type="textarea"
@@ -106,10 +101,10 @@ function PatientRegistration() {
                     onChange={event => setEmail(event.target.value)} />
             </div>
             <div>
-            <label>
-                Phone Number:
-            </label>
-            <br/>
+                <label>
+                    Phone Number:
+                </label>
+                <br />
                 <input
                     name="phoneNumber"
                     type="textarea"
@@ -117,10 +112,10 @@ function PatientRegistration() {
                     onChange={event => setPhoneNumber(event.target.value)} />
             </div>
             <div>
-            <label>
-                Username:
-            </label>
-            <br/>
+                <label>
+                    Username:
+                </label>
+                <br />
                 <input
                     name="username"
                     type="textarea"
@@ -128,26 +123,20 @@ function PatientRegistration() {
                     onChange={event => setUserName(event.target.value)} />
             </div>
             <div>
-            <label>
-                Password:
-            </label>
-            <br/>
+                <label>
+                    Password:
+                </label>
+                <br />
                 <input
                     name="password"
                     type="password"
                     onChange={event => setPassword(event.target.value)}
-                    />
+                />
             </div>
             <br />
             <input type="submit" value="Submit" onClick={handleSubmit} />
         </form>
     );
-
-    
-
 }
-
-
-
 
 export default PatientRegistration;
