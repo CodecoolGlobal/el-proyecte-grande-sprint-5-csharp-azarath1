@@ -1,11 +1,28 @@
 import { useState, useEffect, } from 'react';
+
+import {Button, Modal, Table} from 'react-bootstrap';
+const currentUserSubject = JSON.parse(localStorage.getItem('currentUser'));
+
 import {Table} from 'react-bootstrap';
 import { getWithExpiry } from './LocalStorageTTLUtils';
 
 
+
 function PatientMedications() {
     const [meddata, setMeds] = useState(null);
+
+    const [showNoteModal, setShowNoteModal] = useState(false);
+
+    const handleCloseNoteModal = () => setShowNoteModal(false);
+    const handleShowNoteModal = () => setShowNoteModal(true);
+
+    function handleClickNoteModal(event) {
+        event.preventDefault();
+        handleShowNoteModal();
+    };
+
     const [loginData] = useState(getWithExpiry())
+
 
     useEffect(() => {
         getData();
@@ -14,6 +31,7 @@ function PatientMedications() {
        
           const response = await fetch(process.env.REACT_APP_BASE_URL_PATIENT+loginData.id+'/medication/'+0, {headers:{Authorization: `Bearer ${loginData.token}`}});  
           const data = await response.json();
+          console.log(data);
           setMeds(data);
         }
 
@@ -26,7 +44,7 @@ function PatientMedications() {
                     <thead>
                         <tr>
                             <th>Date</th>
-                            <th>Title</th>
+                            <th>Medicine</th>
                             <th>Dosage</th>
                             <th>Notes by the Doctor</th>
                         </tr>
@@ -35,9 +53,26 @@ function PatientMedications() {
                         {meddata.map(dat=>
                             <tr key={dat.date}>
                                 <td>{dat.date}</td>
-                                <td>{dat.name}</td>
+                                <td><a href={dat.medicine.descriptionLink} target="_blank">{dat.medicine.name}</a></td>
                                 <td>{dat.dose}</td>
-                                <td>{dat.doctorNote}</td>
+                                <td>
+                                <Button style={{ margin: '10px' }}  variant="primary" onClick={handleClickNoteModal}>
+                                    <i class="fas fa-edit"></i> See Note
+                                </Button>     
+                                </td>
+                                <Modal show={showNoteModal} onHide={handleCloseNoteModal}>
+                                    <Modal.Header closeButton>
+                                        <Modal.Title>Doctor's Note</Modal.Title>
+                                    </Modal.Header>
+                      
+                                        {dat.doctorNote}
+                                                   
+                                    <Modal.Footer>
+                                        <Button variant="secondary" onClick={handleCloseNoteModal}>
+                                            Close
+                                        </Button>
+                                    </Modal.Footer>
+                                </Modal>
                             </tr>)}
                     </tbody>
                 </Table>
