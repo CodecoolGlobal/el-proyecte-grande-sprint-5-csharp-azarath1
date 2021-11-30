@@ -7,6 +7,7 @@ const currentUserSubject = JSON.parse(localStorage.getItem('currentUser'));
 
 function DoctorsPatientDetails()  {
     let location = useLocation();
+    let patientid = location.state.patientid;
     const [patientmedications, setMedications] = useState(null);
     const [medicines, setMedicines] = useState(null);
     const [medicineID, setMedicineID] = useState(1);
@@ -92,7 +93,7 @@ function DoctorsPatientDetails()  {
                 "Name": medicationName,
                 "Dose": medicationDose,
                 "DoctorNote": medicationNote,
-                "PatientID": location.state.patientid,
+                "PatientID": patientid,
                 "MedicineID": medicineID
             }),
         }).then(res => res.json())
@@ -127,7 +128,7 @@ function DoctorsPatientDetails()  {
 
             
 
-            const response = await fetch(process.env.REACT_APP_BASE_URL_DOCTOR + currentUserSubject.id + '/patients-medications/' + location.state.patientid + "/" + 0, {headers:{Authorization: `Bearer ${currentUserSubject.token}`}});
+            const response = await fetch(process.env.REACT_APP_BASE_URL_DOCTOR + currentUserSubject.id + '/patients-medications/' + patientid + "/" + 0, {headers:{Authorization: `Bearer ${currentUserSubject.token}`}});
 
             const data = await response.json();
 
@@ -137,7 +138,7 @@ function DoctorsPatientDetails()  {
         async function getMedicines() {
 
 
-            const response = await fetch(process.env.REACT_APP_BASE_URL + 'medicine/' + currentUserSubject.id, {
+            const response = await fetch(process.env.REACT_APP_BASE_URL + 'medicine', {
                 mode: 'cors',
                 credentials: 'include',
                 method: 'GET',
@@ -152,7 +153,7 @@ function DoctorsPatientDetails()  {
             setMedicines(data);
         }
 
-    }, [location.state.patientid]);
+    }, [patientid]);
     if (patientmedications && medicines) {
         return (
             <div>
