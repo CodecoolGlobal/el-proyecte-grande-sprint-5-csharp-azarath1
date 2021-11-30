@@ -1,3 +1,5 @@
+// import { Redirect } from "react-router";
+
 export const  setWithExpiry= (userData) => {
 	const item = {
 		token: userData.token,
@@ -20,6 +22,19 @@ export const getWithExpiry=()=> {
 		// If the item is expired, delete the item from storage
 		// and return null
 		localStorage.removeItem("currentUser")
+		let fresh = window.confirm("Your session expired!");
+		if (fresh === true) {
+			window.location.href = "/Login";
+                setTimeout(() => {
+                    window.location.reload();    
+                  }, 1000);
+			
+		} else {
+			window.location.href = "/";
+                setTimeout(() => {
+                    window.location.reload();    
+                  }, 1000);
+		}
 		return null
 	}
 	return item
