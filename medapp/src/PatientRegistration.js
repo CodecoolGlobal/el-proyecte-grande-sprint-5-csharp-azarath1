@@ -71,6 +71,11 @@ export class PatientRegistration extends Component {
         })
             .then(res => res.json())
             .then((result) => {
+                if(result.error){
+                    alert(result.error)
+                    window.location.reload();
+                    return;
+                }
                 setWithExpiry(result);
                 alert('Successfully registered');
                 <Redirect to="/"/>

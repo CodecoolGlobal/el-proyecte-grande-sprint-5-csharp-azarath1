@@ -30,6 +30,7 @@ namespace SuperDuperMedAPP.Data
         public DbSet<Medication> Medications { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<RegistrationNumber> RegistrationNumbers { get; set; }
+        public DbSet<SocialSecurityNumber> SocialSecurityNumbers { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -39,6 +40,7 @@ namespace SuperDuperMedAPP.Data
             modelBuilder.Entity<Medication>().ToTable("Medication");
             modelBuilder.Entity<User>().ToTable("User");
             modelBuilder.Entity<RegistrationNumber>().ToTable("RegistrationNumber");
+            modelBuilder.Entity<SocialSecurityNumber>().ToTable("SocialSecurityNumber");
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
