@@ -4,9 +4,11 @@ import { useHistory } from "react-router-dom";
 import {NavLink} from 'react-router-dom';
 import {Navbar,Nav} from 'react-bootstrap';
 import { SignUpModal } from './SignUpModal';
-const currentUserSubject = JSON.parse(localStorage.getItem('currentUser'));
+import { LoginModal } from './LoginModal';
+import{getWithExpiry} from './LocalStorageTTLUtils.js';
 
 function Navigation() {
+    const currentUserSubject = getWithExpiry();
     const history = useHistory();
 
     const [showSignupModal, setShowSignup] = useState(false);
@@ -16,7 +18,6 @@ function Navigation() {
     function Logout() {
             // remove user from local storage to log user out
             localStorage.removeItem('currentUser');
-            // currentUserSubject.next(null);
             history.push("/");
                 setTimeout(() => {
                     window.location.reload();    

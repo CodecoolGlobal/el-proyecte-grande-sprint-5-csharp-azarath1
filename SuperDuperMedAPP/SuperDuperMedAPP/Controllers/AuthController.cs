@@ -72,8 +72,9 @@ namespace SuperDuperMedAPP.Controllers
             if (!usernameUniq) return BadRequest(new { username = "user with this email already exists" });
 
             await _patientRepository.AddPatient(model.HashPatientPassword());
+            var patient = await _patientRepository.GetPatientByUsername(model.Username);
 
-            return _authService.GetAuthData(model.ID, model.Role);
+            return _authService.GetAuthData(patient.ID, patient.Role);
         }
 
         [HttpPost]
@@ -95,8 +96,9 @@ namespace SuperDuperMedAPP.Controllers
             if (!regNumberValid  || (regNumberValid && isRegNumberInUse)) return BadRequest(new { registrationNumber = "user with this registration number already exists" });
 
             await _doctorRepository.AddDoctor(model.HashDoctorPassword());
+            var doctor = await _doctorRepository.GetDoctorByUsername(model.Username);
 
-            return _authService.GetAuthData(model.ID, model.Role);
+            return _authService.GetAuthData(doctor.ID, doctor.Role);
         }
 
         private bool IsUsernameUniq(string modelUsername, List<string> usernames)

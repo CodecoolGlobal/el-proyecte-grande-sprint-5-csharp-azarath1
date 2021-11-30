@@ -1,21 +1,27 @@
 import { useState, useEffect, } from 'react';
 import { Table, Button } from 'react-bootstrap';
-const currentUserSubject = JSON.parse(localStorage.getItem('currentUser'));
+import { getWithExpiry } from './LocalStorageTTLUtils';
+
+
 
 function AllPatientsPage() {
-  const [patientdetails, setDetails] = useState(null);
+  const [loginData] = useState(getWithExpiry())
+  const [patientDetails, setDetails] = useState(null);
 
   useEffect(() => {
     getData();
 
     async function getData() {
-
-      const response = await fetch(process.env.REACT_APP_BASE_URL+'all-patients/'+ 0, {headers:{Authorization: `Bearer ${currentUserSubject.token}`}});
+if(!loginData){
+  setDetails(null)
+}else{
+      const response = await fetch(process.env.REACT_APP_BASE_URL+'all-patients/'+ 0, {headers:{Authorization: `Bearer ${loginData.token}`}});
       const data = await response.json();
       setDetails(data);
     }
-  }, [patientdetails]);
-  if(patientdetails){
+  }
+  }, [patientDetails,loginData]);
+  if(patientDetails){
     return (
         <div>
           <h1>All Patients</h1>
@@ -30,7 +36,7 @@ function AllPatientsPage() {
                         </tr>
                     </thead>
                     <tbody>
-                    {patientdetails.map(patient=>
+                    {patientDetails.map(patient=>
                             <tr key={patient.id}>
                                 <td>{patient.name}</td>
                                 <td>{patient.socialSecurityNumber}</td>
@@ -60,7 +66,7 @@ function AllPatientsPage() {
       credentials: 'include',
       mode: 'cors',
       headers:{
-          'Authorization': `Bearer ${currentUserSubject.token}`,
+          'Authorization': `Bearer ${loginData.token}`,
           'Access-Control-Allow-Credentials': 'true',
           'Accept':'application/json',
           'Content-Type':'application/json'
@@ -68,7 +74,7 @@ function AllPatientsPage() {
       body: JSON.stringify(event.target.value),
   };
   if(window.confirm('Are you sure you want to add this patient?')){
-  fetch(process.env.REACT_APP_BASE_URL_DOCTOR+currentUserSubject.id+'/register-patient/'+event.target.value, requestOptions)
+  fetch(process.env.REACT_APP_BASE_URL_DOCTOR+loginData.id+'/register-patient/'+event.target.value, requestOptions)
       .then(async response => {
       const data = await response;
       alert("Sucessfuly added!")
