@@ -6,7 +6,7 @@ namespace SuperDuperMedAPP.Data.Repositories
 {
     public class RegistrationNumberRepository : IRegistrationNumberRepository
     {
-        public readonly AppDbContext _db;
+        private readonly AppDbContext _db;
 
         public RegistrationNumberRepository(AppDbContext db)
         {

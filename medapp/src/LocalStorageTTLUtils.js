@@ -1,6 +1,9 @@
 // import { Redirect } from "react-router";
 
 export const  setWithExpiry= (userData) => {
+	if(userData.error){
+		return;
+	}
 	const item = {
 		token: userData.token,
 		id: userData.id,
