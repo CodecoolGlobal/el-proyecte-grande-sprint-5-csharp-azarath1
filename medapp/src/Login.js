@@ -2,8 +2,8 @@
 import React from 'react';
 import { useState } from 'react';
 import { useHistory } from "react-router-dom";
+import{setWithExpiry} from './LocalStorageTTLUtils.js';
 // const currentUserSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('currentUser')));
-
 
 function Login() {
     const history = useHistory();
@@ -28,8 +28,7 @@ function Login() {
         })
             .then(res => res.json())
             .then((res) => {
-                localStorage.setItem('currentUser', JSON.stringify(res));
-                // currentUserSubject.next(res);
+                setWithExpiry(res);
                 history.push("/");
                 setTimeout(() => {
                     window.location.reload();    
