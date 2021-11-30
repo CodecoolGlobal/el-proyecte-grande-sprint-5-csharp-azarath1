@@ -13,7 +13,45 @@ function DoctorRegistration() {
         const [userName, setUserName] = useState("Username");
         const [password, setPassword] = useState("Password");
     
-        
+        function handleSubmit(event) {
+            event.preventDefault();
+            fetch(process.env.REACT_APP_BASE_URL + 'register/doctor', {
+    
+                method: 'post',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "RegistrationNumber": registrationNumber,
+                    "Name": name,
+                    "DateOfBirth": DateOfBirth,
+                    "Email": email,
+                    "PhoneNumber": phoneNumber,
+                    "Username": userName,
+                    "HashPassword": password,
+                    "Role": 'doctor'
+                }),
+            })
+                .then(res => res.json())
+                .then((result) => {
+                    if (result.error) {
+                        alert(result.error)
+                        window.location.reload();
+                        return;
+                    }
+                    setWithExpiry(result);
+                    alert('Successfully registered');
+                    history.push("/");
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1000);
+    
+                },
+                    (error) => {
+                        alert('Failed registration');
+                    })
+        }
     
         return (
             <form action="submit">
