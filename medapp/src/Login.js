@@ -28,6 +28,10 @@ function Login() {
         })
             .then(res => res.json())
             .then((res) => {
+                if(res.error){
+                    alert(res.error)
+                    window.location.reload();
+                }
                 setWithExpiry(res);
                 history.push("/");
                 setTimeout(() => {
