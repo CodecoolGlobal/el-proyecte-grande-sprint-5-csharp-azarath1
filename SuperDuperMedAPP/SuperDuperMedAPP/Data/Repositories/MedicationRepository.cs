@@ -24,6 +24,7 @@ namespace SuperDuperMedAPP.Data.Repositories
         {
             return await _db.Medications
                 .Where(x => x.PatientID.Equals(patientId))
+                .Include("Medicine")
                 .Skip(10 * pageNumber)
                 .Take(10)
                 .ToListAsync();
