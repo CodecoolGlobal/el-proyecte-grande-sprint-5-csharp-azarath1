@@ -2,7 +2,7 @@ import './App.css';
 import Home from './Home';
 import Navigation from './Navigation';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
-import { PatientRegistration } from './PatientRegistration';
+import PatientRegistration from './PatientRegistration';
 import { DoctorRegistration } from './DoctorRegistration';
 import Login from './Login';
 import PersonalDetails from './DetailsPage';
