@@ -54,7 +54,7 @@ export const Timer = ({LT})=>{
 }
 
 // Renderer callback with condition 
-const Renderer = ({ hours, minutes, seconds, completed }) => {
+const Renderer = ({minutes, seconds, completed }) => {
 	if (completed) {
 		localStorage.removeItem("currentUser")
 		window.location.href = "/Login";
@@ -63,6 +63,6 @@ const Renderer = ({ hours, minutes, seconds, completed }) => {
                   }, 1000);
 	  } else {
 		// Render a countdown
-		return <span style={{color:'red'}}>{hours}:{minutes}:{seconds}</span>;
+		return <span style={{color:'red'}}>{minutes}:{seconds}</span>;
 	  }
 	};
