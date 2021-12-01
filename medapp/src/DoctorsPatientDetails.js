@@ -1,14 +1,14 @@
 import { Button } from 'react-bootstrap';
 import React, { useState, useEffect } from 'react';
-import { Modal, Table, Form } from 'react-bootstrap';
+import { Card, Modal, Table, Form } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 import { getWithExpiry } from './LocalStorageTTLUtils';
 const currentUserSubject = getWithExpiry();
 
 
 function DoctorsPatientDetails()  {
-    let location = useLocation();
-    let patientid = location.state.patientid;
+    //let location = useLocation();
+    let patientid = useQuery().get('id');
     const [patientmedications, setMedications] = useState(null);
     const [medicines, setMedicines] = useState(null);
     const [medicineID, setMedicineID] = useState(1);
@@ -24,6 +24,10 @@ function DoctorsPatientDetails()  {
     const handleCloseAddModal = () => window.location.reload();
     const handleShowAddModal = () => setShowAddModal(true);
 
+
+    function useQuery() {
+        return new URLSearchParams(window.location.search);
+    }
 
     function handleClickEditModal(event) {
         event.preventDefault();
@@ -118,6 +122,9 @@ function DoctorsPatientDetails()  {
             .then(res => console.log(res));
     };
 
+    
+
+    
 
     useEffect(() => {
         getPatientMedications();
@@ -125,9 +132,7 @@ function DoctorsPatientDetails()  {
 
         async function getPatientMedications() {
 
-            
-
-            const response = await fetch(process.env.REACT_APP_BASE_URL_DOCTOR + currentUserSubject.id + '/patients-medications/' + patientid + "/" + 0, {headers:{Authorization: `Bearer ${currentUserSubject.token}`}});
+            const response = await fetch(process.env.REACT_APP_BASE_URL_DOCTOR + currentUserSubject.id + '/patients-medications/' + patientid + "/" + 0, { headers: { Authorization: `Bearer ${currentUserSubject.token}` } });
 
             const data = await response.json();
 
@@ -136,7 +141,6 @@ function DoctorsPatientDetails()  {
 
         async function getMedicines() {
 
-
             const response = await fetch(process.env.REACT_APP_BASE_URL + 'medicine', {
                 mode: 'cors',
                 credentials: 'include',
@@ -144,7 +148,7 @@ function DoctorsPatientDetails()  {
                 headers: {
                     Authorization: `Bearer ${currentUserSubject.token}`
                 }
-            
+
             });
 
             const data = await response.json();
@@ -152,7 +156,9 @@ function DoctorsPatientDetails()  {
             setMedicines(data);
         }
 
-    }, [patientid]);
+
+
+    }, [] );
     if (patientmedications && medicines) {
         return (
             <div>
@@ -172,15 +178,20 @@ function DoctorsPatientDetails()  {
                                     <th>Name</th>
                                     <th>Dose</th>
                                     <th>Doctor's note</th>
+                                    <th>Options</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {patientmedications.map(medication =>
                                     <tr key={medication.medicationID}>
-                                        <td>{medication.name}</td>
-                                        <td>{medication.dose}</td>
-                                        <td>{medication.doctorNote}</td>
-                                        <td>
+                                        <td width="25%">{medication.name}</td>
+                                        <td width="25%">{medication.dose}</td>
+                                        <td width="25%">
+                                            <Card style={{ width: '18rem' }}>
+                                                <Card.Body>{medication.doctorNote}</Card.Body>
+                                            </Card>
+                                        </td>
+                                        <td width="25%">
                                             <Button style={{ margin: '10px' }} medicationname={medication.name} medicationdose={medication.dose} doctornote={ medication.doctorNote} variant="primary" onClick={handleClickEditModal}>
                                             <i className="fas fa-edit"></i> Edit
                                             </Button>                                            
@@ -200,8 +211,8 @@ function DoctorsPatientDetails()  {
                                                     <Form.Control type="text" name="dose"
                                                         defaultValue={medication.dose}
                                                         placeholder="dose"
-                                                        onChange={(event) => setMedicationDose( event.target.value )} />
-                                                    <Button style={{ marginTop: '10px' }} variant="primary" type="submit" value={ medication.medicationID} onClick={handleDoseUpdate}>
+                                                        onChange={(event) => setMedicationDose(event.target.value)} />
+                                                    <Button style={{ marginTop: '10px' }} variant="primary" type="submit" value={medication.medicationID} onClick={handleDoseUpdate}>
                                                         Update dose
                                                     </Button>
                                                 </Form.Group>
@@ -214,18 +225,11 @@ function DoctorsPatientDetails()  {
                                                         defaultValue={medication.doctorNote}
                                                         placeholder="medicationnote"
                                                         onChange={(event) => setMedicationNote(event.target.value)} />
-                                                    <Button style={{ marginTop: '10px' }} variant="primary" type="submit" value={medication.medicationID} onClick={ handleNoteUpdate }>
+                                                    <Button style={{ marginTop: '10px' }} variant="primary" type="submit" value={medication.medicationID} onClick={handleNoteUpdate}>
                                                         Update note
                                                     </Button>
                                                 </Form.Group>
                                             </Form>
-                                                
-                                            
-                                            <Modal.Footer>
-                                                <Button variant="secondary" onClick={handleCloseEditModal}>
-                                                    Close
-                                                </Button>
-                                            </Modal.Footer>
                                         </Modal>
                                     </tr>)}
                             </tbody>
@@ -250,15 +254,15 @@ function DoctorsPatientDetails()  {
 
                                     <Form.Group controlId="medicationdose">
                                         <Form.Label>Dose</Form.Label>
-                                        <Form.Control type="text" name="dose"
-                                            onChange={(event) => setMedicationDose(event.target.value)} />
+                                    <Form.Control type="text" name="dose"
+                                        onChange={(event) => setMedicationDose(event.target.value)} />
                                     </Form.Group>
 
 
                                     <Form.Group controlId="medicationnote">
                                         <Form.Label>Doctor's note</Form.Label>
-                                        <Form.Control type="text" name="medicationnote"
-                                            onChange={(event) => setMedicationNote(event.target.value)} />
+                                    <Form.Control type="text" name="medicationnote"
+                                        onChange={(event) => setMedicationNote(event.target.value)} />
                                     </Form.Group>
 
 
@@ -267,12 +271,6 @@ function DoctorsPatientDetails()  {
                                 <Modal.Footer>
                                     <Button variant="success" onClick={handleAddMedication}>
                                     <i className="fas fa-hand-holding-medical"></i> Add Medication
-                                    </Button>
-                                </Modal.Footer>
-
-                                <Modal.Footer>
-                                    <Button variant="secondary" onClick={handleCloseAddModal}>
-                                        Close
                                     </Button>
                                 </Modal.Footer>
                             </Modal>
