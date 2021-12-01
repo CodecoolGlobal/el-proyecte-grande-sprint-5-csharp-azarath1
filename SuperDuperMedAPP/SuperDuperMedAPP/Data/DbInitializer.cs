@@ -96,34 +96,73 @@ namespace SuperDuperMedAPP.Data
 
             context.SaveChanges();
 
-
+            var medic = new Medicine
+            {
+                Name = "ALGOPYRIN 500 mg", Manufacturer = "sanofi-aventis",
+                DescriptionLink = "https://www.webbeteg.hu/gyogyszerkereso/algopyrin-500-mg/1581/betegtajekoztato"
+            };
             var medicines = new Medicine[]
             {
                 new Medicine
-                    {Name = "ALGOPYRIN 500 mg", Manufacturer = "sanofi-aventis", DescriptionLink = "https://www.webbeteg.hu/gyogyszerkereso/algopyrin-500-mg/1581/betegtajekoztato"},
-
-                new Medicine {Name = "FRONTIN 0,25 mg", Manufacturer = "EGIS", DescriptionLink = "https://www.webbeteg.hu/gyogyszerkereso/frontin-0-25-mg/4425/betegtajekoztato"},
-
-                new Medicine {Name = "XANAX 0,25 mg", Manufacturer = "Pfizer", DescriptionLink = "https://www.webbeteg.hu/gyogyszerkereso/xanax-0-25-mg/3618/betegtajekoztato"},
-
-                new Medicine
-                    {Name = "RITALIN 10 mg", Manufacturer = "Novartis Hungária", DescriptionLink = "https://www.webbeteg.hu/gyogyszerkereso/ritalin-10-mg/8399/betegtajekoztato"},
-
-                new Medicine {Name = "ASPIRIN 500 mg", Manufacturer = "Bayer Hungária", DescriptionLink = "https://www.webbeteg.hu/gyogyszerkereso/aspirin-500-mg/1667/betegtajekoztato"},
+                {
+                    Name = "ALGOPYRIN 500 mg", Manufacturer = "sanofi-aventis",
+                    DescriptionLink = "https://www.webbeteg.hu/gyogyszerkereso/algopyrin-500-mg/1581/betegtajekoztato"
+                },
 
                 new Medicine
-                    {Name = "REXETIN 20 mg", Manufacturer = "Richter Gedeon", DescriptionLink = "https://www.webbeteg.hu/gyogyszerkereso/rexetin-20-mg/10810/betegtajekoztato"},
+                {
+                    Name = "FRONTIN 0,25 mg", Manufacturer = "EGIS",
+                    DescriptionLink = "https://www.webbeteg.hu/gyogyszerkereso/frontin-0-25-mg/4425/betegtajekoztato"
+                },
 
                 new Medicine
-                    {Name = "ACC Long", Manufacturer = "Sandoz Hungária", DescriptionLink = "https://www.webbeteg.hu/gyogyszerkereso/acc-long-600/28482/betegtajekoztato"},
+                {
+                    Name = "XANAX 0,25 mg", Manufacturer = "Pfizer",
+                    DescriptionLink = "https://www.webbeteg.hu/gyogyszerkereso/xanax-0-25-mg/3618/betegtajekoztato"
+                },
 
                 new Medicine
-                    {Name = "NUROFEN FORTE", Manufacturer = "Reckitt Benckiser Healthcare", DescriptionLink = "https://www.webbeteg.hu/gyogyszerkereso/nurofen-forte-400/12737/betegtajekoztato"},
-
-                new Medicine {Name = "ALGOFLEX FORTE", Manufacturer = "sanofi-aventis", DescriptionLink = "https://www.webbeteg.hu/gyogyszerkereso/algoflex-forte-filmtabletta/12881/betegtajekoztato"},
+                {
+                    Name = "RITALIN 10 mg", Manufacturer = "Novartis Hungária",
+                    DescriptionLink = "https://www.webbeteg.hu/gyogyszerkereso/ritalin-10-mg/8399/betegtajekoztato"
+                },
 
                 new Medicine
-                    {Name = "VIAGRA 100 mg", Manufacturer = "Pfizer UK", DescriptionLink = "https://www.webbeteg.hu/gyogyszerkereso/viagra-100-mg/16711/betegtajekoztato"}
+                {
+                    Name = "ASPIRIN 500 mg", Manufacturer = "Bayer Hungária",
+                    DescriptionLink = "https://www.webbeteg.hu/gyogyszerkereso/aspirin-500-mg/1667/betegtajekoztato"
+                },
+
+                new Medicine
+                {
+                    Name = "REXETIN 20 mg", Manufacturer = "Richter Gedeon",
+                    DescriptionLink = "https://www.webbeteg.hu/gyogyszerkereso/rexetin-20-mg/10810/betegtajekoztato"
+                },
+
+                new Medicine
+                {
+                    Name = "ACC Long", Manufacturer = "Sandoz Hungária",
+                    DescriptionLink = "https://www.webbeteg.hu/gyogyszerkereso/acc-long-600/28482/betegtajekoztato"
+                },
+
+                new Medicine
+                {
+                    Name = "NUROFEN FORTE", Manufacturer = "Reckitt Benckiser Healthcare",
+                    DescriptionLink = "https://www.webbeteg.hu/gyogyszerkereso/nurofen-forte-400/12737/betegtajekoztato"
+                },
+
+                new Medicine
+                {
+                    Name = "ALGOFLEX FORTE", Manufacturer = "sanofi-aventis",
+                    DescriptionLink =
+                        "https://www.webbeteg.hu/gyogyszerkereso/algoflex-forte-filmtabletta/12881/betegtajekoztato"
+                },
+
+                new Medicine
+                {
+                    Name = "VIAGRA 100 mg", Manufacturer = "Pfizer UK",
+                    DescriptionLink = "https://www.webbeteg.hu/gyogyszerkereso/viagra-100-mg/16711/betegtajekoztato"
+                }
             };
             foreach (Medicine m in medicines)
             {
