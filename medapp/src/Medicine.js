@@ -13,7 +13,7 @@ export class Medicine extends Component{
     }
 
     refreshList(){
-        fetch(process.env.REACT_APP_BASE_URL_WITH_API+'medicines',
+        fetch('/medicine',
                 { method: 'GET',
                 headers: {
                 'Accept': 'application/json',
@@ -35,7 +35,7 @@ export class Medicine extends Component{
 
     deleteMed(medid){
         if(window.confirm('Are you sure?')){
-            fetch(process.env.REACT_APP_BASE_URL+'medicines/'+medid,{
+            fetch('medicine/'+medid,{
                 method:'DELETE',
                 header:{'Accept':'application/json',
             'Content-Type':'application/json'}

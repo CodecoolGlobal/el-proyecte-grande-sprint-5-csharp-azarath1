@@ -12,7 +12,7 @@ function Login() {
 
     async function handleSubmit(event) {
         event.preventDefault();
-        await fetch(process.env.REACT_APP_BASE_URL + 'login', {
+        await fetch('login', {
             method: 'post',
             mode:'cors',
             credentials: 'include',

@@ -18,7 +18,7 @@ function DoctorsOwnPatientsPage() {
 if(!loginData){
   setDetails(null)
 }else{
-            const response = await fetch(process.env.REACT_APP_BASE_URL_DOCTOR + currentUserSubject.id + '/patients/'+0,{headers:{Authorization: `Bearer ${currentUserSubject.token}`}});
+            const response = await fetch('doctor/'+currentUserSubject.id + '/patients/'+0,{headers:{Authorization: `Bearer ${currentUserSubject.token}`}});
             const data = await response.json();
             setDetails(data);
 }

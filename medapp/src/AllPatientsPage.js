@@ -15,7 +15,7 @@ function AllPatientsPage() {
 if(!loginData){
   setDetails(null)
 }else{
-      const response = await fetch(process.env.REACT_APP_BASE_URL+'all-patients/'+ 0, {headers:{Authorization: `Bearer ${loginData.token}`}});
+      const response = await fetch('all-patients/'+ 0, {headers:{Authorization: `Bearer ${loginData.token}`}});
       const data = await response.json();
       setDetails(data);
     }
@@ -74,7 +74,7 @@ if(!loginData){
       body: JSON.stringify(event.target.value),
   };
   if(window.confirm('Are you sure you want to add this patient?')){
-  fetch(process.env.REACT_APP_BASE_URL_DOCTOR+loginData.id+'/register-patient/'+event.target.value, requestOptions)
+  fetch('doctor/'+loginData.id+'/register-patient/'+event.target.value, requestOptions)
       .then(async response => {
       const data = await response;
       alert("Sucessfuly added!")

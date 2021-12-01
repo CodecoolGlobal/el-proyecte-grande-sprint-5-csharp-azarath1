@@ -26,7 +26,7 @@ function PatientMedications() {
 
     async function getData() {
        
-          const response = await fetch(process.env.REACT_APP_BASE_URL_PATIENT+loginData.id+'/medication/'+0, {headers:{Authorization: `Bearer ${loginData.token}`}});  
+          const response = await fetch('patient/'+loginData.id+'/medication/'+0, {headers:{Authorization: `Bearer ${loginData.token}`}});  
           const data = await response.json();
           console.log(data);
           setMeds(data);

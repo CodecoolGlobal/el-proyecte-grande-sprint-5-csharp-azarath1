@@ -9,7 +9,7 @@ export class EditMedModal extends Component{
 
     handleSubmit(event){
         event.preventDefault();
-        fetch(process.env.REACT_APP_BASE_URL_WITH_API+'medicines/'+this.props.medid,{
+        fetch('medicine/'+this.props.medid,{
             method:'PUT',
             credentials: 'include',
             headers:{

@@ -31,7 +31,7 @@ function DoctorsPatientDetails()  {
 
     async function handleNoteUpdate(event) {
         event.preventDefault();
-        await fetch(process.env.REACT_APP_BASE_URL_DOCTOR + currentUserSubject.id + '/medication/' + event.target.value + '/edit-note', {
+        await fetch('doctor/'+currentUserSubject.id + '/medication/' + event.target.value + '/edit-note', {
             method: 'put',
             mode: 'cors',
             credentials: 'include',
@@ -50,7 +50,7 @@ function DoctorsPatientDetails()  {
 
     async function handleDelete(event) {
         event.preventDefault();
-        await fetch(process.env.REACT_APP_BASE_URL_DOCTOR + currentUserSubject.id + '/medication/' + event.target.value + '/delete', {
+        await fetch('doctor/medication/' + event.target.value + '/delete', {
                 method: 'delete',
                 mode: 'cors',
                 credentials: 'include',
@@ -80,7 +80,7 @@ function DoctorsPatientDetails()  {
         console.log(medicationName);
         console.log(medicationDose);
         console.log(medicationNote);
-        await fetch(process.env.REACT_APP_BASE_URL_DOCTOR + currentUserSubject.id + '/medication/add', {
+        await fetch('doctor/'+currentUserSubject.id + '/medication/add', {
             method: 'post',
             mode: 'cors',
             credentials: 'include',
@@ -103,7 +103,7 @@ function DoctorsPatientDetails()  {
 
     async function handleDoseUpdate(event) {
         event.preventDefault();
-        await fetch(process.env.REACT_APP_BASE_URL_DOCTOR + currentUserSubject.id + '/medication/' + event.target.value + '/edit-dosage', {
+        await fetch('doctor/'+currentUserSubject.id + '/medication/' + event.target.value + '/edit-dosage', {
             method: 'put',
             mode: 'cors',
             credentials: 'include',
@@ -129,7 +129,7 @@ function DoctorsPatientDetails()  {
 
             
 
-            const response = await fetch(process.env.REACT_APP_BASE_URL_DOCTOR + currentUserSubject.id + '/patients-medications/' + patientid + "/" + 0, {headers:{Authorization: `Bearer ${currentUserSubject.token}`}});
+            const response = await fetch('doctor/'+currentUserSubject.id + '/patients-medications/' + patientid + "/" + 0, {headers:{Authorization: `Bearer ${currentUserSubject.token}`}});
 
             const data = await response.json();
 
@@ -139,7 +139,7 @@ function DoctorsPatientDetails()  {
         async function getMedicines() {
 
 
-            const response = await fetch(process.env.REACT_APP_BASE_URL + 'medicine', {
+            const response = await fetch('medicine', {
                 mode: 'cors',
                 credentials: 'include',
                 method: 'GET',

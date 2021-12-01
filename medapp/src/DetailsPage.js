@@ -20,14 +20,14 @@ function PersonalDetails() {
         setDetails(null);
       }
       else if (loginData && loginData.userRole === "doctor"){
-        const response = await fetch(process.env.REACT_APP_BASE_URL_DOCTOR+loginData.id+"/details", {headers:{Authorization: `Bearer ${loginData.token}`}});  
+        const response = await fetch(loginData.id+'/details', {headers:{Authorization: `Bearer ${loginData.token}`}});  
         const data = await response.json();
         setDoctorDetails(data);
         setMail(data.email);
         setPhone(data.phoneNumber);
       }
       else {
-        const response = await fetch(process.env.REACT_APP_BASE_URL_PATIENT+loginData.id+"/details", {headers:{Authorization: `Bearer ${loginData.token}`}});
+        const response = await fetch(loginData.id+'/details', {headers:{Authorization: `Bearer ${loginData.token}`}});
         const data = await response.json();
         setDetails(data);
         setMail(data.email);
@@ -148,7 +148,7 @@ function PersonalDetails() {
           phonenumber: phoneContact})
     };
     if (loginData.userRole === "patient") {
-      fetch(process.env.REACT_APP_BASE_URL_PATIENT+loginData.id+"/edit-contacts", requestOptions)
+      fetch('patient/'+loginData.id+'/edit-contacts', requestOptions)
         .then(async response => {
         const data = await response;
           if (!response.ok) {
@@ -161,7 +161,7 @@ function PersonalDetails() {
       });
     }
     else {
-      fetch(process.env.REACT_APP_BASE_URL_DOCTOR+loginData.id+"/edit-contacts", requestOptions)
+      fetch('doctor/'+loginData.id+'/edit-contacts', requestOptions)
         .then(async response => {
         const data = await response;
           if (!response.ok) {

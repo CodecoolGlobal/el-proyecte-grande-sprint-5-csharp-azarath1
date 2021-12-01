@@ -16,7 +16,7 @@ function DoctorRegistration() {
 
     function handleSubmit(event) {
         event.preventDefault();
-        fetch(process.env.REACT_APP_BASE_URL + 'register/doctor', {
+        fetch('register/doctor', {
 
             method: 'post',
             credentials: 'include',
