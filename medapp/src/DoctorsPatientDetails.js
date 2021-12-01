@@ -99,7 +99,7 @@ function DoctorsPatientDetails()  {
                 "MedicineID": medicineID
             }),
         }).then(res => res.json())
-            .then(res => console.log(res));
+            .then(res => console.log(res)).then(window.location.reload());
     };
 
     async function handleDoseUpdate(event) {
