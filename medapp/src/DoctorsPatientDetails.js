@@ -67,7 +67,7 @@ function DoctorsPatientDetails()  {
                 },
         })
             .then(res => res.json())
-            .then(res => console.log(res));;
+            .then(res => console.log(res)).then(window.location.reload());;
     };
 
     function handleNameUpdate(event) {
@@ -81,7 +81,6 @@ function DoctorsPatientDetails()  {
 
     async function handleAddMedication(event) {
         event.preventDefault();
-        console.log(medicationName);
         await fetch(process.env.REACT_APP_BASE_URL_DOCTOR + currentUserSubject.id + '/medication/add', {
             method: 'post',
             mode: 'cors',
