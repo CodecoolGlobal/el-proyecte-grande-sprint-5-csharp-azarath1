@@ -13,9 +13,9 @@ namespace SuperDuperMedAPP.Data.Repositories
             _db = db;
         }
 
-        public async Task<bool> RegNumberValid(string regNumber)
+        public async Task<bool> RegNumberValid(string? regNumber)
         {
-            return await _db.RegistrationNumbers.AnyAsync(x => x.RegNumber.Equals(regNumber));
+            return await _db.RegistrationNumbers.AnyAsync(x => x.RegNumber != null && x.RegNumber.Equals(regNumber));
 
         }
     }

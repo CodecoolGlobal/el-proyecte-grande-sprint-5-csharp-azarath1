@@ -10,7 +10,7 @@ namespace SuperDuperMedAPP.Data.Repositories
 {
     public class PatientRepository : IPatientRepository
     {
-        private AppDbContext _db;
+        private readonly AppDbContext _db;
 
         public PatientRepository() => _db = new AppDbContext();
         public PatientRepository(AppDbContext dbContext) => _db = dbContext;
@@ -22,14 +22,14 @@ namespace SuperDuperMedAPP.Data.Repositories
             await _db.SaveChangesAsync();
         }
 
-        public async Task<Patient?> GetPatientByUsername(string username)
+        public async Task<Patient?> GetPatientByUsername(string? username)
         {
-            return await _db.Patients.FirstOrDefaultAsync(x => x.Username.Equals(username));
+            return await _db.Patients.FirstOrDefaultAsync(x => x.Username != null && x.Username.Equals(username));
         }
 
-        public async Task<bool> SocNumberInUse(string socNumber)
+        public async Task<bool> SocNumberInUse(string? socNumber)
         {
-            return await _db.Patients.AnyAsync(x => x.SocialSecurityNumber.Equals(socNumber));
+            return await _db.Patients.AnyAsync(x => x.SocialSecurityNumber != null && x.SocialSecurityNumber.Equals(socNumber));
         }
 
         public async Task<Patient?> GetPatientById(int userid)

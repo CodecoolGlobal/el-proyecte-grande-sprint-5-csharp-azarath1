@@ -9,7 +9,7 @@ namespace SuperDuperMedAPP.Data.Services
         Task AddMedication(Medication medication);
         Task<Medicine?> GetMedicineById(int medId);
         Task DeleteMedication(int medId);
-        Task EditMedicationDosage(int medicationId, string newDosage);
+        Task EditMedicationDosage(int medicationId, string? newDosage);
         Task EditMedicationNote(int medicationId, string newNote);
         Task<List<Medication>?> GetAllMedicationByPatientId(int patientId, int pageNumber);
         Task<Medication?> GetMedicationById(int medicationId);

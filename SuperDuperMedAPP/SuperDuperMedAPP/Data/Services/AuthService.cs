@@ -17,7 +17,7 @@ namespace SuperDuperMedAPP.Data.Services
             this._jwtSecret = jwtSecret;
             this._jwtLifespan = jwtLifespan;
         }
-        public AuthData GetAuthData(int id, string role)
+        public AuthData GetAuthData(int id, string? role)
         {
             var expirationTime = DateTime.UtcNow.AddMinutes(_jwtLifespan);
 
@@ -52,7 +52,7 @@ namespace SuperDuperMedAPP.Data.Services
             return Crypto.HashPassword(password);
         }
 
-        public bool VerifyPassword(string actualPassword, string hashedPassword)
+        public bool VerifyPassword(string? actualPassword, string? hashedPassword)
         {
             return Crypto.VerifyHashedPassword(hashedPassword, actualPassword);
         }

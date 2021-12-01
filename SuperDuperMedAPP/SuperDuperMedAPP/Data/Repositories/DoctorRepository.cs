@@ -22,9 +22,9 @@ namespace SuperDuperMedAPP.Data.Repositories
             await _db.SaveChangesAsync();
         }
 
-        public async Task<Doctor?> GetDoctorByUsername(string username)
+        public async Task<Doctor?> GetDoctorByUsername(string? username)
         {
-            return await _db.Doctors.FirstOrDefaultAsync(x => x.Username.Equals(username));
+            return await _db.Doctors.FirstOrDefaultAsync(x => x.Username != null && x.Username.Equals(username));
         }
 
         public async Task<Doctor?> GetDoctorById(int userid)
@@ -32,9 +32,9 @@ namespace SuperDuperMedAPP.Data.Repositories
             return await _db.Doctors.FirstOrDefaultAsync(x => x.ID.Equals(userid));
         }
 
-        public async Task<bool> RegNumberInUse(string regNumber)
+        public async Task<bool> RegNumberInUse(string? regNumber)
         {
-            return await _db.Doctors.AnyAsync(x => x.RegistrationNumber.Equals(regNumber));
+            return await _db.Doctors.AnyAsync(x => x.RegistrationNumber != null && x.RegistrationNumber.Equals(regNumber));
         }
 
         public async Task<List<Doctor>?> GetAllDoctors()
@@ -75,7 +75,7 @@ namespace SuperDuperMedAPP.Data.Repositories
 
         public async Task<string?> GetHashedPassword(string username)
         {
-            return await _db.Doctors.Where(x => x.Username.Equals(username)).Select(x => x.HashPassword)
+            return await _db.Doctors.Where(x => x.Username != null && x.Username.Equals(username)).Select(x => x.HashPassword)
                 .FirstOrDefaultAsync();
         }
 

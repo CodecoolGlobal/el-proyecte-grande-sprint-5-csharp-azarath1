@@ -13,11 +13,11 @@ namespace SuperDuperMedAPP.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private IAuthService _authService;
-        private IPatientRepository _patientRepository;
-        private IDoctorRepository _doctorRepository;
-        private IRegistrationNumberRepository _registrationNumberRepository;
-        private ISocialSecurityNumberRepository _securityNumberRepository;
+        private readonly IAuthService _authService;
+        private readonly IPatientRepository _patientRepository;
+        private readonly IDoctorRepository _doctorRepository;
+        private readonly IRegistrationNumberRepository _registrationNumberRepository;
+        private readonly ISocialSecurityNumberRepository _securityNumberRepository;
 
         public AuthController(IAuthService authService, IPatientRepository patientRepository,
             IDoctorRepository doctorRepository, IRegistrationNumberRepository registrationNumberRepository, ISocialSecurityNumberRepository securityNumberRepository)
@@ -51,7 +51,7 @@ namespace SuperDuperMedAPP.Controllers
             return _authService.GetAuthData(user.Id, user.Role);
         }
 
-        private async Task<GetUserToAuthDTO?> GetUserToAuth(string username)
+        private async Task<GetUserToAuthDTO?> GetUserToAuth(string? username)
         {
             var patient = await _patientRepository.GetPatientByUsername(username);
             var doctor = await _doctorRepository.GetDoctorByUsername(username);
@@ -107,12 +107,12 @@ namespace SuperDuperMedAPP.Controllers
             return _authService.GetAuthData(doctor.ID, doctor.Role);
         }
 
-        private bool IsUsernameUniq(string modelUsername, List<string> usernames)
+        private static bool IsUsernameUniq(string? modelUsername, List<string?> usernames)
         {
             return !usernames.Contains(modelUsername);
         }
 
-        private bool IsEmailUniq(string? modelEmail, List<string?> emails)
+        private static bool IsEmailUniq(string? modelEmail, List<string?> emails)
         {
             return !emails.Contains(modelEmail);
         }

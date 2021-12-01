@@ -10,7 +10,7 @@ namespace SuperDuperMedAPP.Data.Repositories
         Task<List<Medication>?> GetMedicationByPageNumber(int patientId, int pageNumber);
         Task<Medication?> GetMedicationById(int medicationId);
         Task DeleteMedication(int medicationId);
-        Task EditMedicationDosage(int medicationId, string newDosage);
+        Task EditMedicationDosage(int medicationId, string? newDosage);
         Task EditMedicationNote(int medicationId, string newNote);
     }
 }

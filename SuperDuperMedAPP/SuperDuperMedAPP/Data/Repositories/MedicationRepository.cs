@@ -42,7 +42,7 @@ namespace SuperDuperMedAPP.Data.Repositories
             await _db.SaveChangesAsync();
         }
 
-        public async Task EditMedicationDosage(int medicationId, string newDosage)
+        public async Task EditMedicationDosage(int medicationId, string? newDosage)
         {
             var medication = await _db.Medications.SingleOrDefaultAsync(x => x.MedicationID == medicationId);
             medication.Dose = newDosage;

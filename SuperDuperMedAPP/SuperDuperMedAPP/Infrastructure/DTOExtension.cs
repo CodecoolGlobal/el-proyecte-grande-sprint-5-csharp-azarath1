@@ -30,7 +30,7 @@ namespace SuperDuperMedAPP.Infrastructure
                 Date = medication.Date.ToShortDateString(),
                 Dose = medication.Dose,
                 DoctorNote = medication.DoctorNote,
-                medicationID = medication.MedicationID
+                MedicationID = medication.MedicationID
             };
         }
 
@@ -44,7 +44,7 @@ namespace SuperDuperMedAPP.Infrastructure
                 Date = x.Date.ToLocalTime().ToShortDateString(),
                 DoctorNote = x.DoctorNote,
                 Dose = x.Dose,
-                medicationID = x.MedicationID
+                MedicationID = x.MedicationID
             }).ToList();
         }
 
