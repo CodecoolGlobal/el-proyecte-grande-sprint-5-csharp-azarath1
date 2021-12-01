@@ -182,10 +182,10 @@ function DoctorsPatientDetails()  {
                                         <td>{medication.doctorNote}</td>
                                         <td>
                                             <Button style={{ margin: '10px' }} medicationname={medication.name} medicationdose={medication.dose} doctornote={ medication.doctorNote} variant="primary" onClick={handleClickEditModal}>
-                                            <i class="fas fa-edit"></i> Edit
+                                            <i className="fas fa-edit"></i> Edit
                                             </Button>                                            
                                             <Button value={ medication.medicationID } variant="danger" onClick={handleDelete}>
-                                            <i class="fas fa-trash-alt"></i> Delete
+                                            <i className="fas fa-trash-alt"></i> Delete
                                             </Button>
                                         </td>
                                         <Modal show={showEditModal} onHide={handleCloseEditModal}>
@@ -241,10 +241,11 @@ function DoctorsPatientDetails()  {
                                     <Form.Group controlId="medicinename">
                                     <Form.Label>Medicine</Form.Label>
                                     <Form.Select aria-label="Default select example" onChange={(event) => setMedicineID(event.target.value), (event) => setMedicationName(event.target.options[event.target.selectedIndex].text)}>
+                                        <option disabled selected value> -- select an option -- </option>
                                         {medicines.map(medicine =>
                                             <option value={medicine.medicineID}>{ medicine.name}</option>
                                         )}
-                                        </Form.Select>
+                                    </Form.Select>
                                     </Form.Group>
 
                                     <Form.Group controlId="medicationdose">
@@ -265,7 +266,7 @@ function DoctorsPatientDetails()  {
 
                                 <Modal.Footer>
                                     <Button variant="success" onClick={handleAddMedication}>
-                                    <i class="fas fa-hand-holding-medical"></i> Add Medication
+                                    <i className="fas fa-hand-holding-medical"></i> Add Medication
                                     </Button>
                                 </Modal.Footer>
 
