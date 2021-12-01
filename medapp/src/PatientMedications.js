@@ -62,6 +62,7 @@ function PatientMedications() {
                                         <Modal.Title>Doctor's Note</Modal.Title>
                                     </Modal.Header>
                                     <Modal.Body>
+
                                         <Card>
                                             <Card.Body>{ dat.doctorNote }</Card.Body>
                                         </Card>
@@ -71,6 +72,7 @@ function PatientMedications() {
                                             Close
                                         </Button>
                                     </Modal.Footer>
+
                                 </Modal>
                             </tr>)}
                     </tbody>
