@@ -39,7 +39,7 @@ namespace SuperDuperMedAPP.Data.Repositories
 
         public async Task<List<Doctor>?> GetAllDoctors()
         {
-            return await _db.Doctors.ToListAsync();
+            return await _db.Doctors.OrderBy(x => x.Name).ToListAsync();
         }
 
         public async Task UpdateDoctor(Doctor doctor)
