@@ -104,7 +104,7 @@ function Navigation() {
                             <NavLink className="d-inline p-2 bg-dark text-white" to="/allpatients">
                                 <i className="fas fa-book-medical"></i> Patient list
                             </NavLink>
-                            <NavLink className="d-inline p-2 bg-dark text-white" to="/" onClick={Logout}>
+                            <NavLink id="logout" className="d-inline p-2 bg-dark text-white" to="/" onClick={Logout}>
                                 <i className="fas fa-sign-out-alt"></i> Logout
                             </NavLink>
                             <div id='session-timer'>
@@ -133,7 +133,7 @@ function Navigation() {
                 <NavLink  className="d-inline p-2 bg-dark text-white" to="/mymedications">
                 <i className="fas fa-tablets"></i> My Medications
                 </NavLink>
-                <NavLink className="d-inline p-2 bg-dark text-white" to="/" onClick={Logout}>
+                <NavLink id="logout" className="d-inline p-2 bg-dark text-white" to="/" onClick={Logout}>
                 <i className="fas fa-sign-out-alt"></i> Logout
                 </NavLink>
                 <div id='session-timer'>
