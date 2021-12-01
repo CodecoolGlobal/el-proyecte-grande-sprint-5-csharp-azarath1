@@ -33,7 +33,7 @@ namespace SuperDuperMedAPP.Controllers
             return NoContent();
         }
 
-        
+
         [Authorize(Roles = "doctor")]
         [Route("doctor/{id:int}/medication/{medicationId}/edit-dosage")]
         [HttpPut]
@@ -49,7 +49,7 @@ namespace SuperDuperMedAPP.Controllers
             await _services.EditMedicationDosage(medicationId, newDosage);
             return NoContent();
         }
-        
+
 
         [Authorize(Roles = "doctor")]
         [Route("doctor/{id:int}/medication/{medicationId}/edit-note")]
@@ -67,7 +67,7 @@ namespace SuperDuperMedAPP.Controllers
             return NoContent();
         }
 
-        
+
         [Authorize(Roles = "doctor")]
         [Route("doctor/{id:int}/medication/{medId:int}/delete")]
         [HttpDelete]
@@ -128,7 +128,7 @@ namespace SuperDuperMedAPP.Controllers
                 return NoContent();
             }
 
-            return Ok(userMedication);
+            return Ok(userMedication.ToGetPatientsMedicationAllDTO());
         }
     }
 }

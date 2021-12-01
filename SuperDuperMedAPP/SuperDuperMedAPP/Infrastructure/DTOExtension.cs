@@ -16,7 +16,7 @@ namespace SuperDuperMedAPP.Infrastructure
                 Name = dto.Name,
                 Dose = dto.Dose,
                 DoctorNote = dto.DoctorNote,
-                Date = new DateTime().ToLocalTime(),
+                Date = DateTime.Now.ToLocalTime(),
                 PatientID = dto.PatientID,
                 Medicine = medicine
             };
@@ -34,12 +34,14 @@ namespace SuperDuperMedAPP.Infrastructure
             };
         }
 
-        public static List<GetPatientsMedicationAllDTO>? ToGetPatientsMedicationAllDTO(this List<Medication>? medications)
+        public static List<GetPatientsMedicationAllDTO>? ToGetPatientsMedicationAllDTO(
+            this List<Medication>? medications)
         {
             return medications?.Select(x => new GetPatientsMedicationAllDTO
             {
                 Name = x.Name,
-                Date = x.Date.ToShortDateString(),
+                Medicine = x.Medicine,
+                Date = x.Date.ToLocalTime().ToShortDateString(),
                 DoctorNote = x.DoctorNote,
                 Dose = x.Dose,
                 medicationID = x.MedicationID
@@ -59,6 +61,7 @@ namespace SuperDuperMedAPP.Infrastructure
                     ID = x.ID
                 }).ToList();
         }
+
         public static List<GetAllPatientsDTO> ToGetAllPatientsDTOs(this List<Patient>? patients)
         {
             return (patients ?? new List<Patient>())
@@ -98,6 +101,7 @@ namespace SuperDuperMedAPP.Infrastructure
                 RegistrationNumber = unhashedDoctor.RegistrationNumber
             };
         }
+
         public static Patient HashPatientPassword(this Patient unhashedPatient)
         {
             return new Patient
@@ -111,6 +115,29 @@ namespace SuperDuperMedAPP.Infrastructure
                 Role = unhashedPatient.Role,
                 SocialSecurityNumber = unhashedPatient.SocialSecurityNumber
             };
-}
+        }
+
+        public static PatientDetailDTO ToPatientDetailDTO(this Patient patient)
+        {
+            return new PatientDetailDTO
+            {
+                Name = patient.Name,
+                DateOfBirth = patient.DateOfBirth.ToLocalTime().ToShortDateString(),
+                Email = patient.Email,
+                PhoneNumber = patient.PhoneNumber,
+                SocialSecurityNumber = patient.SocialSecurityNumber
+            };
+        }
+        public static DoctorDetailDTO ToDoctortDetailDTO(this Doctor doctor)
+        {
+            return new DoctorDetailDTO
+            {
+                Name = doctor.Name,
+                DateOfBirth = doctor.DateOfBirth.ToLocalTime().ToShortDateString(),
+                Email = doctor.Email,
+                PhoneNumber = doctor.PhoneNumber,
+                 RegistrationNumber= doctor.RegistrationNumber
+            };
+        }
     }
 }
