@@ -1,8 +1,8 @@
-// import { BehaviorSubject } from 'rxjs';
 import React from 'react';
 import { useState } from 'react';
 import { useHistory } from "react-router-dom";
 import{setWithExpiry} from './LocalStorageTTLUtils.js';
+import { Button } from "react-bootstrap";
 // const currentUserSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('currentUser')));
 
 function Login() {
@@ -41,28 +41,32 @@ function Login() {
     }
     
         return (
-            <form onSubmit={handleSubmit}>
-                <label>
-                    Username:
-                </label>
-                    <br />
-                    <input
-                        name="username"
-                        type="textarea"
-                        placeholder="eg. BelaLugosi11"
-                        onChange={event => setUsername(event.target.value)} />
-                <br />
-                <label>
-                    Password:
-                </label>
-                <br />
-                    <input
-                        name="password"
-                        type="password"
-                        onChange={event => setPassword(event.target.value)} />
-                <br />
-                <input type="submit" value="Submit" />
-            </form>
+            <div className="login-page">
+                <div className="form">
+                        <form className="login-form" onSubmit={handleSubmit}>
+                        <label className="login-label">
+                            Username:
+                        </label>
+                            <br />
+                            <input
+                                name="username"
+                                type="textarea"
+                                placeholder="eg. BelaLugosi11"
+                                onChange={event => setUsername(event.target.value)} />
+                        <br />
+                        <label className="login-label">
+                            Password:
+                        </label>
+                        <br />
+                            <input
+                                name="password"
+                                type="password"
+                                onChange={event => setPassword(event.target.value)} />
+                        <br />
+                        <Button variant="success" type="submit">Submit</Button>
+                    </form>
+                </div>
+            </div>
         );
 }
 
