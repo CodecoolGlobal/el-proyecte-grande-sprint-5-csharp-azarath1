@@ -156,7 +156,14 @@ function DoctorsPatientDetails()  {
     if (patientmedications && medicines) {
         return (
             <div>
-                <h1>Medications</h1>
+                <div className="flex-container">
+                    <h1 className="flex-child">Medications</h1>
+                    <Button className="flex-child" id="logout" variant="success" onClick={handleClickAddMedication}>
+                        <i className="fas fa-hand-holding-medical"></i> Add Medication
+                    </Button>
+                </div>
+                
+                
                 <div className = "patientMedications">
                     <div>
                         <Table className="mt-4" striped bordered hover size="sm">
@@ -268,10 +275,6 @@ function DoctorsPatientDetails()  {
                                     </Button>
                                 </Modal.Footer>
                             </Modal>
-                        
-                        <Button variant="success" onClick={handleClickAddMedication}>
-                        <i class="fas fa-hand-holding-medical"></i> Add Medication
-                        </Button>
                     </div>
                 </div>
             </div>           

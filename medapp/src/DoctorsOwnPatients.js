@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Table } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 import { getWithExpiry } from './LocalStorageTTLUtils';
-const currentUserSubject = getWithExpiry(); 
+const currentUserSubject = getWithExpiry();
 
 
 function DoctorsOwnPatientsPage() {
@@ -15,13 +15,13 @@ function DoctorsOwnPatientsPage() {
         getData();
 
         async function getData() {
-if(!loginData){
-  setDetails(null)
-}else{
-            const response = await fetch(process.env.REACT_APP_BASE_URL_DOCTOR + currentUserSubject.id + '/patients/'+0,{headers:{Authorization: `Bearer ${currentUserSubject.token}`}});
-            const data = await response.json();
-            setDetails(data);
-}
+            if (!loginData) {
+                setDetails(null)
+            } else {
+                const response = await fetch(process.env.REACT_APP_BASE_URL_DOCTOR + currentUserSubject.id + '/patients/' + 0, { headers: { Authorization: `Bearer ${currentUserSubject.token}` } });
+                const data = await response.json();
+                setDetails(data);
+            }
         }
     }, [loginData]);
     if (patientDetails) {
@@ -44,15 +44,16 @@ if(!loginData){
                                         <td>{patient.name}</td>
                                         <td>{patient.socialSecurityNumber}</td>
                                         <td>
-                                            <Button className="mr-2" variant="info">
-                                                <NavLink to={{
-                                                    pathname: '/doctorspatient',
-                                                    state: {
-                                                        patientid: patient.id }
-                                                }}>
-                                                    <i class="fas fa-search-plus"></i> View
-                                                </NavLink>
-                                            </Button>
+                                            <NavLink to={{
+                                                pathname: '/doctorspatient',
+                                                state: {
+                                                    patientid: patient.id
+                                                }
+                                            }}>
+                                                <Button className="mr-2" variant="info">
+                                                    <i class="fas fa-search-plus"></i>View
+                                                </Button>
+                                            </NavLink>
                                         </td>
                                     </tr>)}
                             </tbody>
@@ -65,9 +66,9 @@ if(!loginData){
     else {
         return (<div></div>)
     }
-    
 
 
-    
+
+
 }
 export default DoctorsOwnPatientsPage;
