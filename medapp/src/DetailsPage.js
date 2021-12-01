@@ -39,12 +39,10 @@ function PersonalDetails() {
   if(patientdetails){
     return (
         <div>
-          <h1>My Profile Details</h1>
-            <div className="patientdetails">
+          <h1>{patientdetails.name}</h1>
+            <div className="userdetail">
                 <div>
-                  <h5>{patientdetails.name}</h5>
-                  <br/>
-                  <p><strong>Social Security Number: </strong>{patientdetails.socialSecurityNumber}</p>
+                  <p><strong>Social Security Number: </strong>{dashedNumber(patientdetails.socialSecurityNumber)}</p>
                   <p><strong>Date of Birth: </strong>{patientdetails.dateOfBirth}</p>
                   <p><strong>E-mail address: </strong>{emailContact}</p>
                   <p><strong>Phone Number: </strong>{phoneContact}</p>
@@ -79,12 +77,10 @@ function PersonalDetails() {
   if(doctordetails){
     return (
         <div>
-          <h1>My Profile Details</h1>
-            <div className="doctordetails">
+          <h1>{doctordetails.name}</h1>
+            <div className="userdetail">
                 <div>
-                  <h5>{doctordetails.name}</h5>
-                  <br/>
-                  <p><strong>Registration Number: </strong>{doctordetails.registrationNumber}</p>
+                  <p><strong>Registration Number: </strong>{dashedNumber(doctordetails.registrationNumber)}</p>
                   <p><strong>Date of Birth: </strong>{doctordetails.dateOfBirth}</p>
                   <p><strong>E-mail address: </strong>{emailContact}</p>
                   <p><strong>Phone Number: </strong>{phoneContact}</p>
@@ -124,6 +120,18 @@ function PersonalDetails() {
   </h1></div>)
   }
 
+
+  function dashedNumber(value){
+    const afterIndices = [3,6,9]; 
+    const length = value.length;
+    let newValue = '' 
+    for(let i=0; i<length; i++){
+      if(afterIndices.includes(i))
+        newValue+='-'
+      newValue+=value[i];
+    }
+    return newValue;
+  }
 
   function saveEditedDetails() {
     setLoginData(getWithExpiry())
