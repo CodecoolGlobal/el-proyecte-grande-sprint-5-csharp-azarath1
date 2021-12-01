@@ -30,7 +30,7 @@ namespace SuperDuperMedAPP.Controllers
                 return NotFound();
             }
 
-            return Ok(result);
+            return Ok(result.ToPatientDetailDTO());
         }
 
         [Authorize(Roles = "patient")]
