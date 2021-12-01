@@ -1,9 +1,7 @@
 import { useState, useEffect, } from 'react';
-import {Card, Button, Modal, Table} from 'react-bootstrap';
-const currentUserSubject = JSON.parse(localStorage.getItem('currentUser'));
-
-import {Table} from 'react-bootstrap';
+import { Card, Button, Modal, Table } from 'react-bootstrap';
 import { getWithExpiry } from './LocalStorageTTLUtils';
+const currentUserSubject = JSON.parse(localStorage.getItem('currentUser'));
 
 
 
