@@ -1,28 +1,33 @@
 import { Button } from 'react-bootstrap';
 import React, { useState, useEffect } from 'react';
-import { Modal, Table, Form } from 'react-bootstrap';
+import { Card, Modal, Table, Form } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 import { getWithExpiry } from './LocalStorageTTLUtils';
 const currentUserSubject = getWithExpiry();
 
 
 function DoctorsPatientDetails()  {
-    let location = useLocation();
-    let patientid = location.state.patientid;
+    //let location = useLocation();
+    let patientid = useQuery().get('id');
     const [patientmedications, setMedications] = useState(null);
     const [medicines, setMedicines] = useState(null);
     const [medicineID, setMedicineID] = useState(1);
+    const [medicineName, setMedicineName] = useState(null);
     const [medicationName, setMedicationName] = useState(null);
     const [medicationDose, setMedicationDose] = useState(0);
     const [medicationNote, setMedicationNote] = useState("");
     const [showEditModal, setShowEditModal] = useState(false);
     const [showAddModal, setShowAddModal] = useState(false);
 
-    const handleCloseEditModal = () => setShowEditModal(false);
+    const handleCloseEditModal = () => window.location.reload();
     const handleShowEditModal = () => setShowEditModal(true);
-    const handleCloseAddModal = () => setShowAddModal(false);
+    const handleCloseAddModal = () => window.location.reload();
     const handleShowAddModal = () => setShowAddModal(true);
 
+
+    function useQuery() {
+        return new URLSearchParams(window.location.search);
+    }
 
     function handleClickEditModal(event) {
         event.preventDefault();
@@ -76,7 +81,6 @@ function DoctorsPatientDetails()  {
 
     async function handleAddMedication(event) {
         event.preventDefault();
-        console.log(medicineID);
         console.log(medicationName);
         console.log(medicationDose);
         console.log(medicationNote);
@@ -120,6 +124,9 @@ function DoctorsPatientDetails()  {
             .then(res => console.log(res));
     };
 
+    
+
+    
 
     useEffect(() => {
         getPatientMedications();
@@ -146,7 +153,7 @@ function DoctorsPatientDetails()  {
                 headers: {
                     Authorization: `Bearer ${currentUserSubject.token}`
                 }
-            
+
             });
 
             const data = await response.json();
@@ -154,11 +161,20 @@ function DoctorsPatientDetails()  {
             setMedicines(data);
         }
 
-    }, [patientid]);
+
+
+    }, [] );
     if (patientmedications && medicines) {
         return (
             <div>
-                <h1>Medications</h1>
+                <div className="flex-container">
+                    <h1 className="flex-child">Medications</h1>
+                    <Button className="flex-child" id="logout" variant="success" onClick={handleClickAddMedication}>
+                        <i className="fas fa-hand-holding-medical"></i> Add Medication
+                    </Button>
+                </div>
+                
+                
                 <div className = "patientMedications">
                     <div>
                         <Table className="mt-4" striped bordered hover size="sm">
@@ -167,15 +183,20 @@ function DoctorsPatientDetails()  {
                                     <th>Name</th>
                                     <th>Dose</th>
                                     <th>Doctor's note</th>
+                                    <th>Options</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {patientmedications.map(medication =>
                                     <tr key={medication.medicationID}>
-                                        <td>{medication.name}</td>
-                                        <td>{medication.dose}</td>
-                                        <td>{medication.doctorNote}</td>
-                                        <td>
+                                        <td width="25%">{medication.name}</td>
+                                        <td width="25%">{medication.dose}</td>
+                                        <td width="25%">
+                                            <Card style={{ width: '18rem' }}>
+                                                <Card.Body>{medication.doctorNote}</Card.Body>
+                                            </Card>
+                                        </td>
+                                        <td width="25%">
                                             <Button style={{ margin: '10px' }} medicationname={medication.name} medicationdose={medication.dose} doctornote={ medication.doctorNote} variant="primary" onClick={handleClickEditModal}>
                                             <i class="fas fa-edit"></i> Edit
                                             </Button>                                            
@@ -187,19 +208,7 @@ function DoctorsPatientDetails()  {
                                             <Modal.Header closeButton>
                                                 <Modal.Title>Update Medication</Modal.Title>
                                             </Modal.Header>
-                                            <Form>
 
-                                                <Form.Group controlId="medicationname">
-                                                    <Form.Label>Name of Medication</Form.Label>
-                                                    <Form.Control type="text" name="name"
-                                                        defaultValue={medication.name}
-                                                        placeholder="name" />
-                                                    <Button style={{ marginTop: '10px' }} variant="primary" type="submit" onClick={ handleNameUpdate }>
-                                                        Update Name
-                                                    </Button>
-                                                </Form.Group>
-
-                                            </Form>
 
                                             <Form>
                                                 <Form.Group controlId="medicationdose">
@@ -207,8 +216,8 @@ function DoctorsPatientDetails()  {
                                                     <Form.Control type="text" name="dose"
                                                         defaultValue={medication.dose}
                                                         placeholder="dose"
-                                                        onChange={(event) => setMedicationDose( event.target.value )} />
-                                                    <Button style={{ marginTop: '10px' }} variant="primary" type="submit" value={ medication.medicationID} onClick={handleDoseUpdate}>
+                                                        onChange={(event) => setMedicationDose(event.target.value)} />
+                                                    <Button style={{ marginTop: '10px' }} variant="primary" type="submit" value={medication.medicationID} onClick={handleDoseUpdate}>
                                                         Update dose
                                                     </Button>
                                                 </Form.Group>
@@ -221,18 +230,11 @@ function DoctorsPatientDetails()  {
                                                         defaultValue={medication.doctorNote}
                                                         placeholder="medicationnote"
                                                         onChange={(event) => setMedicationNote(event.target.value)} />
-                                                    <Button style={{ marginTop: '10px' }} variant="primary" type="submit" value={medication.medicationID} onClick={ handleNoteUpdate }>
+                                                    <Button style={{ marginTop: '10px' }} variant="primary" type="submit" value={medication.medicationID} onClick={handleNoteUpdate}>
                                                         Update note
                                                     </Button>
                                                 </Form.Group>
                                             </Form>
-                                                
-                                            
-                                            <Modal.Footer>
-                                                <Button variant="secondary" onClick={handleCloseEditModal}>
-                                                    Close
-                                                </Button>
-                                            </Modal.Footer>
                                         </Modal>
                                     </tr>)}
                             </tbody>
@@ -245,15 +247,9 @@ function DoctorsPatientDetails()  {
 
                                 <Form>
 
-                                    <Form.Group controlId="medicationname">
-                                        <Form.Label>Name of Medication</Form.Label>
-                                    <Form.Control type="text" name="name"
-                                        onChange={(event) => setMedicationName(event.target.value)} />
-                                    </Form.Group>
-
                                     <Form.Group controlId="medicinename">
-                                        <Form.Label>Medicine</Form.Label>
-                                    <Form.Select aria-label="Default select example" onChange={(event) => setMedicineID(event.target.value)}>
+                                    <Form.Label>Medicine</Form.Label>
+                                    <Form.Select aria-label="Default select example" onChange={(event) => setMedicineID(event.target.value), (event) => setMedicationName(event.target.options[event.target.selectedIndex].text)}>
                                         {medicines.map(medicine =>
                                             <option value={medicine.medicineID}>{ medicine.name}</option>
                                         )}
@@ -262,15 +258,15 @@ function DoctorsPatientDetails()  {
 
                                     <Form.Group controlId="medicationdose">
                                         <Form.Label>Dose</Form.Label>
-                                        <Form.Control type="text" name="dose"
-                                            onChange={(event) => setMedicationDose(event.target.value)} />
+                                    <Form.Control type="text" name="dose"
+                                        onChange={(event) => setMedicationDose(event.target.value)} />
                                     </Form.Group>
 
 
                                     <Form.Group controlId="medicationnote">
                                         <Form.Label>Doctor's note</Form.Label>
-                                        <Form.Control type="text" name="medicationnote"
-                                            onChange={(event) => setMedicationNote(event.target.value)} />
+                                    <Form.Control type="text" name="medicationnote"
+                                        onChange={(event) => setMedicationNote(event.target.value)} />
                                     </Form.Group>
 
 
@@ -281,17 +277,7 @@ function DoctorsPatientDetails()  {
                                     <i class="fas fa-hand-holding-medical"></i> Add Medication
                                     </Button>
                                 </Modal.Footer>
-
-                                <Modal.Footer>
-                                    <Button variant="secondary" onClick={handleCloseAddModal}>
-                                        Close
-                                    </Button>
-                                </Modal.Footer>
                             </Modal>
-                        
-                        <Button variant="success" onClick={handleClickAddMedication}>
-                        <i class="fas fa-hand-holding-medical"></i> Add Medication
-                        </Button>
                     </div>
                 </div>
             </div>           

@@ -66,7 +66,6 @@ function PersonalDetails() {
                   </form>
                   </Modal.Body>
                   <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>Close</Button>
                     <Button variant="success" type="submit" onClick={() => {saveEditedDetails(); handleClose();}}>Save Changes</Button>
                   </Modal.Footer>
                 </Modal>
@@ -104,7 +103,6 @@ function PersonalDetails() {
                   </form>
                   </Modal.Body>
                   <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>Close</Button>
                     <Button variant="success" type="submit" onClick={() => {saveEditedDetails(); handleClose();}}>Save Changes</Button>
                   </Modal.Footer>
                 </Modal>
