@@ -30,7 +30,7 @@ namespace SuperDuperMedAPP.Controllers
         }
 
         [HttpPost]
-        [Route("/login")]
+        [Route("login")]
         public async Task<ActionResult<AuthData>> Login([FromBody] LoginData model)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
