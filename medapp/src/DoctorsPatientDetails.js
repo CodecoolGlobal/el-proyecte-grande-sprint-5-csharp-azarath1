@@ -233,13 +233,6 @@ function DoctorsPatientDetails()  {
                                                     </Button>
                                                 </Form.Group>
                                             </Form>
-                                                
-                                            
-                                            <Modal.Footer>
-                                                <Button variant="secondary" onClick={handleCloseEditModal}>
-                                                    Close
-                                                </Button>
-                                            </Modal.Footer>
                                         </Modal>
                                     </tr>)}
                             </tbody>
@@ -286,12 +279,6 @@ function DoctorsPatientDetails()  {
                                 <Modal.Footer>
                                     <Button variant="success" onClick={handleAddMedication}>
                                     <i class="fas fa-hand-holding-medical"></i> Add Medication
-                                    </Button>
-                                </Modal.Footer>
-
-                                <Modal.Footer>
-                                    <Button variant="secondary" onClick={handleCloseAddModal}>
-                                        Close
                                     </Button>
                                 </Modal.Footer>
                             </Modal>

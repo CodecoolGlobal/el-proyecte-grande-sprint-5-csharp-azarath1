@@ -61,14 +61,9 @@ function PatientMedications() {
                                     <Modal.Header closeButton>
                                         <Modal.Title>Doctor's Note</Modal.Title>
                                     </Modal.Header>
-                      
+                                    <Modal.Body>
                                         {dat.doctorNote}
-                                                   
-                                    <Modal.Footer>
-                                        <Button variant="secondary" onClick={handleCloseNoteModal}>
-                                            Close
-                                        </Button>
-                                    </Modal.Footer>
+                                    </Modal.Body>     
                                 </Modal>
                             </tr>)}
                     </tbody>
