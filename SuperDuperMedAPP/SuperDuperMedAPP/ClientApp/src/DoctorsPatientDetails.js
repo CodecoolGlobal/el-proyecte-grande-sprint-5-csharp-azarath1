@@ -1,18 +1,15 @@
 import { Button } from 'react-bootstrap';
 import React, { useState, useEffect } from 'react';
 import { Card, Modal, Table, Form } from 'react-bootstrap';
-import { useLocation } from 'react-router-dom';
 import { getWithExpiry } from './LocalStorageTTLUtils';
 const currentUserSubject = getWithExpiry();
 
 
 function DoctorsPatientDetails()  {
-    //let location = useLocation();
     let patientid = useQuery().get('id');
     const [patientmedications, setMedications] = useState(null);
     const [medicines, setMedicines] = useState(null);
     const [medicineID, setMedicineID] = useState(1);
-    const [medicineName, setMedicineName] = useState(null);
     const [medicationName, setMedicationName] = useState(null);
     const [medicationDose, setMedicationDose] = useState(0);
     const [medicationNote, setMedicationNote] = useState("");
@@ -68,10 +65,6 @@ function DoctorsPatientDetails()  {
         })
             .then(res => res.json())
             .then(res => console.log(res));;
-    };
-
-    function handleNameUpdate(event) {
-
     };
 
     function handleClickAddMedication(event) {
@@ -131,6 +124,7 @@ function DoctorsPatientDetails()  {
     useEffect(() => {
         getPatientMedications();
         getMedicines();
+        
 
         async function getPatientMedications() {
 
@@ -163,7 +157,7 @@ function DoctorsPatientDetails()  {
 
 
 
-    }, [] );
+    }, [patientid] );
     if (patientmedications && medicines) {
         return (
             <div>
@@ -198,10 +192,10 @@ function DoctorsPatientDetails()  {
                                         </td>
                                         <td width="25%">
                                             <Button style={{ margin: '10px' }} medicationname={medication.name} medicationdose={medication.dose} doctornote={ medication.doctorNote} variant="primary" onClick={handleClickEditModal}>
-                                            <i class="fas fa-edit"></i> Edit
+                                            <i className="fas fa-edit"></i> Edit
                                             </Button>                                            
                                             <Button value={ medication.medicationID } variant="danger" onClick={handleDelete}>
-                                            <i class="fas fa-trash-alt"></i> Delete
+                                            <i className="fas fa-trash-alt"></i> Delete
                                             </Button>
                                         </td>
                                         <Modal show={showEditModal} onHide={handleCloseEditModal}>
@@ -251,7 +245,7 @@ function DoctorsPatientDetails()  {
                                     <Form.Label>Medicine</Form.Label>
                                     <Form.Select aria-label="Default select example" onChange={(event) => setMedicineID(event.target.value), (event) => setMedicationName(event.target.options[event.target.selectedIndex].text)}>
                                         {medicines.map(medicine =>
-                                            <option value={medicine.medicineID}>{ medicine.name}</option>
+                                            <option key={medicine.medicineID} value={medicine.medicineID}>{ medicine.name}</option>
                                         )}
                                         </Form.Select>
                                     </Form.Group>
@@ -274,7 +268,7 @@ function DoctorsPatientDetails()  {
 
                                 <Modal.Footer>
                                     <Button variant="success" onClick={handleAddMedication}>
-                                    <i class="fas fa-hand-holding-medical"></i> Add Medication
+                                    <i className="fas fa-hand-holding-medical"></i> Add Medication
                                     </Button>
                                 </Modal.Footer>
                             </Modal>
