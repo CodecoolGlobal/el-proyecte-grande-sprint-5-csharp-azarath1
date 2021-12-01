@@ -1,6 +1,6 @@
 import { Button } from 'react-bootstrap';
 import React, { useState, useEffect } from 'react';
-import { Modal, Table, Form } from 'react-bootstrap';
+import { Card, Modal, Table, Form } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 import { getWithExpiry } from './LocalStorageTTLUtils';
 const currentUserSubject = getWithExpiry();
@@ -174,7 +174,11 @@ function DoctorsPatientDetails()  {
                                     <tr key={medication.medicationID}>
                                         <td>{medication.name}</td>
                                         <td>{medication.dose}</td>
-                                        <td>{medication.doctorNote}</td>
+                                        <td>
+                                            <Card style={{ width: '18rem' }}>
+                                                <Card.Body>{medication.doctorNote}</Card.Body>
+                                            </Card>
+                                        </td>
                                         <td>
                                             <Button style={{ margin: '10px' }} medicationname={medication.name} medicationdose={medication.dose} doctornote={ medication.doctorNote} variant="primary" onClick={handleClickEditModal}>
                                             <i class="fas fa-edit"></i> Edit
