@@ -20,7 +20,7 @@ function DoctorsPatientDetails()  {
 
     const handleCloseEditModal = () => window.location.reload();
     const handleShowEditModal = () => setShowEditModal(true);
-    const handleCloseAddModal = () => setShowAddModal(false);
+    const handleCloseAddModal = () => window.location.reload();
     const handleShowAddModal = () => setShowAddModal(true);
 
 
