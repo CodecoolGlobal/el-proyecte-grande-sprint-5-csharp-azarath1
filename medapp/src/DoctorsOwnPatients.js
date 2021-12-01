@@ -1,7 +1,7 @@
 import { Button } from 'react-bootstrap';
 import React, { useState, useEffect } from 'react';
 import { Table } from 'react-bootstrap';
-import { NavLink } from 'react-router-dom';
+import { useHistory, NavLink } from 'react-router-dom';
 import { getWithExpiry } from './LocalStorageTTLUtils';
 const currentUserSubject = getWithExpiry(); 
 
@@ -9,6 +9,13 @@ const currentUserSubject = getWithExpiry();
 function DoctorsOwnPatientsPage() {
     const [loginData] = useState(getWithExpiry())
     const [patientDetails, setDetails] = useState(null);
+    const history = useHistory();
+
+
+    function handleClick(event) {
+        event.preventDefault();
+        history.push("doctorspatient?id=" + event.target.value);
+    }
 
 
     useEffect(() => {
@@ -44,14 +51,8 @@ if(!loginData){
                                         <td>{patient.name}</td>
                                         <td>{patient.socialSecurityNumber}</td>
                                         <td>
-                                            <Button className="mr-2" variant="info">
-                                                <NavLink to={{
-                                                    pathname: '/doctorspatient',
-                                                    state: {
-                                                        patientid: patient.id }
-                                                }}>
-                                                    <i class="fas fa-search-plus"></i> View
-                                                </NavLink>
+                                            <Button className="mr-2" variant="info" value={patient.id} onClick={ handleClick }>
+                                                
                                             </Button>
                                         </td>
                                     </tr>)}
