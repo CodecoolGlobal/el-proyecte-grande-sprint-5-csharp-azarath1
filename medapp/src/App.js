@@ -10,6 +10,7 @@ import DoctorsOwnPatientsPage from './DoctorsOwnPatients';
 import DoctorsPatientDetails from './DoctorsPatientDetails';
 import AllPatientsPage from './AllPatientsPage';
 import PatientMedications from './PatientMedications';
+import FooterElement from './FooterElement';
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
           <Route path='/doctorspatient' component={DoctorsPatientDetails} />
 
         </Switch>
+        <FooterElement />
       </div>
     </BrowserRouter>
   );
