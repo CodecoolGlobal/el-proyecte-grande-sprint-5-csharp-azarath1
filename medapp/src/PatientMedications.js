@@ -1,9 +1,6 @@
 import { useState, useEffect, } from 'react';
 
 import {Button, Modal, Table} from 'react-bootstrap';
-const currentUserSubject = JSON.parse(localStorage.getItem('currentUser'));
-
-import {Table} from 'react-bootstrap';
 import { getWithExpiry } from './LocalStorageTTLUtils';
 
 
@@ -53,7 +50,7 @@ function PatientMedications() {
                         {meddata.map(dat=>
                             <tr key={dat.date}>
                                 <td>{dat.date}</td>
-                                <td><a href={dat.medicine.descriptionLink} target="_blank">{dat.medicine.name}</a></td>
+                                <td><a href={dat.medicine.descriptionLink} target="_blank" rel="noreferrer">{dat.medicine.name}</a></td>
                                 <td>{dat.dose}</td>
                                 <td>
                                 <Button style={{ margin: '10px' }}  variant="primary" onClick={handleClickNoteModal}>

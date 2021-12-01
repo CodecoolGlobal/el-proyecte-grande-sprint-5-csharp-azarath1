@@ -103,7 +103,7 @@ namespace SuperDuperMedAPP.Data
 
             var medications = new Medication[]
             {
-            new Medication{ Name = "Medication daily", Dose="3", DoctorNote="Daily pill of 1", Date=DateTime.Parse("2021-11-03"), Medicine=medic, PatientID=2 }
+            new Medication{ Name = "Xanax", Dose="2x1", DoctorNote="If you feel adverse effect please contact me!", Date=DateTime.Parse("2021-11-03"), Medicine=medic, PatientID=2 }
             };
             foreach (Medication me in medications)
             {

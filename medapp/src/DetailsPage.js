@@ -43,11 +43,11 @@ function PersonalDetails() {
             <div className="patientdetails">
                 <div>
                   <h5>{patientdetails.name}</h5>
+                  <br/>
                   <p><strong>Social Security Number: </strong>{patientdetails.socialSecurityNumber}</p>
                   <p><strong>Date of Birth: </strong>{patientdetails.dateOfBirth}</p>
                   <p><strong>E-mail address: </strong>{emailContact}</p>
                   <p><strong>Phone Number: </strong>{phoneContact}</p>
-                  <p><strong>Username: </strong>{patientdetails.username}</p>
                 </div>
                 <Button variant="primary" onClick={handleShow}>
                    Change my contact info
@@ -83,11 +83,11 @@ function PersonalDetails() {
             <div className="doctordetails">
                 <div>
                   <h5>{doctordetails.name}</h5>
+                  <br/>
                   <p><strong>Registration Number: </strong>{doctordetails.registrationNumber}</p>
                   <p><strong>Date of Birth: </strong>{doctordetails.dateOfBirth}</p>
                   <p><strong>E-mail address: </strong>{emailContact}</p>
                   <p><strong>Phone Number: </strong>{phoneContact}</p>
-                  <p><strong>Username: </strong>{doctordetails.username}</p>
                 </div>
                 <Button variant="primary" onClick={handleShow}>
                    Change my contact info

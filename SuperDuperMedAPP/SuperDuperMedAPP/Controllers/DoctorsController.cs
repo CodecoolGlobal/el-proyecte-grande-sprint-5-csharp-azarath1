@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using SuperDuperMedAPP.Data.Services;
 using SuperDuperMedAPP.Models.DTO;
 using System.Threading.Tasks;
+using SuperDuperMedAPP.Infrastructure;
 
 
 namespace SuperDuperMedAPP.Controllers
@@ -29,7 +30,7 @@ namespace SuperDuperMedAPP.Controllers
                 return NotFound();
             }
 
-            return Ok(result);
+            return Ok(result.ToDoctortDetailDTO());
         }
         [Authorize(Roles = "doctor")]
         [Route("doctor/{id:int}/edit-contacts")]
