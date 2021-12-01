@@ -167,19 +167,20 @@ function DoctorsPatientDetails()  {
                                     <th>Name</th>
                                     <th>Dose</th>
                                     <th>Doctor's note</th>
+                                    <th>Options</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {patientmedications.map(medication =>
                                     <tr key={medication.medicationID}>
-                                        <td>{medication.name}</td>
-                                        <td>{medication.dose}</td>
-                                        <td>
+                                        <td width="25%">{medication.name}</td>
+                                        <td width="25%">{medication.dose}</td>
+                                        <td width="25%">
                                             <Card style={{ width: '18rem' }}>
                                                 <Card.Body>{medication.doctorNote}</Card.Body>
                                             </Card>
                                         </td>
-                                        <td>
+                                        <td width="25%">
                                             <Button style={{ margin: '10px' }} medicationname={medication.name} medicationdose={medication.dose} doctornote={ medication.doctorNote} variant="primary" onClick={handleClickEditModal}>
                                             <i class="fas fa-edit"></i> Edit
                                             </Button>                                            
