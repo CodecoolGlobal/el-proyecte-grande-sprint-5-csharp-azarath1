@@ -1,5 +1,5 @@
 import { useState, useEffect, } from 'react';
-import {Button, Modal, Table} from 'react-bootstrap';
+import {Card, Button, Modal, Table} from 'react-bootstrap';
 const currentUserSubject = JSON.parse(localStorage.getItem('currentUser'));
 
 
@@ -51,13 +51,15 @@ function PatientMedications() {
                                     <i class="fas fa-edit"></i> See Note
                                 </Button>     
                                 </td>
-                                <Modal show={showNoteModal} onHide={handleCloseNoteModal}>
+                                <Modal show={showNoteModal} onHide={handleCloseNoteModal} scrollable={true}>
                                     <Modal.Header closeButton>
                                         <Modal.Title>Doctor's Note</Modal.Title>
                                     </Modal.Header>
-                      
-                                        {dat.doctorNote}
-                                                   
+                                    <Modal.Body>
+                                        <Card>
+                                            <Card.Body>{ dat.doctorNote }</Card.Body>
+                                        </Card>
+                                    </Modal.Body>
                                     <Modal.Footer>
                                         <Button variant="secondary" onClick={handleCloseNoteModal}>
                                             Close
