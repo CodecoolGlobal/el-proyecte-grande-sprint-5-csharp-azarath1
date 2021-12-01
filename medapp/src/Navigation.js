@@ -4,25 +4,19 @@ import { useHistory } from "react-router-dom";
 import {NavLink} from 'react-router-dom';
 import {Navbar,Nav} from 'react-bootstrap';
 import { SignUpModal } from './SignUpModal';
-import { LoginModal } from './LoginModal';
-const currentUserSubject = JSON.parse(localStorage.getItem('currentUser'));
+import{getWithExpiry, Timer} from './LocalStorageTTLUtils.js';
 
 function Navigation() {
+    const currentUserSubject = getWithExpiry();
     const history = useHistory();
 
     const [showSignupModal, setShowSignup] = useState(false);
-    const [show, setShow] = useState(false);
-
     const handleSignupShow = () => setShowSignup(true);
-    const handleShow = () => setShow(true);
-
-    const handleClose = () => setShow(false);
     const handleSignupClose = () => setShowSignup(false);
     
     function Logout() {
             // remove user from local storage to log user out
             localStorage.removeItem('currentUser');
-            // currentUserSubject.next(null);
             history.push("/");
                 setTimeout(() => {
                     window.location.reload();    
@@ -35,7 +29,6 @@ function Navigation() {
         return(
             <div className="navcontainer">
                 <div className="modalcontainer">
-                <LoginModal show={show} onHide={handleClose}/>
                 <SignUpModal show={showSignupModal} onHide={handleSignupClose}/>
                 </div>
                 <Navbar className="navbar-dark bg-dark" expand="lg">
@@ -48,7 +41,7 @@ function Navigation() {
                             <NavLink className="d-inline p-2 bg-dark text-white" to="#" onClick={handleSignupShow} >
                             <i className="fas fa-user-plus"></i> Register
                             </NavLink >
-                            <NavLink className="d-inline p-2 bg-dark text-white" to="#" onClick={handleShow} >
+                            <NavLink className="d-inline p-2 bg-dark text-white" to="/Login">
                             <i className="fas fa-sign-in-alt"></i> Login
                             </NavLink >
                         </Nav>
@@ -78,6 +71,9 @@ function Navigation() {
                 <NavLink className="d-inline p-2 bg-dark text-white" to="/" onClick={Logout}>
                 <i className="fas fa-sign-out-alt"></i> Logout
                 </NavLink>
+                <div id='session-timer'>
+                    <Timer LT={currentUserSubject.expiry}/>
+                </div>
                 </Nav>
                 </Navbar.Collapse>
             </Navbar>
@@ -104,6 +100,9 @@ function Navigation() {
                 <NavLink className="d-inline p-2 bg-dark text-white" to="/" onClick={Logout}>
                 <i className="fas fa-sign-out-alt"></i> Logout
                 </NavLink>
+                <div id='session-timer'>
+                    <Timer LT={currentUserSubject.expiry}/>
+                </div>
                 </Nav>
                 </Navbar.Collapse>
             </Navbar>

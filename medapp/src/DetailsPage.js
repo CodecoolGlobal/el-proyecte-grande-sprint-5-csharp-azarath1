@@ -1,6 +1,6 @@
 import { useState, useEffect, } from 'react';
 import { Modal, Button } from 'react-bootstrap';
-const currentUserSubject = JSON.parse(localStorage.getItem('currentUser'));
+import { getWithExpiry } from './LocalStorageTTLUtils';
 
 function PersonalDetails() {
   const [patientdetails, setDetails] = useState(null);
@@ -10,20 +10,24 @@ function PersonalDetails() {
   const [show, setShow] = useState(false);
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
+  const [loginData,setLoginData] = useState(getWithExpiry())
 
   useEffect(() => {
     getData();
 
     async function getData() {
-      if (currentUserSubject.userRole === "doctor"){
-        const response = await fetch(process.env.REACT_APP_BASE_URL_DOCTOR+currentUserSubject.id+"/details", {headers:{Authorization: `Bearer ${currentUserSubject.token}`}});  
+      if(!loginData){
+        setDetails(null);
+      }
+      else if (loginData && loginData.userRole === "doctor"){
+        const response = await fetch(process.env.REACT_APP_BASE_URL_DOCTOR+loginData.id+"/details", {headers:{Authorization: `Bearer ${loginData.token}`}});  
         const data = await response.json();
         setDoctorDetails(data);
         setMail(data.email);
         setPhone(data.phoneNumber);
       }
       else {
-        const response = await fetch(process.env.REACT_APP_BASE_URL_PATIENT+currentUserSubject.id+"/details", {headers:{Authorization: `Bearer ${currentUserSubject.token}`}});
+        const response = await fetch(process.env.REACT_APP_BASE_URL_PATIENT+loginData.id+"/details", {headers:{Authorization: `Bearer ${loginData.token}`}});
         const data = await response.json();
         setDetails(data);
         setMail(data.email);
@@ -31,7 +35,7 @@ function PersonalDetails() {
       }
       
     }
-  }, []);
+  }, [loginData]);
   if(patientdetails){
     return (
         <div>
@@ -122,11 +126,12 @@ function PersonalDetails() {
 
 
   function saveEditedDetails() {
+    setLoginData(getWithExpiry())
       const requestOptions = {
         method:'PUT',
         credentials: 'include',
         headers:{
-            'Authorization': `Bearer ${currentUserSubject.token}`,
+            'Authorization': `Bearer ${loginData.token}`,
             'Accept':'application/json',
             'Content-Type':'application/json'
         },
@@ -134,8 +139,8 @@ function PersonalDetails() {
           email: emailContact,
           phonenumber: phoneContact})
     };
-    if (currentUserSubject.userRole === "patient") {
-      fetch(process.env.REACT_APP_BASE_URL_PATIENT+currentUserSubject.id+"/edit-contacts", requestOptions)
+    if (loginData.userRole === "patient") {
+      fetch(process.env.REACT_APP_BASE_URL_PATIENT+loginData.id+"/edit-contacts", requestOptions)
         .then(async response => {
         const data = await response;
           if (!response.ok) {
@@ -148,7 +153,7 @@ function PersonalDetails() {
       });
     }
     else {
-      fetch(process.env.REACT_APP_BASE_URL_DOCTOR+currentUserSubject.id+"/edit-contacts", requestOptions)
+      fetch(process.env.REACT_APP_BASE_URL_DOCTOR+loginData.id+"/edit-contacts", requestOptions)
         .then(async response => {
         const data = await response;
           if (!response.ok) {

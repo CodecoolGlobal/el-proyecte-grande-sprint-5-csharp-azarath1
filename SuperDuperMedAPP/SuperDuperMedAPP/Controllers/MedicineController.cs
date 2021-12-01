@@ -26,7 +26,7 @@ namespace SuperDuperMedAPP.Controllers
 
         
         [Authorize(Roles = "doctor")]
-        [Route("medicine/")]
+        [Route("medicine")]
         [HttpGet]
         public async Task<ActionResult> GetAllMedicine()
         {

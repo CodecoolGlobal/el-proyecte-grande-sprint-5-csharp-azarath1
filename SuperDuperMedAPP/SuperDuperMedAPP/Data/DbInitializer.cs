@@ -33,6 +33,22 @@ namespace SuperDuperMedAPP.Data
             }
             context.SaveChanges();
 
+            var socNumbers = Enumerable
+                .Range(0, 10)
+                .Select(x => new SocialSecurityNumber
+                {
+                    SocialSecurityNum = new Random()
+                        .Next(100000000, 999999999)
+                        .ToString()
+                })
+                .ToList();
+
+            foreach (var socNumber in socNumbers)
+            {
+                context.SocialSecurityNumbers.Add(socNumber);
+            }
+            context.SaveChanges();
+
             var doctors = new Doctor[]
             {
             new Doctor{RegistrationNumber= regNumbers[0].RegNumber
@@ -54,9 +70,9 @@ namespace SuperDuperMedAPP.Data
 
             var patients = new Patient[]
 {
-            new Patient{SocialSecurityNumber = "044-033-999", DoctorID = 1, Name="Mr. Instance Imre", DateOfBirth=DateTime.Parse("2005-09-01"),HashPassword = service.HashPassword("Imre"),Username = "Imre",Role = "patient"},
-            new Patient{SocialSecurityNumber = "044-033-919", DoctorID = 1, Name="Miss Exampli Gratia", DateOfBirth=DateTime.Parse("2002-09-01"),HashPassword = service.HashPassword("Gratia"),Username = "Gratia",Role = "patient"},
-            new Patient{SocialSecurityNumber = "044-033-929", DoctorID = 1, Name="Mr. Standard Arturo", DateOfBirth=DateTime.Parse("2003-09-01"),HashPassword = service.HashPassword("Arturo"),Username = "Arturo",Role = "patient"}
+            new Patient{SocialSecurityNumber = socNumbers[0].SocialSecurityNum, DoctorID = 1, Name="Mr. Instance Imre", DateOfBirth=DateTime.Parse("2005-09-01"),HashPassword = service.HashPassword("Imre"),Username = "Imre",Role = "patient"},
+            new Patient{SocialSecurityNumber = socNumbers[1].SocialSecurityNum, DoctorID = 1, Name="Miss Exampli Gratia", DateOfBirth=DateTime.Parse("2002-09-01"),HashPassword = service.HashPassword("Gratia"),Username = "Gratia",Role = "patient"},
+            new Patient{SocialSecurityNumber = socNumbers[2].SocialSecurityNum, DoctorID = 1, Name="Mr. Standard Arturo", DateOfBirth=DateTime.Parse("2003-09-01"),HashPassword = service.HashPassword("Arturo"),Username = "Arturo",Role = "patient"}
 };
             foreach (Patient p in patients)
             {
@@ -95,7 +111,7 @@ namespace SuperDuperMedAPP.Data
             }
             context.SaveChanges();
 
-            
+
         }
     }
 }
