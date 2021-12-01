@@ -1,7 +1,7 @@
 import { React, useState } from 'react';
 import { NavLink, useHistory } from "react-router-dom";
 import { Navbar, Nav, CloseButton, Modal, Button, Form } from 'react-bootstrap';
-import { getWithExpiry } from './LocalStorageTTLUtils';
+import { getWithExpiry, Timer } from './LocalStorageTTLUtils';
 
 function Navigation() {
     const currentUserSubject = getWithExpiry();
@@ -107,6 +107,9 @@ function Navigation() {
                             <NavLink className="d-inline p-2 bg-dark text-white" to="/" onClick={Logout}>
                                 <i className="fas fa-sign-out-alt"></i> Logout
                             </NavLink>
+                            <div id='session-timer'>
+                                <Timer LT={currentUserSubject.expiry} />
+                            </div>
                         </Nav>
                     </Navbar.Collapse>
                 </Navbar>
@@ -118,25 +121,28 @@ function Navigation() {
         return (
             <div className="navcontainer">
                 <Navbar className="navbar-dark bg-dark" expand="lg">
-                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                    <Navbar.Collapse id="basic-navbar-nav">
-                        <Nav>
-                            <NavLink className="d-inline p-2 bg-dark text-white" to="/">
-                                <h4><i className="fas fa-laptop-medical text-danger"></i></h4>
-                            </NavLink >
-                            <NavLink className="d-inline p-2 bg-dark text-white" to="/personal">
-                                <i className="fas fa-user-injured"></i> My Details
-                            </NavLink>
-                            <NavLink className="d-inline p-2 bg-dark text-white" to="/mymedications">
-                                <i className="fas fa-tablets"></i> My Medications
-                            </NavLink>
-                            <NavLink className="d-inline p-2 bg-dark text-white" to="/" onClick={Logout}>
-                                <i className="fas fa-sign-out-alt"></i> Logout
-                            </NavLink>
-                        </Nav>
-                    </Navbar.Collapse>
-                </Navbar>
-            </div>
+                <Navbar.Toggle aria-controls="basic-navbar-nav"/>
+                <Navbar.Collapse id="basic-navbar-nav">
+                <Nav>
+                <NavLink className="d-inline p-2 bg-dark text-white" to="/">
+                <h4><i className="fas fa-laptop-medical text-danger"></i></h4> 
+                </NavLink >
+                <NavLink  className="d-inline p-2 bg-dark text-white" to="/personal">
+                <i className="fas fa-user-injured"></i> My Details
+                </NavLink>
+                <NavLink  className="d-inline p-2 bg-dark text-white" to="/mymedications">
+                <i className="fas fa-tablets"></i> My Medications
+                </NavLink>
+                <NavLink className="d-inline p-2 bg-dark text-white" to="/" onClick={Logout}>
+                <i className="fas fa-sign-out-alt"></i> Logout
+                </NavLink>
+                <div id='session-timer'>
+                    <Timer LT={currentUserSubject.expiry} />
+                </div>
+                </Nav>
+                </Navbar.Collapse>
+            </Navbar>
+        </div>
         )
     }
     else {

@@ -7,5 +7,6 @@
         public string Date { get; set; }
         public string DoctorNote { get; set; }
         public int medicationID { get; set; }
+        public Medicine Medicine { get; set; }
     }
 }
