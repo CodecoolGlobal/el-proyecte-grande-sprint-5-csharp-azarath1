@@ -19,9 +19,9 @@ function DoctorsPatientDetails()  {
     const [showEditModal, setShowEditModal] = useState(false);
     const [showAddModal, setShowAddModal] = useState(false);
 
-    const handleCloseEditModal = () => setShowEditModal(false);
+    const handleCloseEditModal = () => window.location.reload();
     const handleShowEditModal = () => setShowEditModal(true);
-    const handleCloseAddModal = () => setShowAddModal(false);
+    const handleCloseAddModal = () => window.location.reload();
     const handleShowAddModal = () => setShowAddModal(true);
 
 
@@ -185,19 +185,7 @@ function DoctorsPatientDetails()  {
                                             <Modal.Header closeButton>
                                                 <Modal.Title>Update Medication</Modal.Title>
                                             </Modal.Header>
-                                            <Form>
 
-                                                <Form.Group controlId="medicationname">
-                                                    <Form.Label>Name of Medication</Form.Label>
-                                                    <Form.Control type="text" name="name"
-                                                        defaultValue={medication.name}
-                                                        placeholder="name" />
-                                                    <Button style={{ marginTop: '10px' }} variant="primary" type="submit" onClick={ handleNameUpdate }>
-                                                        Update Name
-                                                    </Button>
-                                                </Form.Group>
-
-                                            </Form>
 
                                             <Form>
                                                 <Form.Group controlId="medicationdose">
