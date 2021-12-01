@@ -12,6 +12,7 @@ function DoctorsPatientDetails()  {
     const [patientmedications, setMedications] = useState(null);
     const [medicines, setMedicines] = useState(null);
     const [medicineID, setMedicineID] = useState(1);
+    const [medicineName, setMedicineName] = useState(null);
     const [medicationName, setMedicationName] = useState(null);
     const [medicationDose, setMedicationDose] = useState(0);
     const [medicationNote, setMedicationNote] = useState("");
@@ -76,10 +77,7 @@ function DoctorsPatientDetails()  {
 
     async function handleAddMedication(event) {
         event.preventDefault();
-        console.log(medicineID);
         console.log(medicationName);
-        console.log(medicationDose);
-        console.log(medicationNote);
         await fetch(process.env.REACT_APP_BASE_URL_DOCTOR + currentUserSubject.id + '/medication/add', {
             method: 'post',
             mode: 'cors',
@@ -245,15 +243,9 @@ function DoctorsPatientDetails()  {
 
                                 <Form>
 
-                                    <Form.Group controlId="medicationname">
-                                        <Form.Label>Name of Medication</Form.Label>
-                                    <Form.Control type="text" name="name"
-                                        onChange={(event) => setMedicationName(event.target.value)} />
-                                    </Form.Group>
-
                                     <Form.Group controlId="medicinename">
-                                        <Form.Label>Medicine</Form.Label>
-                                    <Form.Select aria-label="Default select example" onChange={(event) => setMedicineID(event.target.value)}>
+                                    <Form.Label>Medicine</Form.Label>
+                                    <Form.Select aria-label="Default select example" onChange={(event) => setMedicineID(event.target.value), (event) => setMedicationName(event.target.options[event.target.selectedIndex].text)}>
                                         {medicines.map(medicine =>
                                             <option value={medicine.medicineID}>{ medicine.name}</option>
                                         )}
