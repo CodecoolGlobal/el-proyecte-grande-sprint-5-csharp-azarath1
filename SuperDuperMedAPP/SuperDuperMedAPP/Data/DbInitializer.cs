@@ -96,12 +96,7 @@ namespace SuperDuperMedAPP.Data
 
             context.SaveChanges();
 
-            var medic = new Medicine
-            {
-                Name = "ALGOPYRIN 500 mg",
-                Manufacturer = "sanofi-aventis",
-                DescriptionLink = "https://www.webbeteg.hu/gyogyszerkereso/algopyrin-500-mg/1581/betegtajekoztato"
-            };
+            var medic = new Medicine { Name = "Medicine 8", Manufacturer = "Tova Gyógyszerkereskedelmi Zrt.", DescriptionLink = "" };
             var medicines = new Medicine[]
             {
                 new Medicine
