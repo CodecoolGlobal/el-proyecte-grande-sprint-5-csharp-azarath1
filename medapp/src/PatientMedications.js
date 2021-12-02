@@ -1,8 +1,6 @@
 import { useState, useEffect, } from 'react';
 import { Card, Button, Modal, Table } from 'react-bootstrap';
 import { getWithExpiry } from './LocalStorageTTLUtils';
-const currentUserSubject = JSON.parse(localStorage.getItem('currentUser'));
-
 
 
 function PatientMedications() {

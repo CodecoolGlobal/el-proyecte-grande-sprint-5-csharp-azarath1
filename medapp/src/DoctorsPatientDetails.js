@@ -1,7 +1,6 @@
 import { Button } from 'react-bootstrap';
 import React, { useState, useEffect } from 'react';
 import { Card, Modal, Table, Form } from 'react-bootstrap';
-import { useLocation } from 'react-router-dom';
 import { getWithExpiry } from './LocalStorageTTLUtils';
 const currentUserSubject = getWithExpiry();
 
@@ -12,7 +11,6 @@ function DoctorsPatientDetails()  {
     const [patientmedications, setMedications] = useState(null);
     const [medicines, setMedicines] = useState(null);
     const [medicineID, setMedicineID] = useState(1);
-    const [medicineName, setMedicineName] = useState(null);
     const [medicationName, setMedicationName] = useState(null);
     const [medicationDose, setMedicationDose] = useState(0);
     const [medicationNote, setMedicationNote] = useState("");
@@ -68,10 +66,6 @@ function DoctorsPatientDetails()  {
         })
             .then(res => res.json())
             .then(res => console.log(res)).then(window.location.reload());;
-    };
-
-    function handleNameUpdate(event) {
-
     };
 
     function handleClickAddMedication(event) {
@@ -157,7 +151,7 @@ function DoctorsPatientDetails()  {
 
 
 
-    }, [] );
+    }, [patientid] );
     if (patientmedications && medicines) {
         return (
             <div>
@@ -243,7 +237,7 @@ function DoctorsPatientDetails()  {
 
                                     <Form.Group controlId="medicinename">
                                     <Form.Label>Medicine</Form.Label>
-                                    <Form.Select aria-label="Default select example" onChange={(event) => setMedicineID(event.target.value), (event) => setMedicationName(event.target.options[event.target.selectedIndex].text)}>
+                                    <Form.Select aria-label="Default select example" onChange={(event) => {setMedicineID(event.target.value); setMedicationName(event.target.options[event.target.selectedIndex].text)}}>
                                         <option disabled selected value> -- select an option -- </option>
                                         {medicines.map(medicine =>
                                             <option value={medicine.medicineID}>{ medicine.name}</option>
