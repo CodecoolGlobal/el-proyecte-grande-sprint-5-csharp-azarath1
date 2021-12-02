@@ -47,8 +47,8 @@ function DoctorsPatientDetails()  {
             body: JSON.stringify(
                 medicationNote
             ),
-        }).then(res => res.json())
-            .then(res => console.log(res));
+        }).then(res => res);
+        
     };
 
     async function handleDelete(event) {
@@ -65,7 +65,7 @@ function DoctorsPatientDetails()  {
                 },
         })
             .then(res => res.json())
-            .then(res => console.log(res)).then(window.location.reload());;
+            .then(window.location.reload());
     };
 
     function handleClickAddMedication(event) {
@@ -92,8 +92,8 @@ function DoctorsPatientDetails()  {
                 "PatientID": patientid,
                 "MedicineID": medicineID
             }),
-        }).then(res => res.json())
-            .then(res => console.log(res)).then(window.location.reload());
+        }).then(res => res)
+        .then(window.location.reload());
     };
 
     async function handleDoseUpdate(event) {
@@ -111,7 +111,7 @@ function DoctorsPatientDetails()  {
             body: JSON.stringify(
                 medicationDose
             ),
-        }).then(res => res.json())
+        }).then(res => res)
             .then(res => console.log(res));
     };
 
