@@ -8,6 +8,7 @@ const currentUserSubject = getWithExpiry();
 function DoctorsPatientDetails()  {
     //let location = useLocation();
     let patientid = useQuery().get('id');
+    let patientname = useQuery().get('name');
     const [patientmedications, setMedications] = useState(null);
     const [medicines, setMedicines] = useState(null);
     const [medicineID, setMedicineID] = useState(1);
@@ -156,7 +157,7 @@ function DoctorsPatientDetails()  {
         return (
             <div>
                 <div className="flex-container">
-                    <h1 className="flex-child">Medications</h1>
+                    <h1 className="flex-child">Medications - { patientname }</h1>
                     <Button className="flex-child" id="logout" variant="success" onClick={handleClickAddMedication}>
                         <i className="fas fa-hand-holding-medical"></i> Add Medication
                     </Button>
