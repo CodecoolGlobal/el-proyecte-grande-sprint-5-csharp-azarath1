@@ -58,9 +58,9 @@ function PatientRegistration() {
         <div className="login-page">
             <div className="form">
                 <form className="login-form" action="submit">
-                    <div class="flex-container">
+                    <div className="flex-container">
 
-                        <div class="flex-child">
+                        <div className="flex-child">
                             <div>
                                 <label className="login-label">
                                     Social Security Number:
@@ -108,7 +108,7 @@ function PatientRegistration() {
                             </div>
                         </div>
 
-                        <div class="flex-child">
+                        <div className="flex-child">
                             <div>
                                 <label className="login-label">
                                     Phone Number:

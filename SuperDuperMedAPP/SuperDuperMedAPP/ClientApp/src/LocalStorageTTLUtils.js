@@ -25,15 +25,16 @@ export const getWithExpiry=()=> {
 	if (now.getTime() > item.expiry) {
 		// If the item is expired, delete the item from storage
 		// and return null
-		localStorage.removeItem("currentUser")
 		let fresh = window.confirm("Your session expired!");
 		if (fresh === true) {
+			localStorage.removeItem("currentUser")
 			window.location.href = "/login";
                 setTimeout(() => {
                     window.location.reload();    
                   }, 1000);
 			
 		} else {
+			localStorage.removeItem("currentUser")
 			window.location.href = "/";
                 setTimeout(() => {
                     window.location.reload();    

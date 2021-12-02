@@ -53,7 +53,7 @@ function PatientMedications() {
                                 <td>{dat.dose}</td>
                                 <td>
                                 <Button style={{ margin: '10px' }}  variant="primary" onClick={handleClickNoteModal}>
-                                    <i class="fas fa-edit"></i> See Note
+                                    <i className="fas fa-edit"></i> See Note
                                 </Button>     
                                 </td>
                                 <Modal show={showNoteModal} onHide={handleCloseNoteModal} scrollable={true}>

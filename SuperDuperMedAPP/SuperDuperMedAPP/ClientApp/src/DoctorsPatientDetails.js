@@ -46,13 +46,12 @@ function DoctorsPatientDetails()  {
             body: JSON.stringify(
                 medicationNote
             ),
-        }).then(res => res.json())
-            .then(res => console.log(res));
+        }).then(res => res);
     };
 
     async function handleDelete(event) {
         event.preventDefault();
-        await fetch('doctor/medication/' + event.target.value + '/delete', {
+        await fetch('doctor/'+currentUserSubject.id +'/medication/'+  event.target.value + '/delete', {
                 method: 'delete',
                 mode: 'cors',
                 credentials: 'include',
@@ -63,8 +62,7 @@ function DoctorsPatientDetails()  {
                     'Accept': 'application/json'
                 },
         })
-            .then(res => res.json())
-            .then(res => console.log(res));;
+            .then(res => res.json());
     };
 
     function handleClickAddMedication(event) {
@@ -74,9 +72,6 @@ function DoctorsPatientDetails()  {
 
     async function handleAddMedication(event) {
         event.preventDefault();
-        console.log(medicationName);
-        console.log(medicationDose);
-        console.log(medicationNote);
         await fetch('doctor/'+currentUserSubject.id + '/medication/add', {
             method: 'post',
             mode: 'cors',
@@ -94,13 +89,12 @@ function DoctorsPatientDetails()  {
                 "PatientID": patientid,
                 "MedicineID": medicineID
             }),
-        }).then(res => res.json())
-            .then(res => console.log(res));
+        }).then(res => res);
     };
 
     async function handleDoseUpdate(event) {
         event.preventDefault();
-        await fetch('doctor/'+currentUserSubject.id + '/medication/' + event.target.value + '/edit-dosage', {
+        await fetch('doctor/' +currentUserSubject.id + '/medication/' + event.target.value + '/edit-dosage', {
             method: 'put',
             mode: 'cors',
             credentials: 'include',
@@ -113,27 +107,25 @@ function DoctorsPatientDetails()  {
             body: JSON.stringify(
                 medicationDose
             ),
-        }).then(res => res.json())
-            .then(res => console.log(res));
+        }).then(res => res);
     };
 
-    
 
-    
+
+
 
     useEffect(() => {
         getPatientMedications();
         getMedicines();
-        
+
 
         async function getPatientMedications() {
 
-            
+
 
             const response = await fetch('doctor/'+currentUserSubject.id + '/patients-medications/' + patientid + "/" + 0, {headers:{Authorization: `Bearer ${currentUserSubject.token}`}});
 
             const data = await response.json();
-
             setMedications(data);
         }
 
@@ -167,8 +159,8 @@ function DoctorsPatientDetails()  {
                         <i className="fas fa-hand-holding-medical"></i> Add Medication
                     </Button>
                 </div>
-                
-                
+
+
                 <div className = "patientMedications">
                     <div>
                         <Table className="mt-4" striped bordered hover size="sm">
@@ -193,7 +185,7 @@ function DoctorsPatientDetails()  {
                                         <td width="25%">
                                             <Button style={{ margin: '10px' }} medicationname={medication.name} medicationdose={medication.dose} doctornote={ medication.doctorNote} variant="primary" onClick={handleClickEditModal}>
                                             <i className="fas fa-edit"></i> Edit
-                                            </Button>                                            
+                                            </Button>
                                             <Button value={ medication.medicationID } variant="danger" onClick={handleDelete}>
                                             <i className="fas fa-trash-alt"></i> Delete
                                             </Button>
@@ -233,7 +225,7 @@ function DoctorsPatientDetails()  {
                                     </tr>)}
                             </tbody>
                         </Table>
-                        
+
                             <Modal show={showAddModal} onHide={handleCloseAddModal}>
                                 <Modal.Header closeButton>
                                     <Modal.Title>Add Medication</Modal.Title>
@@ -274,7 +266,7 @@ function DoctorsPatientDetails()  {
                             </Modal>
                     </div>
                 </div>
-            </div>           
+            </div>
         )
     }
     else {

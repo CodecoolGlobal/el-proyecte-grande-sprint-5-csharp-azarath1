@@ -42,7 +42,7 @@ if(!loginData){
                                 <td>{patient.socialSecurityNumber}</td>
                                 <td>
                                     <Button className="mr-2" value={patient.id} variant="success" onClick={putIntoPractice}>
-                                    <i class="fas fa-user-plus"></i> Add to practice
+                                    <i className="fas fa-user-plus"></i> Add to practice
                                     </Button>
                                 </td>
                             </tr>)}

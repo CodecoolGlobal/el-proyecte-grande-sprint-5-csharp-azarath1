@@ -24,8 +24,8 @@ function App() {
           <Route path='/doctorRegistration' component={DoctorRegistration} />
           <Route path='/login' component={Login} />
           <Route path='/mymedications' component={PatientMedications} />
-          {/* <Route path='/doctorLogin' component={Login} />
-          <Route path='/patientLogin' component={Login} /> */}
+          <Route path='/doctorLogin' component={Login} />
+          <Route path='/patientLogin' component={Login} />
           <Route path='/allpatients' component={AllPatientsPage} />
           <Route path='/mypatients' component={DoctorsOwnPatientsPage} />
           <Route path='/doctorspatient' component={DoctorsPatientDetails} />
