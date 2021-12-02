@@ -28,7 +28,7 @@ export const getWithExpiry=()=> {
 		let fresh = window.confirm("Your session expired!");
 		if (fresh === true) {
 			localStorage.removeItem("currentUser")
-			window.location.href = "/login";
+			window.location.href = "/";
                 setTimeout(() => {
                     window.location.reload();    
                   }, 1000);
