@@ -36,7 +36,7 @@ function Login() {
                 history.push("/");
                 setTimeout(() => {
                     window.location.reload();    
-                  }, 1000);
+                  }, 500);
             })
     }
     

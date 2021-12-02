@@ -31,13 +31,13 @@ export const getWithExpiry=()=> {
 			window.location.href = "/Login";
                 setTimeout(() => {
                     window.location.reload();    
-                  }, 1000);
+                  }, 500);
 			
 		} else {
 			window.location.href = "/";
                 setTimeout(() => {
                     window.location.reload();    
-                  }, 1000);
+                  }, 500);
 		}
 		return null
 	}
@@ -60,7 +60,7 @@ const Renderer = ({ hours, minutes, seconds, completed }) => {
 		window.location.href = "/Login";
                 setTimeout(() => {
                     window.location.reload();    
-                  }, 1000);
+                  }, 500);
 	  } else {
 		// Render a countdown
 		return <span style={{color:'red'}}>{hours}:{minutes}:{seconds}</span>;
