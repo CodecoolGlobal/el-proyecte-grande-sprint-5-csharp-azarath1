@@ -40,6 +40,7 @@ namespace SuperDuperMedAPP.Data.Repositories
         public async Task<List<Patient>?> GetPatientsByDoctorId(int doctorId, int pageNumber)
         {
             return await _db.Patients
+                .OrderBy(x => x.Name)
                 .Where(x => x.DoctorID.Equals(doctorId))
                 .Skip(10 * pageNumber)
                 .Take(10)
@@ -48,12 +49,12 @@ namespace SuperDuperMedAPP.Data.Repositories
 
         public async Task<List<Patient>?> GetAllPatients()
         {
-            return await _db.Patients.ToListAsync();
+            return await _db.Patients.OrderBy(x => x.Name).ToListAsync();
         }
 
         public async Task<List<Patient>?> GetAllPatientsByPageNumber(int pageNumber)
         {
-            return await _db.Patients.Skip(10 * pageNumber).Take(10).ToListAsync();
+            return await _db.Patients.OrderBy(x => x.Name).Skip(10 * pageNumber).Take(10).ToListAsync();
         }
 
         public async Task UpdatePatientContacts(UserContacts contacts, int id)

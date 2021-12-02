@@ -23,6 +23,7 @@ namespace SuperDuperMedAPP.Data.Repositories
         public async Task<List<Medication>?> GetMedicationByPageNumber(int patientId, int pageNumber)
         {
             return await _db.Medications
+                .OrderBy(x=>x.Name)
                 .Where(x => x.PatientID.Equals(patientId))
                 .Include("Medicine")
                 .Skip(10 * pageNumber)
