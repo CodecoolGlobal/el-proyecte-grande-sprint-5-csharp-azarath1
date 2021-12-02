@@ -22,7 +22,7 @@ function App() {
           <Route path='/personal' component={PersonalDetails} />
           <Route path='/patientRegistration' component={PatientRegistration} />
           <Route path='/doctorRegistration' component={DoctorRegistration} />
-          <Route path='/Login' component={Login} />
+          <Route path='/login' component={Login} />
           <Route path='/mymedications' component={PatientMedications} />
           {/* <Route path='/doctorLogin' component={Login} />
           <Route path='/patientLogin' component={Login} /> */}

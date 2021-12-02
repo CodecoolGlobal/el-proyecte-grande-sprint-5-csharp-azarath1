@@ -76,7 +76,7 @@ function Navigation() {
                             <NavLink className="d-inline p-2 bg-dark text-white" to="#" onClick={handleSignupShow} >
                                 <i className="fas fa-user-plus"></i> Register
                             </NavLink >
-                            <NavLink className="d-inline p-2 bg-dark text-white" to="/Login">
+                            <NavLink className="d-inline p-2 bg-dark text-white" to="/login">
                                 <i className="fas fa-sign-in-alt"></i> Login
                             </NavLink >
                         </Nav>

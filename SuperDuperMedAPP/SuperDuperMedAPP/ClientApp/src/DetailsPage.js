@@ -35,7 +35,7 @@ function PersonalDetails() {
       }
       
     }
-  }, [loginData]);
+  },[]);
   if(patientdetails){
     return (
         <div>

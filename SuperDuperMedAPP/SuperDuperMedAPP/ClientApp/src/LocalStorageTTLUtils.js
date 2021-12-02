@@ -28,7 +28,7 @@ export const getWithExpiry=()=> {
 		localStorage.removeItem("currentUser")
 		let fresh = window.confirm("Your session expired!");
 		if (fresh === true) {
-			window.location.href = "/Login";
+			window.location.href = "/login";
                 setTimeout(() => {
                     window.location.reload();    
                   }, 1000);
@@ -56,11 +56,7 @@ export const Timer = ({LT})=>{
 // Renderer callback with condition 
 const Renderer = ({minutes, seconds, completed }) => {
 	if (completed) {
-		localStorage.removeItem("currentUser")
-		window.location.href = "/Login";
-                setTimeout(() => {
-                    window.location.reload();    
-                  }, 1000);
+		console.log("session expired");
 	  } else {
 		// Render a countdown
 		return <span style={{color:'red'}}>{minutes}:{seconds}</span>;
