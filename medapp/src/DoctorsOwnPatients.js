@@ -14,7 +14,9 @@ function DoctorsOwnPatientsPage() {
 
     function handleClick(event) {
         event.preventDefault();
-        history.push("doctorspatient?id=" + event.target.value + "&name=" + event.target.name);
+        let id = event.target.value;
+        let name = event.target.name
+        history.push("doctorspatient?id=" + id + "&name=" + name);
     }
 
 
