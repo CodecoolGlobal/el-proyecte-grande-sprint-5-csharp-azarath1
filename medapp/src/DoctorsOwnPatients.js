@@ -14,7 +14,9 @@ function DoctorsOwnPatientsPage() {
 
     function handleClick(event) {
         event.preventDefault();
-        history.push("doctorspatient?id=" + event.target.value);
+        let id = event.target.value;
+        let name = event.target.name;
+        history.push("doctorspatient?id=" + id + "&name=" + name);
     }
 
 
@@ -52,7 +54,7 @@ function DoctorsOwnPatientsPage() {
                                         <td>{patient.socialSecurityNumber}</td>
                                         <td>
 
-                                                <Button className="mr-2" variant="info" value={patient.id} onClick={ handleClick }>
+                                            <Button className="mr-2" variant="info" value={patient.id} name={ patient.name } onClick={ handleClick }>
                                                     <i class="fas fa-search-plus"></i>View
                                                 </Button>
                                       
