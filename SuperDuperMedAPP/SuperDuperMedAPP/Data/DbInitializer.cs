@@ -74,19 +74,19 @@ namespace SuperDuperMedAPP.Data
                 {
                     SocialSecurityNumber = socNumbers[0].SocialSecurityNum, DoctorID = 1, Name = "Mr. Instance Imre",
                     DateOfBirth = DateTime.Parse("2005-09-01"), HashPassword = service.HashPassword("Imre"),
-                    Username = "Imre", Role = "patient"
+                    Username = "Imre", Role = "patient", Email = "imre@imre.hu"
                 },
                 new Patient
                 {
                     SocialSecurityNumber = socNumbers[1].SocialSecurityNum, DoctorID = 1, Name = "Miss Exampli Gratia",
                     DateOfBirth = DateTime.Parse("2002-09-01"), HashPassword = service.HashPassword("Gratia"),
-                    Username = "Gratia", Role = "patient"
+                    Username = "Gratia", Role = "patient", Email = "gratia@gratia.hu"
                 },
                 new Patient
                 {
                     SocialSecurityNumber = socNumbers[2].SocialSecurityNum, DoctorID = 1, Name = "Mr. Standard Arturo",
                     DateOfBirth = DateTime.Parse("2003-09-01"), HashPassword = service.HashPassword("Arturo"),
-                    Username = "Arturo", Role = "patient"
+                    Username = "Arturo", Role = "patient", Email = "arturo@arturo.hu"
                 }
             };
             foreach (Patient p in patients)

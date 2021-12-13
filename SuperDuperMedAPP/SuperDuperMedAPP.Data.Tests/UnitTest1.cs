@@ -59,18 +59,18 @@ namespace SuperDuperMedAPP.Data.Tests
         {
             var patient = new Patient()
             {
-                DateOfBirth = DateTime.Parse("1991.01.01"),
-                SocialSecurityNumber = "204-001-301",
-                Email = "valami@valami.hu",
-                HashPassword = "asdasd",
-                Name = "Mr.Nobody",
-                PhoneNumber = "01201040",
-                Username = "MrN",
+                DateOfBirth = DateTime.Parse("1995.01.01"),
+                SocialSecurityNumber = "111-222-333",
+                Email = "i@mbatman.hu",
+                HashPassword = Crypto.HashPassword("asd"),
+                Name = "Batman",
+                PhoneNumber = "06200120104",
+                Username = "Bman",
                 DoctorID = 1
             };
 
             await _pRepository.AddPatient(patient);
-            Assert.That(_context.Patients.First().Email, Is.EqualTo("valami@valami.hu"));
+            Assert.That(_context.Patients.Any(patient1 =>patient1.Username.Equals("Bman")), Is.True);
         }
 
         [Test]

@@ -11,6 +11,10 @@ namespace SuperDuperMedAPP.Data.Repositories
         Task<Doctor?> GetDoctorByUsername(string username);
         Task<Doctor?> GetDoctorById(int userid);
         Task<bool> RegNumberInUse(string regNumber);
+        Task<bool> IsUsernameUnique(string userName);
+        Task<bool> IsEmailUnique(string email);
+
+
         Task<List<Doctor>?> GetAllDoctors();
         //todo
         Task UpdateDoctor(Doctor doctor);

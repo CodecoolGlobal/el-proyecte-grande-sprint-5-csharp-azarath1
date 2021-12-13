@@ -13,14 +13,15 @@ namespace SuperDuperMedAPP.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private IAuthService _authService;
-        private IPatientRepository _patientRepository;
-        private IDoctorRepository _doctorRepository;
-        private IRegistrationNumberRepository _registrationNumberRepository;
-        private ISocialSecurityNumberRepository _securityNumberRepository;
+        private readonly IAuthService _authService;
+        private readonly IPatientRepository _patientRepository;
+        private readonly IDoctorRepository _doctorRepository;
+        private readonly IRegistrationNumberRepository _registrationNumberRepository;
+        private readonly ISocialSecurityNumberRepository _securityNumberRepository;
 
         public AuthController(IAuthService authService, IPatientRepository patientRepository,
-            IDoctorRepository doctorRepository, IRegistrationNumberRepository registrationNumberRepository, ISocialSecurityNumberRepository securityNumberRepository)
+            IDoctorRepository doctorRepository, IRegistrationNumberRepository registrationNumberRepository,
+            ISocialSecurityNumberRepository securityNumberRepository)
         {
             _authService = authService;
             _patientRepository = patientRepository;
@@ -39,13 +40,13 @@ namespace SuperDuperMedAPP.Controllers
 
             if (user == null)
             {
-                return BadRequest(new { error = "invalid username/password" });
+                return BadRequest(new {error = "invalid username/password"});
             }
 
             var passwordValid = _authService.VerifyPassword(model.Password, user.HashPassword);
             if (!passwordValid)
             {
-                return BadRequest(new { error = "invalid username/password" });
+                return BadRequest(new {error = "invalid username/password"});
             }
 
             return _authService.GetAuthData(user.Id, user.Role);
@@ -65,20 +66,19 @@ namespace SuperDuperMedAPP.Controllers
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            var users = await _patientRepository.GetAllPatients();
+            var emailUniq = await IsEmailUniq(model.Email, model.Role);
+            if (!emailUniq) return BadRequest(new {error = "user with this email already exists"});
 
-            var emailUniq = users != null && IsEmailUniq(model.Email, users.Select(x => x.Email).ToList());
-            if (!emailUniq) return BadRequest(new { error = "user with this email already exists" });
-
-            var usernameUniq = users != null && IsUsernameUniq(model.Username, users.Select(x => x.Username).ToList());
-            if (!usernameUniq) return BadRequest(new { error = "user with this email already exists" });
+            var usernameUniq = await IsUsernameUniq(model.Username, model.Role);
+            if (!usernameUniq) return BadRequest(new {error = "user with this email already exists"});
 
             var socNumberValid = await _securityNumberRepository.SocNumberValid(model.SocialSecurityNumber);
             var socNumberInUse = await _patientRepository.SocNumberInUse(model.SocialSecurityNumber);
-            if (!socNumberValid || (socNumberValid && socNumberInUse)) return BadRequest(new { error = "Social Security number invalid, or already in use!" });
+            if (!socNumberValid || (socNumberValid && socNumberInUse))
+                return BadRequest(new {error = "Social Security number invalid, or already in use!"});
 
-            await _patientRepository.AddPatient(model.HashPatientPassword());
-            var patient = await _patientRepository.GetPatientByUsername(model.Username);
+            var patient = model.HashPatientPassword();
+            await _patientRepository.AddPatient(patient);
 
             return _authService.GetAuthData(patient.ID, patient.Role);
         }
@@ -89,32 +89,37 @@ namespace SuperDuperMedAPP.Controllers
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            var users = await _doctorRepository.GetAllDoctors();
 
-            var emailUniq = users != null && IsEmailUniq(model.Email, users.Select(x => x.Email).ToList());
-            if (!emailUniq) return BadRequest(new { error = "user with this email already exists" });
+            var emailUniq = await IsEmailUniq(model.Email, model.Role);
+            if (!emailUniq) return BadRequest(new {error = "user with this email already exists"});
 
-            var usernameUniq = users != null && IsUsernameUniq(model.Username, users.Select(x => x.Username).ToList());
-            if (!usernameUniq) return BadRequest(new { error = "user with this email already exists" });
+            var usernameUniq = await IsUsernameUniq(model.Username, model.Role);
+            if (!usernameUniq) return BadRequest(new {error = "user with this email already exists"});
 
             var regNumberValid = await _registrationNumberRepository.RegNumberValid(model.RegistrationNumber);
             var isRegNumberInUse = await _doctorRepository.RegNumberInUse(model.RegistrationNumber);
-            if (!regNumberValid  || (regNumberValid && isRegNumberInUse)) return BadRequest(new { error = "Registration number invalid, or already in use!" });
+            if (!regNumberValid || (regNumberValid && isRegNumberInUse))
+                return BadRequest(new {error = "Registration number invalid, or already in use!"});
 
-            await _doctorRepository.AddDoctor(model.HashDoctorPassword());
-            var doctor = await _doctorRepository.GetDoctorByUsername(model.Username);
+            var doctor = model.HashDoctorPassword();
+            await _doctorRepository.AddDoctor(doctor);
 
             return _authService.GetAuthData(doctor.ID, doctor.Role);
         }
 
-        private bool IsUsernameUniq(string modelUsername, List<string> usernames)
+        // todo if more roles are added, use switch!
+        private async Task<bool> IsUsernameUniq(string modelUsername, string role)
         {
-            return !usernames.Contains(modelUsername);
+            return role.Equals("doctor")
+                ? await _doctorRepository.IsUsernameUnique(modelUsername)
+                : await _patientRepository.IsUsernameUnique(modelUsername);
         }
 
-        private bool IsEmailUniq(string? modelEmail, List<string?> emails)
+        private async Task<bool> IsEmailUniq(string modelEmail, string role)
         {
-            return !emails.Contains(modelEmail);
+            return role.Equals("doctor")
+                ? await _doctorRepository.IsEmailUnique(modelEmail)
+                : await _patientRepository.IsEmailUnique(modelEmail);
         }
     }
 }
