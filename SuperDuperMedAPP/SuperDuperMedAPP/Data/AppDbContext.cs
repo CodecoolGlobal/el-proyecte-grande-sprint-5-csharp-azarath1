@@ -9,11 +9,11 @@ namespace SuperDuperMedAPP.Data
 {
     public class AppDbContext : DbContext
     {
-        private IConfiguration _db;
+        public IConfiguration? Db { get; }
 
-        public AppDbContext(DbContextOptions options, IConfiguration configuration) : base(options)
+        public AppDbContext(DbContextOptions options, IConfiguration? configuration) : base(options)
         {
-            _db = configuration;
+            Db = configuration;
         }
 
         public AppDbContext(DbContextOptions options) : base(options)
@@ -24,13 +24,13 @@ namespace SuperDuperMedAPP.Data
         {
         }
 
-        public DbSet<Doctor> Doctors { get; set; }
-        public DbSet<Patient> Patients { get; set; }
-        public DbSet<Medicine> Medicine { get; set; }
-        public DbSet<Medication> Medications { get; set; }
-        public DbSet<User> Users { get; set; }
-        public DbSet<RegistrationNumber> RegistrationNumbers { get; set; }
-        public DbSet<SocialSecurityNumber> SocialSecurityNumbers { get; set; }
+        public DbSet<Doctor> Doctors { get; set; } = default!;
+        public DbSet<Patient> Patients { get; set; } = default!;
+        public DbSet<Medicine> Medicine { get; set; } = default!;
+        public DbSet<Medication> Medications { get; set; } = default!;
+        public DbSet<User> Users { get; set; } = default!;
+        public DbSet<RegistrationNumber> RegistrationNumbers { get; set; } = default!;
+        public DbSet<SocialSecurityNumber> SocialSecurityNumbers { get; set; } = default!;
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

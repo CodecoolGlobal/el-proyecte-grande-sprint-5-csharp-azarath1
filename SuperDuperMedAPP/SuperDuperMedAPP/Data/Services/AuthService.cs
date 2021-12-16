@@ -52,7 +52,7 @@ namespace SuperDuperMedAPP.Data.Services
             return Crypto.HashPassword(password);
         }
 
-        public bool VerifyPassword(string actualPassword, string hashedPassword)
+        public bool VerifyPassword(string? actualPassword, string hashedPassword)
         {
             return Crypto.VerifyHashedPassword(hashedPassword, actualPassword);
         }

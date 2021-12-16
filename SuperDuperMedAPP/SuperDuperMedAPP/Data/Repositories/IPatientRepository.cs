@@ -8,10 +8,10 @@ namespace SuperDuperMedAPP.Data.Repositories
     public interface IPatientRepository
     {
         Task AddPatient(Patient patient);
-        Task<Patient?> GetPatientByUsername(string username);
+        Task<Patient?> GetPatientByUsername(string? username);
         Task<bool> SocNumberInUse(string socNumber);
-        Task<bool> IsUsernameUnique(string userName);
-        Task<bool> IsEmailUnique(string email);
+        Task<bool> IsUsernameUnique(string? userName);
+        Task<bool> IsEmailUnique(string? email);
 
         Task<Patient?> GetPatientById(int userid);
         Task<List<Patient>?> GetPatientsByDoctorId(int doctorId, int pageNumber);

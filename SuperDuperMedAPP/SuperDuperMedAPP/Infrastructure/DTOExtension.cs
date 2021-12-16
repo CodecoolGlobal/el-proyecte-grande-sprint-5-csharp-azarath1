@@ -7,6 +7,7 @@ using CryptoHelper;
 
 namespace SuperDuperMedAPP.Infrastructure
 {
+    // ReSharper disable once InconsistentNaming
     public static class DTOExtension
     {
         public static Medication ToMedication(this AddMedicationDTO dto, Medicine medicine)
@@ -22,7 +23,8 @@ namespace SuperDuperMedAPP.Infrastructure
             };
         }
 
-        public static GetPatientsMedicationSingleDTO ToGetPatientsMedicationSingleDto(this Medication medication)
+        // ReSharper disable once InconsistentNaming
+        public static GetPatientsMedicationSingleDTO ToGetPatientsMedicationSingleDTO(this Medication medication)
         {
             return new GetPatientsMedicationSingleDTO
             {
@@ -34,6 +36,7 @@ namespace SuperDuperMedAPP.Infrastructure
             };
         }
 
+        // ReSharper disable once InconsistentNaming
         public static List<GetPatientsMedicationAllDTO>? ToGetPatientsMedicationAllDTO(
             this List<Medication>? medications)
         {
@@ -48,6 +51,7 @@ namespace SuperDuperMedAPP.Infrastructure
             }).ToList();
         }
 
+        // ReSharper disable once InconsistentNaming
         public static List<GetDoctorsPatientsDTO> ToGetDoctorsPatientsDTOs(this List<Patient>? patients)
         {
             return (patients ?? new List<Patient>())
@@ -62,6 +66,7 @@ namespace SuperDuperMedAPP.Infrastructure
                 }).ToList();
         }
 
+        // ReSharper disable once InconsistentNaming
         public static List<GetAllPatientsDTO> ToGetAllPatientsDTOs(this List<Patient>? patients)
         {
             return (patients ?? new List<Patient>())
@@ -77,7 +82,8 @@ namespace SuperDuperMedAPP.Infrastructure
                 }).ToList();
         }
 
-        public static GetUserToAuthDTO TGetUserToAuthDto(this User user)
+        // ReSharper disable once InconsistentNaming
+        public static GetUserToAuthDTO ToGetUserToAuthDTO(this User user)
         {
             return new GetUserToAuthDTO
             {
@@ -117,6 +123,7 @@ namespace SuperDuperMedAPP.Infrastructure
             };
         }
 
+        // ReSharper disable once InconsistentNaming
         public static PatientDetailDTO ToPatientDetailDTO(this Patient patient)
         {
             return new PatientDetailDTO
@@ -128,7 +135,8 @@ namespace SuperDuperMedAPP.Infrastructure
                 SocialSecurityNumber = patient.SocialSecurityNumber
             };
         }
-        public static DoctorDetailDTO ToDoctortDetailDTO(this Doctor doctor)
+        // ReSharper disable once InconsistentNaming
+        public static DoctorDetailDTO ToDoctorDetailDTO(this Doctor doctor)
         {
             return new DoctorDetailDTO
             {
