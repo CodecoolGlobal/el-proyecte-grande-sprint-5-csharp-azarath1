@@ -22,7 +22,7 @@ namespace SuperDuperMedAPP.Data.Repositories
             await _db.SaveChangesAsync();
         }
 
-        public async Task<Doctor?> GetDoctorByUsername(string username)
+        public async Task<Doctor?> GetDoctorByUsername(string? username)
         {
             return await _db.Doctors.FirstOrDefaultAsync(x => x.Username.Equals(username));
         }
@@ -39,7 +39,7 @@ namespace SuperDuperMedAPP.Data.Repositories
             ;
         }
 
-        public Task<bool> IsUsernameUnique(string userName)
+        public Task<bool> IsUsernameUnique(string? userName)
         {
             return _db.Doctors
                 .AnyAsync(doctor => doctor.Username.Equals(userName))
@@ -49,7 +49,7 @@ namespace SuperDuperMedAPP.Data.Repositories
         public Task<bool> IsEmailUnique(string? email)
         {
             return _db.Doctors
-                .AnyAsync(doctor => doctor.Email.Equals(email))
+                .AnyAsync(doctor => doctor.Email != null && doctor.Email.Equals(email))
                 .ContinueWith(result => !result.Result); ;
         }
 
@@ -84,8 +84,8 @@ namespace SuperDuperMedAPP.Data.Repositories
 
         public async Task DeleteDoctor(int id)
         {
-            var DoctorToDelete = await _db.Doctors.FirstAsync(x => x.ID == id);
-            _db.Doctors.Remove(DoctorToDelete);
+            var doctorToDelete = await _db.Doctors.FirstAsync(x => x.ID == id);
+            _db.Doctors.Remove(doctorToDelete);
             await _db.SaveChangesAsync();
         }
 

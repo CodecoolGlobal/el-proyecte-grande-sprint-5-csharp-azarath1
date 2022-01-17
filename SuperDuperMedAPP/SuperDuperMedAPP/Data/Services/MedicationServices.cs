@@ -31,7 +31,7 @@ namespace SuperDuperMedAPP.Data.Services
             await _medicationRepository.DeleteMedication(medId);
         }
 
-        public async Task EditMedicationDosage(int medicationId, string newDosage)
+        public async Task EditMedicationDosage(int medicationId, string? newDosage)
         {
             await _medicationRepository.EditMedicationDosage(medicationId, newDosage);
         }

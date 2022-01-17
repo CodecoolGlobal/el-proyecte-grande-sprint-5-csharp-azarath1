@@ -8,11 +8,11 @@ namespace SuperDuperMedAPP.Data.Repositories
     public interface IDoctorRepository
     {
         Task AddDoctor(Doctor doctor);
-        Task<Doctor?> GetDoctorByUsername(string username);
+        Task<Doctor?> GetDoctorByUsername(string? username);
         Task<Doctor?> GetDoctorById(int userid);
         Task<bool> RegNumberInUse(string regNumber);
-        Task<bool> IsUsernameUnique(string userName);
-        Task<bool> IsEmailUnique(string email);
+        Task<bool> IsUsernameUnique(string? userName);
+        Task<bool> IsEmailUnique(string? email);
 
 
         Task<List<Doctor>?> GetAllDoctors();

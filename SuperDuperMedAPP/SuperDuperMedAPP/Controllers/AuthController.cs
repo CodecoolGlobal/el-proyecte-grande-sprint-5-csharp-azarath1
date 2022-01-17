@@ -52,11 +52,11 @@ namespace SuperDuperMedAPP.Controllers
             return _authService.GetAuthData(user.Id, user.Role);
         }
 
-        private async Task<GetUserToAuthDTO?> GetUserToAuth(string username)
+        private async Task<GetUserToAuthDTO?> GetUserToAuth(string? username)
         {
             var patient = await _patientRepository.GetPatientByUsername(username);
             var doctor = await _doctorRepository.GetDoctorByUsername(username);
-            return patient?.TGetUserToAuthDto() ?? doctor?.TGetUserToAuthDto();
+            return patient?.ToGetUserToAuthDTO() ?? doctor?.ToGetUserToAuthDTO();
         }
 
 
@@ -115,7 +115,7 @@ namespace SuperDuperMedAPP.Controllers
                 : await _patientRepository.IsUsernameUnique(modelUsername);
         }
 
-        private async Task<bool> IsEmailUniq(string modelEmail, string role)
+        private async Task<bool> IsEmailUniq(string? modelEmail, string role)
         {
             return role.Equals("doctor")
                 ? await _doctorRepository.IsEmailUnique(modelEmail)

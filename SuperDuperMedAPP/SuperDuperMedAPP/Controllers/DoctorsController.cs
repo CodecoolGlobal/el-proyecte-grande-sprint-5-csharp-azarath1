@@ -30,7 +30,7 @@ namespace SuperDuperMedAPP.Controllers
                 return NotFound();
             }
 
-            return Ok(result.ToDoctortDetailDTO());
+            return Ok(result.ToDoctorDetailDTO());
         }
         [Authorize(Roles = "doctor")]
         [Route("doctor/{id:int}/edit-contacts")]

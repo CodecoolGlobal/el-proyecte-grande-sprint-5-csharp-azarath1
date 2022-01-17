@@ -22,7 +22,7 @@ namespace SuperDuperMedAPP.Data.Repositories
             await _db.SaveChangesAsync();
         }
 
-        public async Task<Patient?> GetPatientByUsername(string username)
+        public async Task<Patient?> GetPatientByUsername(string? username)
         {
             return await _db.Patients.FirstOrDefaultAsync(x => x.Username.Equals(username));
         }
@@ -32,15 +32,15 @@ namespace SuperDuperMedAPP.Data.Repositories
             return await _db.Patients.AnyAsync(x => x.SocialSecurityNumber.Equals(socNumber));
         }
 
-        public Task<bool> IsUsernameUnique(string userName)
+        public Task<bool> IsUsernameUnique(string? userName)
         {
             return _db.Patients.AnyAsync(patient => patient.Username.Equals(userName))
                 .ContinueWith(result => !result.Result); ;
         }
 
-        public Task<bool> IsEmailUnique(string email)
+        public Task<bool> IsEmailUnique(string? email)
         {
-           return _db.Patients.AnyAsync(patient => patient.Email.Equals(email))
+           return _db.Patients.AnyAsync(patient => patient.Email != null && patient.Email.Equals(email))
                .ContinueWith(result => !result.Result);
         }
 
